@@ -26,7 +26,7 @@ export default function RootLayout({
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
       </head>
-      <body className="figtree.className">
+      <body className="figtree.className flex flex-col">
 
         <nav className="fixed flex flex-col items-center w-full h-max gap-2 pb-5 bg-black/80">
             <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
@@ -35,10 +35,11 @@ export default function RootLayout({
             <Link href='/' >
             <Image src='/logo.png' height={60} width={60} alt="logo"/>
             </Link>
-            <div className="w-max h-max gap-10 tracking-wide font-semibold flex flex-row items-center text-white">
+            <div className="w-max h-max gap-10 tracking-wider font-semibold flex flex-row items-center text-white">
               <Link className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]" href='/'>Home</Link>
               <Link className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]" href='/shop'>Shop</Link>
               <Link className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]" href='/deals'>Deals</Link>
+              <Link className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]" href='/brands'>Brands</Link>
               <Link className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]" href='/about'>About</Link>
               <Link className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]" href='/contact'>Contact</Link>
             </div>
