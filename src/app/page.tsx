@@ -165,9 +165,19 @@ export default function Home() {
         </p>
 
         <div className="flex flex-row gap-8 h-max w-max overflow-hidden ">
-          <div className="h-max w-max border-2 border-[#BD955E] rounded-md transition ease-in duration-300 hover:scale-110 cursor-pointer overflow-hidden">
+          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden">
             <Image
+              className="transition duration-200 ease-in hover:scale-110"
               src="/category/men.png"
+              height={200}
+              width={200}
+              alt="category"
+            />
+          </div>
+          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden">
+            <Image
+              className="transition duration-200 ease-in hover:scale-110"
+              src="/category/women.png"
               height={200}
               width={200}
               alt="category"
