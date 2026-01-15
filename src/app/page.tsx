@@ -62,7 +62,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
-              src="/fragranceBrands/ysl.png"
+              src="/fragranceBrands/versace.png"
               height={160}
               width={160}
               alt="Brand"
