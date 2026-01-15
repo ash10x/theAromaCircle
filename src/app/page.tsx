@@ -45,7 +45,12 @@ export default function Home() {
             />
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
-            <Image src="/brandLogos/coach.png" height={160} width={160} alt="Brand" />
+            <Image
+              src="/brandLogos/coach.png"
+              height={160}
+              width={160}
+              alt="Brand"
+            />
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
@@ -64,7 +69,12 @@ export default function Home() {
             />
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
-            <Image src="/brandLogos/gucci.png" height={160} width={160} alt="Brand" />
+            <Image
+              src="/brandLogos/gucci.png"
+              height={160}
+              width={160}
+              alt="Brand"
+            />
           </div>
         </div>
 
@@ -154,26 +164,18 @@ export default function Home() {
           between.
         </p>
 
-        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max">
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
+        <div className="flex flex-row gap-8 h-max w-max overflow-hidden ">
+          <div className="h-max w-max border-2 border-[#BD955E] rounded-md transition ease-in duration-300 hover:scale-110 cursor-pointer overflow-hidden">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
-              src="/misc/manspray.jpg"
-              height={300}
+              src="/category/men.png"
+              height={200}
               width={200}
-              alt="Product"
-            />
-          </div>
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
-            <Image
-              className="transition ease-in duration-200 hover:scale-110"
-              src="/misc/womanspray.jpg"
-              height={300}
-              width={200}
-              alt="Product"
+              alt="category"
             />
           </div>
         </div>
+
+        <div className="flex flex-row justify-center  gap-8 w-max p-5 h-[50vh] overflow-hidden"></div>
       </div>
     </div>
   );
