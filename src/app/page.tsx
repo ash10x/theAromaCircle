@@ -38,18 +38,18 @@ export default function Home() {
         <div className="flex flex-row justify-center gap-8 w-full h-max mt-5">
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
-              src="/brands/christiandior.png"
+              src="/brandLogos/christiandior.png"
               height={160}
               width={160}
               alt="Brand"
             />
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
-            <Image src="/brands/coach.png" height={160} width={160} alt="Brand" />
+            <Image src="/brandLogos/coach.png" height={160} width={160} alt="Brand" />
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
-              src="/brands/polo.png"
+              src="/brandLogos/polo.png"
               height={160}
               width={160}
               alt="Brand"
@@ -57,14 +57,14 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
-              src="/brands/ysl.png"
+              src="/brandLogos/ysl.png"
               height={160}
               width={160}
               alt="Brand"
             />
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
-            <Image src="/brands/gucci.png" height={160} width={160} alt="Brand" />
+            <Image src="/brandLogos/gucci.png" height={160} width={160} alt="Brand" />
           </div>
         </div>
 
