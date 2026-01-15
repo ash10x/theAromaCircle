@@ -158,8 +158,8 @@ export default function Home() {
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
               className="transition ease-in duration-200 hover:scale-110"
-              src="/products/burberryhero.jpg"
-              height={200}
+              src="/misc/manspray.jpg"
+              height={300}
               width={200}
               alt="Product"
             />
@@ -167,8 +167,8 @@ export default function Home() {
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
               className="transition ease-in duration-200 hover:scale-110"
-              src="/products/versaceeros.jpg"
-              height={200}
+              src="/misc/womanspray.jpg"
+              height={300}
               width={200}
               alt="Product"
             />
