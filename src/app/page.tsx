@@ -164,8 +164,8 @@ export default function Home() {
           between.
         </p>
 
-        <div className="flex flex-row gap-8 h-max w-max overflow-hidden ">
-          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden">
+        <div className="flex flex-row gap-8 h-max w-max overflow-hidden mt-5 p-5">
+          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
             <Image
               className="transition duration-200 ease-in hover:scale-110"
               src={"/category/menspray.png"}
@@ -174,7 +174,7 @@ export default function Home() {
               alt="category"
             />
           </div>
-          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden">
+          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
             <Image
               className="transition duration-200 ease-in hover:scale-110"
               src={"/category/women.png"}
