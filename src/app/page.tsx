@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div>
+    <div className="z-40">
       <main className="h-screen w-full bg-[url(/backgrounds/bg1.jpg)] bg-cover bg-center bg-ble">
         <div className="h-screen w-full bg-black/50 flex flex-col justify-end items-end">
           <div className="flex flex-col gap-2.5 h-max w-max mr-16 mb-32">
@@ -91,7 +91,7 @@ export default function Home() {
           Best-selling scents that leave a lasting impression—every time.
         </p>
 
-        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max">
+        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5 p-5">
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
               className="transition ease-in duration-200 hover:scale-110"
@@ -101,6 +101,16 @@ export default function Home() {
               alt="Product"
             />
           </div>
+          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
+            <Image
+              className="transition ease-in duration-200 hover:scale-110"
+              src={"/products/coachdreams.jpg"}
+              height={150}
+              width={150}
+              alt="Product"
+            />
+          </div>
+
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
               className="transition ease-in duration-200 hover:scale-110"
@@ -165,24 +175,28 @@ export default function Home() {
         </p>
 
         <div className="flex flex-row gap-8 h-max w-max overflow-hidden mt-5 p-5">
-          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
-            <Image
-              className="transition duration-200 ease-in hover:scale-110"
-              src={"/category/mencat.png"}
-              height="200"
-              width="200"
-              alt="category"
-            />
-          </div>
-          <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
-            <Image
-              className="transition duration-200 ease-in hover:scale-110"
-              src={"/category/womencat.png"}
-              height="200"
-              width="200"
-              alt="category"
-            />
-          </div>
+          <Link href={"/shop/men"}>
+            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
+              <Image
+                className="transition duration-200 ease-in hover:scale-110"
+                src={"/category/mencat.png"}
+                height="200"
+                width="200"
+                alt="category"
+              />
+            </div>
+          </Link>
+          <Link href={"/shop/women"}>
+            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
+              <Image
+                className="transition duration-200 ease-in hover:scale-110"
+                src={"/category/womencat.png"}
+                height="200"
+                width="200"
+                alt="category"
+              />
+            </div>
+          </Link>
         </div>
 
         <div className="flex flex-row justify-center  gap-8 w-max p-5 h-[50vh] overflow-hidden"></div>

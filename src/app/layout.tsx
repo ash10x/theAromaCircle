@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {Figtree} from 'next/font/google';
 import Image from "next/image";
 import Link from "next/link";
+import clsx from "clsx";
 import "./globals.css";
 
 
@@ -21,6 +22,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="en">
       <head>
@@ -30,7 +33,7 @@ export default function RootLayout({
         />
       </head>
       <body className="figtree.className flex flex-col">
-        <nav className="fixed flex flex-col items-center w-full h-max gap-2 pb-5 bg-black/80">
+        <nav className={"fixed flex flex-col items-center w-full h-max gap-2 pb-5 bg-black/80 z-50"}>
           <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
             <p className="text-white text-[9.8pt] font-semibold tracking-wide">
               Free Shipping on Orders Over $75 | 100% Authentic Fragrances
