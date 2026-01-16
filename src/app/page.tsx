@@ -168,7 +168,7 @@ export default function Home() {
           <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
             <Image
               className="transition duration-200 ease-in hover:scale-110"
-              src={"/category/menspray.png"}
+              src={"/category/mencat.png"}
               height="200"
               width="200"
               alt="category"
@@ -177,7 +177,7 @@ export default function Home() {
           <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
             <Image
               className="transition duration-200 ease-in hover:scale-110"
-              src={"/category/women.png"}
+              src={"/category/womencat.png"}
               height="200"
               width="200"
               alt="category"
