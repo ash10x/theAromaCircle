@@ -37,7 +37,7 @@ export default function RootLayout({
             </p>
           </div>
           <Link href="/">
-            <Image src="/logo.png" height={60} width={60} alt="logo" />
+            <Image src={"/logo.png" }height={60} width={60} alt="logo" />
           </Link>
           <div className="w-max h-max gap-10 tracking-wider font-semibold flex flex-row items-center text-white">
             <Link
