@@ -1,36 +1,34 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
-import clsx from 'clsx';
+import React, { use, useEffect } from 'react';
 import { useState } from 'react';
 
 
 export default function navDesktop() {
 
-  const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
 
-  const handleScroll = () => {
-    const scrollTop = window.scrollY;
-    if (scrollTop > 50) {
-      setIsScrolled(true);
-      console.log("scrolled");
-    } else {
-      setIsScrolled(false);
-    }
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+    }, [handleScroll]);
 
-
-    
   return (
     <>
       <nav
         className={
           isScrolled
-            ? "fixed flex flex-col items-center w-full h-max gap-2 pb-5 bg-black transition ease-in-out duration-300 z-50"
-            : "fixed flex flex-col items-center w-full h-max gap-2 pb-5 bg-black/80 transition ease-in-out duration-300 z-50"
+            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-300 z-50"
+            : "fixed flex flex-col items-center w-full h-[175.087px] gap-2 pb-5 bg-black/80 transition-all ease-in-out duration-100 z-50"
         }
       >
         <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
@@ -39,7 +37,13 @@ export default function navDesktop() {
           </p>
         </div>
         <Link href="/">
-          <Image src={"/logo.png"} height={60} width={60} alt="logo" />
+          <Image
+            className={isScrolled ? "hidden" : "w-auto h-auto"}
+            src={"/logo.png"}
+            height={60}
+            width={60}
+            alt="logo"
+          />
         </Link>
         <div className="w-max h-max gap-10 tracking-wider font-semibold flex flex-row items-center text-white">
           <Link

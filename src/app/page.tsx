@@ -38,6 +38,7 @@ export default function Home() {
         <div className="flex flex-row justify-center gap-8 w-full h-max mt-5">
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
+            className={"w-auto h-auto"}
               src={"/fragranceBrands/christiandior.png"}
               height={160}
               width={160}
@@ -46,6 +47,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
+            className={"w-auto h-auto"}
               src="/fragranceBrands/coach.png"
               height={160}
               width={160}
@@ -54,6 +56,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
+            className={"w-auto h-auto"}
               src={"/fragranceBrands/polo.png"}
               height={160}
               width={160}
@@ -62,6 +65,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
+            className={"w-auto h-auto"}
               src="/fragranceBrands/versace.png"
               height={160}
               width={160}
@@ -70,6 +74,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
+            className={"w-auto h-auto"}
               src="/fragranceBrands/gucci.png"
               height={160}
               width={160}
@@ -94,7 +99,7 @@ export default function Home() {
         <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5 p-5">
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
+              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/burberryhero.jpg"}
               height={150}
               width={150}
@@ -103,7 +108,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
+              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/coachdreams.jpg"}
               height={150}
               width={150}
@@ -113,7 +118,7 @@ export default function Home() {
 
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
+              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/versaceeros.jpg"}
               height={150}
               width={150}
@@ -122,7 +127,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
+              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/marcjacobsdaisydream.jpg"}
               height={150}
               width={150}
@@ -131,7 +136,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
+              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/burberrymrburberry.jpg"}
               height={150}
               width={150}
@@ -140,7 +145,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
+              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/versacelhomme.jpg"}
               height={150}
               width={150}
@@ -149,7 +154,7 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
-              className="transition ease-in duration-200 hover:scale-110"
+              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/moschinotoy2bg.jpg"}
               height={150}
               width={150}
@@ -178,7 +183,7 @@ export default function Home() {
           <Link href={"/shop/men"}>
             <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
               <Image
-                className="transition duration-200 ease-in hover:scale-110"
+                className="w-auto h-autotransition duration-200 ease-in hover:scale-110"
                 src={"/category/mencat.png"}
                 height={200}
                 width={200}
@@ -189,7 +194,7 @@ export default function Home() {
           <Link href={"/shop/women"}>
             <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
               <Image
-                className="transition duration-200 ease-in hover:scale-110"
+                className="w-auto h-auto transition duration-200 ease-in hover:scale-110"
                 src={"/category/womencat.png"}
                 height={200}
                 width={200}
