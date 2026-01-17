@@ -180,8 +180,8 @@ export default function Home() {
               <Image
                 className="transition duration-200 ease-in hover:scale-110"
                 src={"/category/mencat.png"}
-                height="200"
-                width="200"
+                height={200}
+                width={200}
                 alt="category"
               />
             </div>
@@ -191,9 +191,9 @@ export default function Home() {
               <Image
                 className="transition duration-200 ease-in hover:scale-110"
                 src={"/category/womencat.png"}
-                height="200"
-                width="200"
-                alt="category"
+                height={200}
+                width={200}
+                alt={"category"}
               />
             </div>
           </Link>
