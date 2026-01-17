@@ -27,7 +27,7 @@ export default function navDesktop() {
       <nav
         className={
           isScrolled
-            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-300 z-50"
+            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-100 z-50"
             : "fixed flex flex-col items-center w-full h-[175.087px] gap-2 pb-5 bg-black/80 transition-all ease-in-out duration-100 z-50"
         }
       >
