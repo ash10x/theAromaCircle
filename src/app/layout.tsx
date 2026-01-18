@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import {Figtree} from 'next/font/google';
+import { Figtree } from "next/font/google";
 import NavDesktop from "./components/navDesktop";
+import FooterDesktop from "./components/footerDesktop";
 import "./globals.css";
 
-
 export const figtree = Figtree({
-  weight: ['400', '600'],
-  subsets: ['latin']
-})
-
+  weight: ["400", "600"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "The Aroma Circle",
@@ -20,8 +19,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   return (
     <html lang="en">
       <head>
@@ -33,6 +30,7 @@ export default function RootLayout({
       <body className="figtree.className flex flex-col">
         <NavDesktop />
         {children}
+        <FooterDesktop />
       </body>
     </html>
   );
