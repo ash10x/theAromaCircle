@@ -215,7 +215,7 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
         <div className="w-max h-max flex flex-col items-start justify-center">
           <p className="text-[25pt] text-white font-bold tracking-wider mb-5">
-            Join the Aroma Circle Community
+            Join The Aroma Circle Community
           </p>
           <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider mb-5">
             Sign up for exclusive offers, new arrivals, and fragrance tips.
