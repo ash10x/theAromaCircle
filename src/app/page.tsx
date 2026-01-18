@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black">
+      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
         <p className="text-[30pt] text-white font-bold tracking-wider">
           Elite Signature Collections
         </p>
@@ -90,7 +90,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black">
+      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
         <p className="text-[30pt] text-white font-bold tracking-wider">
           Luxury Best Sellers
         </p>
@@ -98,7 +98,7 @@ export default function Home() {
           Best-selling scents that leave a lasting impression—every time.
         </p>
 
-        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5 p-5">
+        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5">
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
               className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
@@ -154,7 +154,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black">
+      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
         <p className="text-[30pt] text-white font-bold tracking-wider">
           Refined By Category
         </p>
@@ -189,7 +189,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-row justify-center items-center gap-0 w-full h-max p-10 bg-black">
+      <div className="flex flex-row justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
         <Image
           className="w-96 h-auto transition duration-200 ease-in hover:scale-110"
           src={"/misc/productprop.png"}
