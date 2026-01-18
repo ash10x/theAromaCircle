@@ -1,34 +1,32 @@
-'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import React, { use, useEffect } from 'react';
-import { useState } from 'react';
-
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import React, { use, useEffect } from "react";
+import { useState } from "react";
 
 export default function navDesktop() {
+  const [isScrolled, setIsScrolled] = useState(false);
 
-    const [isScrolled, setIsScrolled] = useState(false);
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    if (scrollTop > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
 
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-    }, [handleScroll]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
     <>
       <nav
         className={
           isScrolled
-            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-100 z-50"
-            : "fixed flex flex-col items-center w-full h-[175.087px] gap-2 pb-5 bg-black/80 transition-all ease-in-out duration-100 z-50"
+            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-300 z-50 overflow-hidden"
+            : "fixed flex flex-col items-center w-full h-[175.087px] gap-2 pb-5 bg-black/80 transition-all ease-in-out duration-200 z-50 overflow-hidden"
         }
       >
         <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
@@ -84,10 +82,10 @@ export default function navDesktop() {
           </Link>
         </div>
         <div className="absolute flex gap-5 w-max h-max bottom-2.5 right-8">
-          <i className=" material-symbols-outlined cursor-pointer transition duration-200 text-white font-semibold hover:scale-110 hover:text-[#BD955E]">
+          <i className=" material-symbols-outlined text-[14px] cursor-pointer transition duration-200 text-white font-semibold hover:scale-110 hover:text-[#BD955E]">
             Search
           </i>
-          <i className=" material-symbols-outlined cursor-pointer transition duration-200 text-white font-semibold hover:scale-110 hover:text-[#BD955E]">
+          <i className=" material-symbols-outlined text-[14px] cursor-pointer transition duration-200 text-white font-semibold hover:scale-110 hover:text-[#BD955E]">
             Shopping_Cart
           </i>
         </div>
