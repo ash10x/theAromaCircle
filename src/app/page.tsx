@@ -6,11 +6,11 @@ export default function Home() {
     <div className="z-40 h-max w-full flex flex-col items-center bg-black">
       <main className="h-screen w-full bg-[url(/backgrounds/bg1.jpg)] bg-cover bg-center bg-ble">
         <div className="h-screen w-full bg-black/70 flex flex-col justify-end items-end max-sm:items-center">
-          <div className="flex flex-col gap-2.5 h-max w-max overflow-hidden mr-16 mb-32 max-sm:mr-0 max-sm:w-70">
+          <div className="flex flex-col gap-2.5 h-max w-max overflow-hidden mr-16 mb-32 max-sm:mr-0 max-sm:w-80">
             <p className="text-[10pt] text-[#BD955E] font-semibold tracking-wide">
               The Aroma Circle
             </p>
-            <p className="text-[40pt] text-[#ffffff] font-bold w-full tracking-wide max-sm:text-[28pt]">
+            <p className="text-[40pt] text-[#ffffff] font-bold w-full tracking-wide max-sm:text-[25pt]">
               Luxury Fragrances. Authentic Brands.
             </p>
             <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wide w-full max-sm:text-[12pt]">
