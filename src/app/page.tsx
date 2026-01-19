@@ -35,8 +35,8 @@ export default function Home() {
           brands.
         </p>
 
-        <div className="flex items-center justify-center w-max h-max overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer mt-5 max-sm:flex-col max-sm:gap-5 max-sm:p-5 max-sm:mt-5">
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
+        <div className="flex items-center justify-center w-max h-max overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-start">
+          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src={"/fragranceBrands/christiandior.png"}
@@ -45,7 +45,7 @@ export default function Home() {
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
+          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src="/fragranceBrands/coach.png"
@@ -54,7 +54,7 @@ export default function Home() {
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
+          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src={"/fragranceBrands/polo.png"}
@@ -63,7 +63,7 @@ export default function Home() {
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
+          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src="/fragranceBrands/versace.png"
@@ -72,7 +72,7 @@ export default function Home() {
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
+          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src="/fragranceBrands/gucci.png"
