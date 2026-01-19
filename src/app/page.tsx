@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="z-40 h-max w-full flex flex-col items-center bg-black">
-      <main className="h-screen w-full bg-[url(/backgrounds/bg1.jpg)] bg-cover bg-center bg-ble max-sm:bg-size-[100%, 100%]">
+    <div className="z-40 h-max w-full flex flex-col items-center">
+      <main className="h-screen w-full bg-[url(/backgrounds/bg2.jpg)] bg-cover bg-center bg-black overflow-hidden max-sm:bg-size-[100%, 100%]">
         <div className="h-screen w-full bg-black/70 flex flex-col justify-end items-end max-sm:items-center">
           <div className="flex flex-col gap-2.5 h-max w-max overflow-hidden mr-16 mb-32 max-sm:mr-0 max-sm:w-85">
             <p className="text-[10pt] text-[#BD955E] font-semibold tracking-wide">
@@ -35,49 +35,49 @@ export default function Home() {
           brands.
         </p>
 
-        <div className="flex items-center justify-center w-max h-max overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
+        <div className="flex items-center justify-center gap-5 w-max h-maxcursor-pointer mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
+          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src={"/fragranceBrands/christiandior.png"}
-              height={160}
-              width={160}
+              height={130}
+              width={130}
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
+          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src="/fragranceBrands/coach.png"
-              height={160}
-              width={160}
+              height={130}
+              width={130}
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
+          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src={"/fragranceBrands/polo.png"}
-              height={160}
-              width={160}
+              height={130}
+              width={130}
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
+          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src="/fragranceBrands/versace.png"
-              height={160}
-              width={160}
+              height={130}
+              width={130}
               alt="Brand"
             />
           </div>
-          <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
+          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
               src="/fragranceBrands/gucci.png"
-              height={160}
-              width={160}
+              height={130}
+              width={130}
               alt="Brand"
             />
           </div>
