@@ -212,28 +212,28 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
+      <div className="flex flex-col justify-center items-center gap-0 w-full h-max p-10 bg-black overflow-hidden max-sm:p-5">
         <div className="w-max h-max flex flex-col items-start justify-center">
-          <p className="text-[25pt] text-white font-bold tracking-wider mb-5">
+          <p className="text-[25pt] text-white font-bold tracking-wider mb-5 max-sm:text-[16pt] max-sm:w-100 max-sm:text-center">
             Join The Aroma Circle Community
           </p>
-          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider mb-5">
+          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider mb-5 max-sm:text-[12pt] max-sm:w-100 max-sm:text-center">
             Sign up for exclusive offers, new arrivals, and fragrance tips.
           </p>
-          <div className="flex flex-row gap-2.5 w-max h-max">
+          <div className="flex flex-row gap-2.5 w-max h-max max-sm:w-full max-sm:items-center max-sm:justify-center">
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-64 h-12 p-2.5 rounded-md outline-0 border-2 border-[#BD955E] bg-black text-white placeholder:text-[#BD955E] focus:border-[#ffffff] transition duration-200 ease-in"
+              className="w-64 h-12 p-2.5 rounded-md outline-0 border-2 border-[#BD955E] bg-black text-white placeholder:text-[#BD955E] focus:border-[#ffffff] transition duration-200 ease-in max-sm:w-48 max-sm:h-10 max-sm:text-[12pt]"
             />
-            <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer">
+            <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer max-sm:w-24 max-sm:h-10 max-sm:text-[12pt]">
               Subscribe
             </button>
           </div>
-          <div className="flex flex-row gap-5 h-max w-max">
+          <div className="flex flex-row gap-5 h-max w-max max-sm:justify-center max-sm:w-full">
             <Link href={"#"}>
               <Image
-                className="w-7.5 h-auto mt-5"
+                className="w-7.5 h-auto mt-5 max-sm:mx-0"
                 src={"/socials/instagram.svg"}
                 height={30}
                 width={30}
@@ -242,7 +242,7 @@ export default function Home() {
             </Link>
             <Link href={"#"}>
               <Image
-                className="w-7.5 h-auto mt-5"
+                className="w-7.5 h-auto mt-5 max-sm:mx-0"
                 src={"/socials/facebook.svg"}
                 height={30}
                 width={30}
