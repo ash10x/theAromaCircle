@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 export default function navMobile() {
   const [navOpen, setNavOpen] = useState(false);
   return (
-    <div>
+    <div className={navOpen ? "overflow-hidden" : "overflow-auto"}>
       <div
         className={
           !navOpen
