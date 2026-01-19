@@ -35,7 +35,7 @@ export default function Home() {
           brands.
         </p>
 
-        <div className="flex items-center justify-center w-max h-max overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-start">
+        <div className="flex items-center justify-center w-max h-max overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden max-sm:w-30 max-sm:h-30">
             <Image
               className={"w-auto h-auto"}
@@ -98,8 +98,8 @@ export default function Home() {
           Best-selling scents that leave a lasting impression—every time.
         </p>
 
-        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5 max-sm:flex-col">
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
+        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
+          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
             <Image
               className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/coachdreams.jpg"}
@@ -109,7 +109,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
+          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
             <Image
               className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/versaceeros.jpg"}
@@ -118,7 +118,7 @@ export default function Home() {
               alt="Product"
             />
           </div>
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
+          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
             <Image
               className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/marcjacobsdaisydream.jpg"}
@@ -127,7 +127,7 @@ export default function Home() {
               alt="Product"
             />
           </div>
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
+          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
             <Image
               className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/burberrymrburberry.jpg"}
@@ -136,7 +136,7 @@ export default function Home() {
               alt="Product"
             />
           </div>
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
+          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
             <Image
               className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
               src={"/products/versacelhomme.jpg"}
@@ -163,22 +163,22 @@ export default function Home() {
           between.
         </p>
 
-        <div className="flex flex-row gap-8 h-max w-max overflow-hidden mt-5 p-5 max-sm:flex-col">
+        <div className="flex flex-row gap-8 h-max w-max overflow-hidden mt-5 p-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
           <Link href={"/shop/men"}>
-            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
+            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-40">
               <Image
-                className="w-50 h-auto transition duration-200 ease-in hover:scale-110"
+                className="w-auto h-auto transition duration-200 ease-in hover:scale-110"
                 src={"/category/mencat.png"}
-                height={200}
-                width={200}
+                height={150}
+                width={150}
                 alt="category"
               />
             </div>
           </Link>
           <Link href={"/shop/women"}>
-            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
+            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-40">
               <Image
-                className="w-50 h-auto transition duration-200 ease-in hover:scale-110"
+                className="w-auto h-auto transition duration-200 ease-in hover:scale-110"
                 src={"/category/womencat.png"}
                 height={200}
                 width={200}
