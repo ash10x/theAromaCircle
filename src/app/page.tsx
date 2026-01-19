@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="z-40 h-max w-full flex flex-col items-center bg-black">
-      <main className="h-screen w-full bg-[url(/backgrounds/bg1.jpg)] bg-cover bg-center bg-ble">
+      <main className="h-screen w-full bg-[url(/backgrounds/bg1.jpg)] bg-cover bg-center bg-ble max-sm:bg-size-[100%, 100%]">
         <div className="h-screen w-full bg-black/70 flex flex-col justify-end items-end max-sm:items-center">
           <div className="flex flex-col gap-2.5 h-max w-max overflow-hidden mr-16 mb-32 max-sm:mr-0 max-sm:w-85">
             <p className="text-[10pt] text-[#BD955E] font-semibold tracking-wide">
@@ -27,15 +27,15 @@ export default function Home() {
       </main>
 
       <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider">
+        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[28pt]">
           Elite Signature Collections
         </p>
-        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider">
+        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
           Discover timeless creations from the world’s most prestigious perfume
           brands.
         </p>
 
-        <div className="flex flex-row justify-center gap-8 w-full h-max mt-5">
+        <div className="flex flex-row justify-center gap-8 w-full h-max mt-5 max-sm:flex-col">
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
               className={"w-auto h-auto"}
@@ -84,21 +84,21 @@ export default function Home() {
         </div>
 
         <Link href="/shop/brands" className="self-end h-max w-max">
-          <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer mt-5">
+          <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer mt-5 max-sm:h-12 max-sm:text-[12pt]">
             View All
           </button>
         </Link>
       </div>
 
       <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider">
+        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[28pt]">
           Luxury Best Sellers
         </p>
-        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider">
+        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
           Best-selling scents that leave a lasting impression—every time.
         </p>
 
-        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5">
+        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5 max-sm:flex-col">
           <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer">
             <Image
               className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
@@ -148,22 +148,22 @@ export default function Home() {
         </div>
 
         <Link href="/shop/bestsellers" className="self-end h-max w-max">
-          <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer mt-5">
+          <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer mt-5 max-sm:h-12 max-sm:text-[12pt]">
             View All
           </button>
         </Link>
       </div>
 
       <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider">
+        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[28pt]">
           Refined By Category
         </p>
-        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider">
+        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
           Find the perfect fragrance—designed for him, her, and every moment in
           between.
         </p>
 
-        <div className="flex flex-row gap-8 h-max w-max overflow-hidden mt-5 p-5">
+        <div className="flex flex-row gap-8 h-max w-max overflow-hidden mt-5 p-5 max-sm:flex-col">
           <Link href={"/shop/men"}>
             <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110">
               <Image
