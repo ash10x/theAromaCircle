@@ -36,13 +36,23 @@ export default function navMobile() {
         <Image
           className={
             navOpen
-              ? "absolute top-0 right-3 w-6 h-auto mt-5 cursor-pointer transition ease-in-out duration-200 opacity-100"
-              : "absolute top-0 right-3 w-6 h-auto mt-5 cursor-pointer transition ease-in-out duration-200 opacity-0"
+              ? "absolute top-0 right-13 w-6 h-auto mt-7 cursor-pointer transition ease-in-out duration-200 opacity-150"
+              : "absolute top-0 right-13 w-6 h-auto mt-7 cursor-pointer transition ease-in-out duration-200 opacity-0"
           }
           src={"/icons/cart.svg"}
           height={25}
           width={25}
           alt="logo"
+        />
+        <Image
+          className={
+            "absolute top-0 mt-6 right-3 w-[34px]h-auto cursor-pointer"
+          }
+          src={"/icons/arrowup.svg"}
+          height={34}
+          width={34}
+          alt="logo"
+          onClick={() => setNavOpen(false)}
         />
 
         <Link
@@ -106,17 +116,6 @@ export default function navMobile() {
             Contact
           </Link>
         </div>
-
-        <Image
-          className={
-            "absolute bottom-0 right-5 w-7.5 h-auto mb-10 cursor-pointer"
-          }
-          src={"/misc/uparrow.svg"}
-          height={30}
-          width={30}
-          alt="logo"
-          onClick={() => setNavOpen(false)}
-        />
       </div>
     </div>
   );
