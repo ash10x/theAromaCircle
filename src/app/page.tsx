@@ -27,7 +27,7 @@ export default function Home() {
       </main>
 
       <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[28pt]">
+        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[22pt] max-sm:text-center">
           Elite Signature Collections
         </p>
         <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
@@ -91,7 +91,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[28pt]">
+        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[22pt]">
           Luxury Best Sellers
         </p>
         <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
@@ -155,7 +155,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[28pt]">
+        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[22pt]">
           Refined By Category
         </p>
         <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
@@ -191,21 +191,21 @@ export default function Home() {
 
       <div className="flex flex-row justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
         <Image
-          className="w-96 h-auto transition duration-200 ease-in hover:scale-110"
+          className="w-auto h-auto transition duration-200 ease-in hover:scale-110 max-sm:w-65 max-sm:h-65"
           src={"/misc/productprop.png"}
           height={400}
           width={400}
           alt="prop"
         />
-        <div className="flex flex-col items-start h-max w-max ml-10 gap-5">
-          <p className="text-[35pt] text-white font-bold tracking-wider">
+        <div className="flex flex-col items-start h-max w-max ml-10 gap-5 max-sm:ml-0">
+          <p className="text-[35pt] text-white font-bold tracking-wider max-sm:text-[22pt]">
             Premium. Authentic. Trusted.
           </p>
-          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider">
+          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
             100% authentic perfumes backed by secure service and support.
           </p>
           <Link href="/about">
-            <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer">
+            <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer max-sm:h-12 max-sm:text-[12pt]">
               Learn More
             </button>
           </Link>
