@@ -35,7 +35,7 @@ export default function Home() {
           brands.
         </p>
 
-        <div className="flex flex-row justify-center gap-8 w-full h-max mt-5 max-sm:flex-col">
+        <div className="flex items-center justify-center w-max h-max overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer mt-5 max-sm:flex-col max-sm:gap-5 max-sm:p-5 max-sm:mt-5">
           <div className="flex items-center justify-center w-40 h-40 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 overflow-hidden">
             <Image
               className={"w-auto h-auto"}
