@@ -25,8 +25,8 @@ export default function navDesktop() {
       <nav
         className={
           isScrolled
-            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-300 z-50 overflow-hidden border-b-[.1px] border-b-[#0e0e0e]"
-            : "fixed flex flex-col items-center w-full h-[175.087px] gap-2 pb-5 bg-black/80 transition-all ease-in-out duration-200 z-50 overflow-hidden border-b-[.1px] border-b-[#0e0e0e]"
+            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-300 z-50 overflow-hidden border-b-[.1px] border-b-[#0e0e0e] max-sm:hidden"
+            : "fixed flex flex-col items-center w-full h-[175.087px] gap-2 pb-5 bg-black/80 transition-all ease-in-out duration-200 z-50 overflow-hidden border-b-[.1px] border-b-[#0e0e0e] max-sm:hidden"
         }
       >
         <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">

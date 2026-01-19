@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
+      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
         <p className="text-[30pt] text-white font-bold tracking-wider">
           Elite Signature Collections
         </p>
@@ -90,7 +90,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
+      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
         <p className="text-[30pt] text-white font-bold tracking-wider">
           Luxury Best Sellers
         </p>
@@ -154,7 +154,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
+      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
         <p className="text-[30pt] text-white font-bold tracking-wider">
           Refined By Category
         </p>
@@ -189,7 +189,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-row justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
+      <div className="flex flex-row justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
         <Image
           className="w-96 h-auto transition duration-200 ease-in hover:scale-110"
           src={"/misc/productprop.png"}
@@ -201,7 +201,7 @@ export default function Home() {
           <p className="text-[35pt] text-white font-bold tracking-wider">
             Premium. Authentic. Trusted.
           </p>
-          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider text-center">
+          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider">
             100% authentic perfumes backed by secure service and support.
           </p>
           <Link href="/about">
@@ -212,7 +212,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e]">
+      <div className="flex flex-col justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
         <div className="w-max h-max flex flex-col items-start justify-center">
           <p className="text-[25pt] text-white font-bold tracking-wider mb-5">
             Join The Aroma Circle Community

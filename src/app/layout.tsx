@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import NavDesktop from "./components/navDesktop";
+import NavMobile from "./components/navMobile";
 import FooterDesktop from "./components/footerDesktop";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({
       </head>
       <body className="figtree.className flex flex-col">
         <NavDesktop />
+        <NavMobile />
         {children}
         <FooterDesktop />
       </body>
