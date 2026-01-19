@@ -12,10 +12,17 @@ export default function navMobile() {
       <div
         className={
           !navOpen
-            ? "fixed top-0 right-0 flex flex-row justify-end p-2.5 h-12.5 w-full bg-black overflow-hidden z-50 md:hidden"
+            ? "fixed top-0 right-0 flex flex-row items-center gap-2.5 justify-end p-5 h-max w-full bg-black overflow-hidden z-50 md:hidden"
             : "hidden"
         }
       >
+        <Image
+          className={"w-6 h-auto cursor-pointer md:hidden"}
+          src={"/icons/search.svg"}
+          height={25}
+          width={25}
+          alt="logo"
+        />
         <Image
           className={"w-6 h-auto cursor-pointer md:hidden"}
           src={"/icons/menu.svg"}
