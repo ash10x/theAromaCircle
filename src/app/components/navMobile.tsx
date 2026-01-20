@@ -18,7 +18,9 @@ export default function navMobile() {
       >
         <Link href="/">
           <Image
-            className={"absolute left-2.5 w-40 h-auto cursor-pointer md:hidden"}
+            className={
+              "absolute left-2.5 top-4.5 w-40 h-auto cursor-pointer md:hidden"
+            }
             src={"/logomobile.svg"}
             height={160}
             width={160}
