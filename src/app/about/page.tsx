@@ -4,19 +4,19 @@ import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <div className="pt-60 h-max w-full flex flex-col items-center bg-black px-4 py-16 tracking-wide">
-      <p className="text-[28pt] text-[#BD955E] font-bold mb-5">
+    <div className="pt-60 h-max w-full flex flex-col items-center bg-black px-4 py-16 tracking-wide max-sm:pt-30">
+      <p className="text-[28pt] text-[#BD955E] font-bold mb-5 max-sm:text-[22pt] text-center">
         More Than Fragrance. It’s Identity.
       </p>
 
-      <p className="mt-4 text-[12pt] text-white w-[60%]">
+      <p className="mt-4 text-[12pt] text-white w-[60%] max-sm:w-full max-sm:px-4 ">
         At The Aroma Circle, scent is a statement. It’s how you enter a room.
         It’s how you’re remembered. We curate premium fragrances for individuals
         who understand that style doesn’t stop at what you wear—it’s what you
         leave behind.
       </p>
 
-      <div className="mt-8 w-[60%] h-max space-y-6 text-white text-[12pt]">
+      <div className="mt-8 w-[60%] h-max space-y-6 text-white text-[12pt] max-sm:w-full max-sm:px-4">
         <section className={"flex flex-col gap-4 pb-4"}>
           <h2 className="text-2xl font-semibold mb-1 text-[#BD955E]">
             Our Story
