@@ -180,8 +180,8 @@ export default function Home() {
               <Image
                 className="w-auto h-auto transition duration-200 ease-in hover:scale-110"
                 src={"/category/womencat.png"}
-                height={200}
-                width={200}
+                height={150}
+                width={150}
                 alt={"category"}
               />
             </div>
