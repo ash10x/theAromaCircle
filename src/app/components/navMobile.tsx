@@ -36,8 +36,8 @@ export default function navMobile() {
       <div
         className={
           navOpen
-            ? "fixed flex flex-col items-center justify-center h-screen w-full bg-black z-50 overflow-hidden transition-all ease-in-out duration-300 md:hidden"
-            : "fixed flex flex-col items-center justify-center h-0 w-full bg-black z-50 overflow-hidden transition-all ease-in-out duration-300 md:hidden "
+            ? "fixed top-0 right-0 flex flex-col items-center justify-center h-screen w-full bg-black z-50 overflow-hidden transition-all ease-in-out duration-300 md:hidden"
+            : "fixed top-0 right-0 flex flex-col items-center justify-center h-0 w-full bg-black z-50 overflow-hidden transition-all ease-in-out duration-300 md:hidden "
         }
       >
         <Image
@@ -76,6 +76,7 @@ export default function navMobile() {
             height={60}
             width={60}
             alt="logo"
+            onClick={() => setNavOpen(false)}
           />
         </Link>
 
@@ -89,36 +90,42 @@ export default function navMobile() {
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/"
+            onClick={() => setNavOpen(false)}
           >
             Home
           </Link>
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/shop"
+            onClick={() => setNavOpen(false)}
           >
             Shop
           </Link>
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/deals"
+            onClick={() => setNavOpen(false)}
           >
             Deals
           </Link>
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/brands"
+            onClick={() => setNavOpen(false)}
           >
             Brands
           </Link>
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/about"
+            onClick={() => setNavOpen(false)}
           >
             About
           </Link>
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/contact"
+            onClick={() => setNavOpen(false)}
           >
             Contact
           </Link>
