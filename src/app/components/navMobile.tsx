@@ -17,6 +17,13 @@ export default function navMobile() {
         }
       >
         <Image
+          className={"absolute left-2.5 w-40 h-auto cursor-pointer md:hidden"}
+          src={"/logomobile.svg"}
+          height={160}
+          width={160}
+          alt="logo"
+        />
+        <Image
           className={"w-6 h-auto cursor-pointer md:hidden"}
           src={"/icons/search.svg"}
           height={25}
