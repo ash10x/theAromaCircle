@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <div className="pt-60 h-max w-full flex flex-col items-center bg-black px-4 py-16 tracking-wide max-sm:pt-30">
+    <div className="pt-50 h-max w-full flex flex-col items-center bg-black px-4 py-16 tracking-wide max-sm:pt-30">
       <p className="text-[28pt] text-[#BD955E] font-bold mb-5 max-sm:text-[22pt] text-center">
         More Than Fragrance. It’s Identity.
       </p>

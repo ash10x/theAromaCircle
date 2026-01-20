@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -19,6 +19,13 @@ export default function navMobile() {
         <Image
           className={"w-6 h-auto cursor-pointer md:hidden"}
           src={"/icons/search.svg"}
+          height={25}
+          width={25}
+          alt="logo"
+        />
+        <Image
+          className={"w-6 h-auto cursor-pointer md:hidden"}
+          src={"/icons/cart.svg"}
           height={25}
           width={25}
           alt="logo"
