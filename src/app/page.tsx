@@ -6,7 +6,7 @@ export default function Home() {
     <div className="z-40 h-max w-full flex flex-col items-center">
       <main className="h-screen w-full bg-[url(/backgrounds/bg2.jpg)] bg-cover bg-center bg-black overflow-hidden max-sm:bg-size-[100%, 100%]">
         <div className="h-screen w-full bg-black/70 flex flex-col justify-end items-end max-sm:items-center">
-          <div className="flex flex-col gap-2.5 h-max w-max overflow-hidden mr-16 mb-32 max-sm:mr-0 max-sm:w-85">
+          <div className="flex flex-col gap-2.5 h-max w-max  mr-16 mb-32 max-sm:mr-0 max-sm:w-85">
             <p className="text-[10pt] text-[#BD955E] font-semibold tracking-wide">
               The Aroma Circle
             </p>
