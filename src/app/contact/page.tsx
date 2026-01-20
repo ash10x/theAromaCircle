@@ -9,7 +9,6 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -18,21 +17,12 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // Add your API endpoint here
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setSubmitted(false), 3000);
-  };
-
   return (
-    <div className="min-h-screen w-full bg-linear-to-br bg-black py-12 px-4 sm:px-6 lg:px-8">
-      <div className="pt-50 w-[50%] h-max mx-auto max-sm:w-full max-sm:pt-30">
+    <div className="min-h-screen w-full bg-linear-to-br bg-black py-12 px-4 sm:px-6 lg:px-8 max-sm:py-6">
+      <div className="pt-40 w-[50%] h-max mx-auto max-sm:w-full max-sm:pt-20">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-[30pt] font-bold text-[#BD955E] mb-4 max-sm:text-[22pt]">
+          <h1 className="text-[28pt] font-bold text-[#BD955E] mb-4 max-sm:text-[22pt]">
             Get In Touch
           </h1>
           <p className="text-[18pt] font-semibold text-[#692437] max-sm:text-[14pt]">
@@ -67,7 +57,7 @@ export default function ContactPage() {
 
         {/* Contact Form */}
         <div className="bg-[#070707]  rounded-lg shadow-lg p-8 md:p-12 max-sm:w-[90%] mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <input
                 type="text"
@@ -114,11 +104,6 @@ export default function ContactPage() {
               Send Message
             </button>
           </form>
-          {submitted && (
-            <div className="mt-4 p-4 bg-green-100 text-green-700 rounded-lg text-center">
-              ✓ Message sent successfully!
-            </div>
-          )}
         </div>
       </div>
     </div>
