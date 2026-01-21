@@ -74,7 +74,7 @@ export default function HomePage() {
                 className="w-25 h-25 flex items-center justify-center bg-black rounded shadow hover:scale-105 transition-transform"
               >
                 <img
-                  src={`/fragrancebrands/${brand}.png`}
+                  src={"/fragrancebrands/" + brand + ".png"}
                   alt={brand}
                   className="h-25 object-contain"
                 />
