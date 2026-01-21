@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo, use } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import Image from "next/image";
 
 interface Product {
@@ -191,7 +191,9 @@ export default function ShopPage() {
               }}
               className="w-full px-6 py-3 rounded-lg border-2 border-[#BD955E] focus:border-slate-900 focus:outline-none transition-colors text-slate-900 placeholder-slate-500"
             />
-            <span className="absolute right-4 top-3.5 text-slate-400">🔍</span>
+            <span className="absolute right-4 top-3.5 text-slate-400">
+              <Search size={20} color="white" />
+            </span>
           </div>
 
           {/* Categories */}
@@ -254,7 +256,7 @@ export default function ShopPage() {
                       <>
                         <ArrowLeft
                           size={35}
-                          color="black"
+                          color="#692437"
                           onClick={() =>
                             handlePrevImage(product.id, product.images.length)
                           }
@@ -262,7 +264,7 @@ export default function ShopPage() {
                         />
                         <ArrowRight
                           size={35}
-                          color="black"
+                          color="#692437"
                           onClick={() =>
                             handleNextImage(product.id, product.images.length)
                           }
