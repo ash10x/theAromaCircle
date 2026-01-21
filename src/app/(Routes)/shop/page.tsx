@@ -342,8 +342,8 @@ export default function ShopPage() {
                     onClick={() => setCurrentPage(page)}
                     className={`w-10 h-10 rounded-lg font-semibold transition-all duration-300 ${
                       currentPage === page
-                        ? "bg-slate-900 text-white"
-                        : "bg-slate-200 text-slate-900 hover:bg-slate-300"
+                        ? "bg-slate-200 text-slate-900"
+                        : "bg-slate-900 text-slate-200 hover:bg-slate-300"
                     }`}
                   >
                     {page}
