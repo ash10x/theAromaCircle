@@ -25,7 +25,7 @@ export default function ContactPage() {
           <h1 className="text-[28pt] font-bold text-[#BD955E] mb-4 max-sm:text-[22pt]">
             Get In Touch
           </h1>
-          <p className="text-[18pt] font-semibold text-[#692437] max-sm:text-[14pt]">
+          <p className="text-[18pt] font-semibold text-[#E5E5E5] max-sm:text-[14pt]">
             We'd love to hear from you. Send us a message!
           </p>
         </div>

@@ -122,7 +122,7 @@ const mockProducts: Product[] = [
 ];
 
 const ITEMS_PER_PAGE = 6;
-const CATEGORIES = ["All", "Men", "Women", "Unisex"];
+const CATEGORIES = ["All", "Men", "Women"];
 
 export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -170,7 +170,7 @@ export default function ShopPage() {
         <h1 className="text-[28pt] font-bold text-[#BD955E] mb-4 tracking-wide">
           Discover Your Signature Scent
         </h1>
-        <p className="text-[12.5pt] text-[#692437] font-semibold max-w-2xl mx-auto tracking-wide">
+        <p className="text-[12.5pt] text-[#E5E5E5] font-semibold max-w-2xl mx-auto tracking-wide">
           Curated collection of premium colognes and perfumes for every mood and
           occasion
         </p>
