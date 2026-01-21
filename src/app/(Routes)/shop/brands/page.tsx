@@ -76,7 +76,7 @@ export default function HomePage() {
                 <img
                   src={"/fragrancebrands/" + brand + ".png"}
                   alt={brand}
-                  className="h-25 object-contain"
+                  className="h-25 w-auto object-contain"
                 />
               </div>
             ),
