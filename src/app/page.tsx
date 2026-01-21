@@ -147,9 +147,9 @@ export default function Home() {
           </div>
         </div>
 
-        <Link href="/shop/bestsellers" className="self-end h-max w-max">
+        <Link href="/shop" className="self-end h-max w-max">
           <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer mt-5 max-sm:h-12 max-sm:text-[12pt]">
-            View All
+            Shop
           </button>
         </Link>
       </div>

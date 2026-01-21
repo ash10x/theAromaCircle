@@ -121,13 +121,6 @@ export default function navMobile() {
           </Link>
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
-            href="/deals"
-            onClick={() => setNavOpen(false)}
-          >
-            Deals
-          </Link>
-          <Link
-            className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/brands"
             onClick={() => setNavOpen(false)}
           >

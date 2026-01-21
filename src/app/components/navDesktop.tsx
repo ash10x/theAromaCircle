@@ -58,12 +58,6 @@ export default function navDesktop() {
           </Link>
           <Link
             className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
-            href="/shop/deals"
-          >
-            Deals
-          </Link>
-          <Link
-            className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
             href="/shop/brands"
           >
             Brands
