@@ -1,5 +1,7 @@
 "use client";
 import { useState, useMemo, use } from "react";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 interface Product {
@@ -237,7 +239,7 @@ export default function ShopPage() {
                   className="group cursor-pointer transition-all duration-300 w-75 h-max hover:shadow-xl rounded-xl overflow-hidden"
                 >
                   {/* Image Slider */}
-                  <div className="relative bg-linear-to-br from-slate-100 to-slate-50 aspect-square overflow-hidden rounded-lg">
+                  <div className="relative w-full h-90 bg-linear-to-br from-slate-100 to-slate-50 aspect-square overflow-hidden rounded-lg">
                     <div className="relative w-full h-full">
                       <Image
                         src={product.images[currentImageIndex[product.id] || 0]}
@@ -250,22 +252,22 @@ export default function ShopPage() {
                     {/* Navigation Buttons */}
                     {product.images.length > 1 && (
                       <>
-                        <button
+                        <ArrowLeft
+                          size={35}
+                          color="black"
                           onClick={() =>
                             handlePrevImage(product.id, product.images.length)
                           }
-                          className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
-                        >
-                          ←
-                        </button>
-                        <button
+                          className="absolute left-3 top-1/2 -translate-y-1/2  hover:scale-110 p-2 rounded-full transition-all duration-300 opacity-0 hover:opacity-100 cursor-pointer group-hover:opacity-100"
+                        />
+                        <ArrowRight
+                          size={35}
+                          color="black"
                           onClick={() =>
                             handleNextImage(product.id, product.images.length)
                           }
-                          className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
-                        >
-                          →
-                        </button>
+                          className="absolute right-3 top-1/2 -translate-y-1/2  p-2 rounded-full transition-all duration-300 opacity-0 hover:scale-110 hover:opacity-100 cursor-pointer group-hover:opacity-100"
+                        />
 
                         {/* Dots */}
                         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
@@ -274,7 +276,7 @@ export default function ShopPage() {
                               key={idx}
                               className={`h-2 w-2 rounded-full transition-all duration-300 ${
                                 idx === (currentImageIndex[product.id] || 0)
-                                  ? "bg-slate-900 w-6"
+                                  ? "bg-[#692437] w-6"
                                   : "bg-white/60"
                               }`}
                             />
@@ -289,25 +291,25 @@ export default function ShopPage() {
                     <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
                       {product.brand}
                     </p>
-                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-slate-700 transition-colors">
+                    <h3 className="text-xl font-bold text-white group-hover:text-[#B] transition-colors">
                       {product.name}
                     </h3>
 
                     {/* Rating */}
                     <div className="flex items-center gap-1">
                       <span className="text-amber-400">★</span>
-                      <span className="text-sm text-slate-700">
+                      <span className="text-sm text-white font-medium">
                         {product.rating}
                       </span>
                     </div>
 
                     {/* Price */}
-                    <p className="text-2xl font-bold text-slate-900">
+                    <p className="text-2xl font-bold text-white">
                       ${product.price.toFixed(2)}
                     </p>
 
                     {/* Add to Cart Button */}
-                    <button className="w-full bg-slate-900 text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-slate-800 hover:shadow-lg active:scale-95">
+                    <button className="w-full bg-[#692437] text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-[#692437]/80 hover:shadow-lg active:scale-95">
                       Add to Cart
                     </button>
                   </div>
@@ -325,7 +327,7 @@ export default function ShopPage() {
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 rounded-lg border-2 border-slate-300 text-slate-900 font-medium transition-all duration-300 hover:border-slate-900 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 rounded-lg border-2 border-slate-300 text-slate-300 font-medium transition-all duration-300 hover:border-slate-900 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               Previous
             </button>
@@ -351,7 +353,7 @@ export default function ShopPage() {
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 rounded-lg border-2 border-slate-300 text-slate-900 font-medium transition-all duration-300 hover:border-slate-900 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 rounded-lg border-2 border-slate-300 text-slate-300 font-medium transition-all duration-300 hover:border-slate-900 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               Next
             </button>
