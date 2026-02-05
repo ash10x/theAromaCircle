@@ -1,89 +1,105 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import React, { use, useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
-export default function navDesktop() {
+export default function NavDesktop() {
   const [isScrolled, setIsScrolled] = useState(false);
-
-  const handleScroll = () => {
-    const scrollTop = window.scrollY;
-    if (scrollTop > 50) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <>
-      <nav
-        className={
-          isScrolled
-            ? "fixed flex flex-col items-center w-full h-[99.5875px] gap-2 pb-5 bg-black transition-all ease-in-out duration-300 z-50 overflow-hidden border-b-[.1px] border-b-[#0e0e0e] max-sm:hidden"
-            : "fixed flex flex-col items-center w-full h-[175.087px] gap-2 pb-5 bg-black/80 transition-all ease-in-out duration-200 z-50 overflow-hidden border-b-[.1px] border-b-[#0e0e0e] max-sm:hidden"
-        }
+    <motion.nav
+      initial={false}
+      animate={{
+        height: isScrolled ? 100 : 175,
+        backgroundColor: isScrolled ? "rgba(0,0,0,1)" : "rgba(0,0,0,0.7)",
+      }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.4,
+        ease: "easeOut",
+      }}
+      className="fixed top-0 z-50 w-full flex flex-col items-center pb-5 border-b border-[#0e0e0e] max-sm:hidden"
+    >
+      {/* Promo Bar */}
+      <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
+        <p className="text-white text-[9.8pt] font-semibold tracking-wide">
+          Free Shipping on Orders Over $75 | 100% Authentic Fragrances
+        </p>
+      </div>
+
+      {/* Logo */}
+      <motion.div
+        initial={false}
+        animate={{ opacity: isScrolled ? 0 : 1, height: isScrolled ? 0 : 80 }}
+        transition={{ duration: reduceMotion ? 0 : 0.3 }}
+        className="overflow-hidden mt-1.5"
       >
-        <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
-          <p className="text-white text-[9.8pt] font-semibold tracking-wide">
-            Free Shipping on Orders Over $75 | 100% Authentic Fragrances
-          </p>
-        </div>
         <Link href="/">
-          <Image
-            className={isScrolled ? "hidden" : "w-auto h-auto"}
-            src={"/logo.png"}
-            height={60}
-            width={60}
-            alt="logo"
-          />
+          <Image src="/logo.png" alt="Logo" width={60} height={60} />
         </Link>
-        <div className="w-max h-max gap-10 tracking-wider font-semibold flex flex-row items-center text-white">
+      </motion.div>
+
+      {/* Nav Links */}
+      <div className="flex gap-10 mt-4 font-semibold tracking-wider text-white">
+        {[
+          { name: "Home", href: "/" },
+          { name: "Shop", href: "/shop" },
+          { name: "Brands", href: "/shop/brands" },
+          { name: "About", href: "/about" },
+          { name: "Contact", href: "/contact" },
+        ].map((link) => (
           <Link
-            className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
-            href="/"
+            key={link.name}
+            href={link.href}
+            className="transition duration-200 hover:scale-110 hover:text-[#BD955E]"
           >
-            Home
+            {link.name}
           </Link>
-          <Link
-            className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
-            href="/shop"
+        ))}
+      </div>
+
+      {/* Icons */}
+      <div className="absolute bottom-2.5 right-8 flex gap-5">
+        {/* Search */}
+        <div className="relative">
+          <i
+            className="material-symbols-outlined text-[14px] text-white cursor-pointer transition duration-200 hover:scale-110 hover:text-[#BD955E]"
+            onClick={() => setIsSearchOpen((prev) => !prev)}
           >
-            Shop
-          </Link>
-          <Link
-            className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
-            href="/shop/brands"
-          >
-            Brands
-          </Link>
-          <Link
-            className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
-            href="/about"
-          >
-            About
-          </Link>
-          <Link
-            className="cursor-pointer transition ease-in duration-200 hover:scale-110 hover:text-[#BD955E]"
-            href="/contact"
-          >
-            Contact
-          </Link>
-        </div>
-        <div className="absolute flex gap-5 w-max h-max bottom-2.5 right-8">
-          <i className=" material-symbols-outlined text-[14px] cursor-pointer transition duration-200 text-white font-semibold hover:scale-110 hover:text-[#BD955E]">
-            Search
+            search
           </i>
-          <i className=" material-symbols-outlined text-[14px] cursor-pointer transition duration-200 text-white font-semibold hover:scale-110 hover:text-[#BD955E]">
-            Shopping_Cart
-          </i>
+
+          <motion.div
+            initial={{ opacity: 0, y: -5 }}
+            animate={isSearchOpen ? { opacity: 1, y: 0 } : { opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="absolute right-0 top-8"
+          >
+            {isSearchOpen && (
+              <input
+                autoFocus
+                onBlur={() => setIsSearchOpen(false)}
+                placeholder="Search products..."
+                className="w-48 px-4 py-2 bg-black text-white placeholder-gray-400 border border-[#BD955E] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
+              />
+            )}
+          </motion.div>
         </div>
-      </nav>
-    </>
+
+        {/* Cart */}
+        <i className="material-symbols-outlined text-[14px] text-white cursor-pointer transition duration-200 hover:scale-110 hover:text-[#BD955E]">
+          shopping_cart
+        </i>
+      </div>
+    </motion.nav>
   );
 }

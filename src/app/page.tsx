@@ -1,275 +1,227 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import AnimatedSection from "./components/AnimatedSection";
 
 export default function Home() {
+  const reduceMotion = useReducedMotion();
+
+  const staggerContainer = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.12,
+      },
+    },
+  };
+
+  const itemFade = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const bestSellers = [
+    { id: "coachdreams", name: "Coach Dreams", price: "$150" },
+    { id: "versaceeros", name: "Versace Eros", price: "$180" },
+    {
+      id: "marcjacobsdaisydream",
+      name: "Marc Jacobs Daisy Dream",
+      price: "$160",
+    },
+    { id: "burberrymrburberry", name: "Burberry Mr. Burberry", price: "$170" },
+    { id: "versacelhomme", name: "Versace L'Homme", price: "$190" },
+  ];
+
   return (
-    <div className="z-40 h-max w-full flex flex-col items-center">
-      <main className="h-screen w-full bg-[url(/backgrounds/bg2.jpg)] bg-cover bg-center bg-black overflow-hidden max-sm:bg-size-[100%, 100%]">
-        <div className="h-screen w-full bg-black/70 flex flex-col justify-end items-end max-sm:items-center">
-          <div className="flex flex-col gap-2.5 h-max w-max  mr-16 mb-32 max-sm:mr-0 max-sm:w-85">
-            <p className="text-[10pt] text-[#BD955E] font-semibold tracking-wide">
+    <div className="w-full bg-black overflow-hidden">
+      {/* HERO */}
+      <main className="relative h-screen w-full">
+        <Image
+          src="/backgrounds/bg2.jpg"
+          alt="Luxury fragrance background"
+          fill
+          priority
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/70 flex justify-end items-end max-sm:justify-center">
+          <AnimatedSection className="mr-16 mb-32 max-sm:mr-0 text-white max-sm:text-center">
+            <p className="text-[10pt] text-[#BD955E] font-semibold">
               The Aroma Circle
             </p>
-            <p className="text-[40pt] text-[#ffffff] font-bold w-full tracking-wide max-sm:text-[28pt]">
+
+            <h1 className="text-[40pt] max-sm:text-[28pt] font-bold mt-2">
               Luxury Fragrances. Authentic Brands.
-            </p>
-            <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wide w-full max-sm:text-[12pt]">
+            </h1>
+
+            <p className="text-[14pt] max-sm:text-[12pt] text-[#BD955E] mt-2">
               Discover authentic designer fragrances crafted to captivate and
               inspire.
             </p>
-            <Link href="/shop">
-              <button className="text center outline-0 p-3 cursor-pointer text-white text-[14.5pt] tracking-wide font-semibold bg-[#692437] w-40 h-14 rounded-md transition duration-200 hover:scale-110 hover:bg-[#BD955E] max-sm:w-32 max-sm:h-12 max-sm:text-[12pt]">
-                Shop Now
-              </button>
+
+            <Link
+              href="/shop"
+              className="inline-flex mt-6 w-40 h-14 max-sm:w-32 max-sm:h-12 items-center justify-center bg-[#692437] rounded-md font-semibold transition-all hover:scale-105 hover:bg-[#BD955E]"
+            >
+              Shop Now
             </Link>
-          </div>
+          </AnimatedSection>
         </div>
       </main>
 
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[22pt] max-sm:text-center">
-          Elite Signature Collections
-        </p>
-        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
-          Discover timeless creations from the world’s most prestigious perfume
-          brands.
-        </p>
+      {/* BRANDS */}
+      <AnimatedSection className="p-10 border-b border-[#0e0e0e]">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-[30pt] max-sm:text-[22pt] text-white font-bold">
+            Elite Signature Collections
+          </h2>
 
-        <div className="flex items-center justify-center gap-5 w-max h-maxcursor-pointer mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
-          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
-            <Image
-              className={"w-auto h-auto"}
-              src={"/fragranceBrands/christiandior.png"}
-              height={130}
-              width={130}
-              alt="Brand"
-            />
-          </div>
-          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
-            <Image
-              className={"w-auto h-auto"}
-              src="/fragranceBrands/coach.png"
-              height={130}
-              width={130}
-              alt="Brand"
-            />
-          </div>
-          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
-            <Image
-              className={"w-auto h-auto"}
-              src={"/fragranceBrands/polo.png"}
-              height={130}
-              width={130}
-              alt="Brand"
-            />
-          </div>
-          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
-            <Image
-              className={"w-auto h-auto"}
-              src="/fragranceBrands/versace.png"
-              height={130}
-              width={130}
-              alt="Brand"
-            />
-          </div>
-          <div className="flex items-center justify-center w-30 h-30 p-2.5 bg-black border-2 border-[#BD955E] rounded-md cursor-pointer transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-30">
-            <Image
-              className={"w-auto h-auto"}
-              src="/fragranceBrands/gucci.png"
-              height={130}
-              width={130}
-              alt="Brand"
-            />
-          </div>
+          <p className="text-[#BD955E] mt-2">
+            Discover timeless creations from the world’s most prestigious
+            perfume brands.
+          </p>
+
+          <AnimatedSection className="flex flex-wrap justify-center gap-5 mt-8">
+            {["christiandior", "coach", "polo", "versace", "gucci"].map(
+              (brand) => (
+                <AnimatedSection
+                  key={brand}
+                  className="w-30 h-30 border-2 border-[#BD955E] rounded-md flex items-center justify-center cursor-pointer"
+                >
+                  <Image
+                    src={`/fragranceBrands/${brand}.png`}
+                    alt={`${brand} fragrance brand logo`}
+                    width={120}
+                    height={120}
+                  />
+                </AnimatedSection>
+              ),
+            )}
+          </AnimatedSection>
         </div>
+      </AnimatedSection>
 
-        <Link href="/shop/brands" className="self-end h-max w-max">
-          <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer mt-5 max-sm:h-12 max-sm:text-[12pt]">
-            View All
+      {/* BEST SELLERS */}
+      <AnimatedSection className="p-10 border-b border-[#0e0e0e]">
+        <div className="max-w-7xl mx-auto text-center">
+          <h3 className="text-[30pt] max-sm:text-[22pt] text-white font-bold">
+            Luxury Best Sellers
+          </h3>
+
+          <p className="text-[#BD955E] mt-2">
+            Best-selling scents that leave a lasting impression—every time.
+          </p>
+
+          {/* Stagger Container */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex flex-wrap justify-center gap-8 mt-8"
+          >
+            {bestSellers.map((product) => (
+              <motion.div
+                key={product.id}
+                variants={itemFade}
+                whileHover={{ y: -6 }}
+                className="cursor-pointer"
+              >
+                <Link
+                  href={`/shop/${product.id}`}
+                  className="block w-45 border-2 h-70 border-[#BD955E] rounded-md overflow-hidden bg-black"
+                >
+                  {/* Fixed-size image container */}
+                  <div className="relative w-full h-45">
+                    <Image
+                      src={`/products/${product.id}.jpg`}
+                      alt={product.name}
+                      fill
+                      className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Title & Price */}
+                  <div className="p-3 text-center">
+                    <p className="text-white font-bold text-md text-ellipsis overflow-hidden whitespace-nowrap">
+                      {product.name}
+                    </p>
+                    <p className="text-[#BD955E] font-bold tracking-wide text-2xl mt-1">
+                      {product.price}
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
+      {/* CATEGORIES */}
+      <AnimatedSection className="w-full border-b border-[#0e0e0e] p-10">
+        <div className="max-w-7xl mx-auto text-center">
+          <h3 className="text-[30pt] max-sm:text-[22pt] text-white font-bold">
+            Refined By Category
+          </h3>
+
+          <p className="text-[#BD955E] mt-2">
+            Find the perfect fragrance—designed for him, her, and every moment
+            in between.
+          </p>
+
+          <AnimatedSection className="flex justify-center gap-8 mt-8 flex-wrap">
+            {[
+              { href: "/shop/men", img: "mencat.png", label: "Shop Men" },
+              { href: "/shop/women", img: "womencat.png", label: "Shop Women" },
+            ].map((cat) => (
+              <AnimatedSection key={cat.href} className="cursor-pointer">
+                <Link
+                  href={cat.href}
+                  className="group relative block border-2 border-[#BD955E] rounded-md overflow-hidden"
+                >
+                  <Image
+                    src={`/category/${cat.img}`}
+                    alt={cat.label}
+                    width={160}
+                    height={160}
+                    className="transition-transform duration-300 group-hover:scale-105"
+                  />
+
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white font-semibold tracking-wide">
+                      {cat.label}
+                    </span>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </AnimatedSection>
+        </div>
+      </AnimatedSection>
+
+      {/* COMMUNITY */}
+      <AnimatedSection className="p-10 text-center">
+        <h3 className="text-[25pt] max-sm:text-[16pt] text-white font-bold">
+          Join The Aroma Circle Community
+        </h3>
+
+        <p className="text-[#BD955E] mt-2">
+          Sign up for exclusive offers, new arrivals, and fragrance tips.
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-3 mt-6">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="w-64 h-12 bg-black border-2 border-[#BD955E] text-white rounded-md px-3 outline-none focus:border-white"
+          />
+          <button className="w-32 h-12 bg-[#692437] text-white rounded-md font-semibold transition-all hover:scale-105 hover:bg-[#BD955E]">
+            Subscribe
           </button>
-        </Link>
-      </div>
-
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[22pt]">
-          Luxury Best Sellers
-        </p>
-        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
-          Best-selling scents that leave a lasting impression—every time.
-        </p>
-
-        <div className="flex flex-row justify-center items-center gap-8 w-full p-5 h-max mt-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
-            <Image
-              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
-              src={"/products/coachdreams.jpg"}
-              height={150}
-              width={150}
-              alt="Product"
-            />
-          </div>
-
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
-            <Image
-              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
-              src={"/products/versaceeros.jpg"}
-              height={150}
-              width={150}
-              alt="Product"
-            />
-          </div>
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
-            <Image
-              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
-              src={"/products/marcjacobsdaisydream.jpg"}
-              height={150}
-              width={150}
-              alt="Product"
-            />
-          </div>
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
-            <Image
-              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
-              src={"/products/burberrymrburberry.jpg"}
-              height={150}
-              width={150}
-              alt="Product"
-            />
-          </div>
-          <div className="flex items-center justify-center w-max h-max border-2 border-[#BD955E] rounded-md overflow-hidden transition ease-in duration-200 hover:scale-110 cursor-pointer max-sm:w-30 max-sm:h-30">
-            <Image
-              className="w-auto h-auto transition ease-in duration-200 hover:scale-110"
-              src={"/products/versacelhomme.jpg"}
-              height={150}
-              width={150}
-              alt="Product"
-            />
-          </div>
         </div>
-
-        <Link href="/shop" className="self-end h-max w-max">
-          <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer mt-5 max-sm:h-12 max-sm:text-[12pt]">
-            Shop
-          </button>
-        </Link>
-      </div>
-
-      <div className="flex flex-col items-center gap-2.5 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <p className="text-[30pt] text-white font-bold tracking-wider max-sm:text-[22pt]">
-          Refined By Category
-        </p>
-        <p className="text-[15pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
-          Find the perfect fragrance—designed for him, her, and every moment in
-          between.
-        </p>
-
-        <div className="flex flex-row gap-8 h-max w-max overflow-hidden mt-5 p-5 max-sm:flex-wrap max-sm:w-full max-sm:gap-5 max-sm:p-5 max-sm:mt-5 max-sm:justify-center">
-          <Link href={"/shop/men"}>
-            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-40">
-              <Image
-                className="w-auto h-auto transition duration-200 ease-in hover:scale-110"
-                src={"/category/mencat.png"}
-                height={150}
-                width={150}
-                alt="category"
-              />
-            </div>
-          </Link>
-          <Link href={"/shop/women"}>
-            <div className="flex items-center justify-center w-max h-max bg-black border-2 border-[#BD955E] rounded-md cursor-pointer overflow-hidden transition duration-200 ease-in hover:scale-110 max-sm:w-30 max-sm:h-40">
-              <Image
-                className="w-auto h-auto transition duration-200 ease-in hover:scale-110"
-                src={"/category/womencat.png"}
-                height={150}
-                width={150}
-                alt={"category"}
-              />
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      <div className="flex flex-row justify-center items-center gap-0 w-full h-max p-10 bg-black border-b-[.1px] border-b-[#0e0e0e] overflow-hidden">
-        <Image
-          className="w-auto h-auto transition duration-200 ease-in hover:scale-110 max-sm:w-65 max-sm:h-65"
-          src={"/misc/productprop.png"}
-          height={400}
-          width={400}
-          alt="prop"
-        />
-        <div className="flex flex-col items-start h-max w-max ml-10 gap-5 max-sm:ml-0">
-          <p className="text-[35pt] text-white font-bold tracking-wider max-sm:text-[22pt]">
-            Premium. Authentic. Trusted.
-          </p>
-          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider max-sm:text-[12pt]">
-            100% authentic perfumes backed by secure service and support.
-          </p>
-          <Link href="/about">
-            <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer max-sm:h-12 max-sm:text-[12pt]">
-              Learn More
-            </button>
-          </Link>
-        </div>
-      </div>
-
-      <div className="flex flex-col justify-center items-center gap-0 w-full h-max p-10 bg-black overflow-hidden max-sm:p-5">
-        <div className="w-max h-max flex flex-col items-start justify-center">
-          <p className="text-[25pt] text-white font-bold tracking-wider mb-5 max-sm:text-[16pt] max-sm:w-100 max-sm:text-center">
-            Join The Aroma Circle Community
-          </p>
-          <p className="text-[14pt] text-[#BD955E] font-semibold tracking-wider mb-5 max-sm:text-[12pt] max-sm:w-100 max-sm:text-center">
-            Sign up for exclusive offers, new arrivals, and fragrance tips.
-          </p>
-          <div className="flex flex-row gap-2.5 w-max h-max max-sm:w-full max-sm:items-center max-sm:justify-center">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-64 h-12 p-2.5 rounded-md outline-0 border-2 border-[#BD955E] bg-black text-white placeholder:text-[#BD955E] focus:border-[#ffffff] transition duration-200 ease-in max-sm:w-48 max-sm:h-10 max-sm:text-[12pt]"
-            />
-            <button className="outline-0 w-32 h-12 p-2.5 text-white text-[14pt] tracking-wide font-semibold bg-[#692437] border-0 rounded-md transition duration-200 ease-in hover:scale-110 hover:bg-[#BD955E] cursor-pointer max-sm:w-24 max-sm:h-10 max-sm:text-[12pt]">
-              Subscribe
-            </button>
-          </div>
-          <div className="flex flex-row gap-5 h-max w-max max-sm:justify-center max-sm:w-full">
-            <Link href={"#"}>
-              <Image
-                className="w-7.5 h-auto mt-5 max-sm:mx-0"
-                src={"/socials/instagram.svg"}
-                height={30}
-                width={30}
-                alt="instagram"
-              />
-            </Link>
-            <Link href={"#"}>
-              <Image
-                className="w-7.5 h-auto mt-5 max-sm:mx-0"
-                src={"/socials/facebook.svg"}
-                height={30}
-                width={30}
-                alt="facebook"
-              />
-            </Link>
-            <Link href={"#"}>
-              <Image
-                className="w-7.5 h-auto mt-5"
-                src={"/socials/tiktok.svg"}
-                height={30}
-                width={30}
-                alt="tiktok"
-              />
-            </Link>
-            <Link href={"#"}>
-              <Image
-                className="w-7.5 h-auto mt-5"
-                src={"/socials/x.svg"}
-                height={30}
-                width={30}
-                alt="x"
-              />
-            </Link>
-          </div>
-        </div>
-      </div>
+      </AnimatedSection>
     </div>
   );
 }
