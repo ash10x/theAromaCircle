@@ -238,37 +238,33 @@ export default function ShopPage() {
               {paginatedProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group cursor-pointer transition-all duration-300 w-75 h-max hover:shadow-xl rounded-xl overflow-hidden"
+                  className="group cursor-pointer transition-all duration-300 hover:shadow-xl rounded-xl overflow-hidden"
                 >
                   {/* Image Slider */}
-                  <div className="relative w-full h-90 bg-linear-to-br from-slate-100 to-slate-50 aspect-square overflow-hidden rounded-lg">
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={product.images[currentImageIndex[product.id] || 0]}
-                        alt={product.name}
-                        fill
-                        className="object-cover transition-opacity duration-500 ease-in-out group-hover:opacity-90"
-                      />
-                    </div>
+                  <div className="relative w-full aspect-square bg-gradient-to-br from-slate-100 to-slate-50 overflow-hidden rounded-lg">
+                    <Image
+                      src={product.images[currentImageIndex[product.id] || 0]}
+                      alt={product.name}
+                      fill
+                      className="object-cover transition-opacity duration-500 group-hover:opacity-90"
+                    />
 
-                    {/* Navigation Buttons */}
+                    {/* Navigation */}
                     {product.images.length > 1 && (
                       <>
                         <ArrowLeft
-                          size={35}
-                          color="#692437"
+                          size={20}
                           onClick={() =>
                             handlePrevImage(product.id, product.images.length)
                           }
-                          className="absolute left-3 top-1/2 -translate-y-1/2  hover:scale-110 p-2 rounded-full transition-all duration-300 opacity-0 hover:opacity-100 cursor-pointer group-hover:opacity-100"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 transition"
                         />
                         <ArrowRight
-                          size={35}
-                          color="#692437"
+                          size={20}
                           onClick={() =>
                             handleNextImage(product.id, product.images.length)
                           }
-                          className="absolute right-3 top-1/2 -translate-y-1/2  p-2 rounded-full transition-all duration-300 opacity-0 hover:scale-110 hover:opacity-100 cursor-pointer group-hover:opacity-100"
+                          className="  absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 transition"
                         />
 
                         {/* Dots */}
@@ -276,10 +272,10 @@ export default function ShopPage() {
                           {product.images.map((_, idx) => (
                             <div
                               key={idx}
-                              className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                              className={`h-2 rounded-full transition-all ${
                                 idx === (currentImageIndex[product.id] || 0)
                                   ? "bg-[#692437] w-6"
-                                  : "bg-white/60"
+                                  : "bg-white/60 w-2"
                               }`}
                             />
                           ))}
@@ -288,16 +284,16 @@ export default function ShopPage() {
                     )}
                   </div>
 
-                  {/* Product Info */}
+                  {/* Info */}
                   <div className="p-5 space-y-3">
                     <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
                       {product.brand}
                     </p>
-                    <h3 className="text-xl font-bold text-white group-hover:text-[#B] transition-colors">
+
+                    <h3 className="text-xl font-bold text-white">
                       {product.name}
                     </h3>
 
-                    {/* Rating */}
                     <div className="flex items-center gap-1">
                       <span className="text-amber-400">★</span>
                       <span className="text-sm text-white font-medium">
@@ -305,13 +301,11 @@ export default function ShopPage() {
                       </span>
                     </div>
 
-                    {/* Price */}
                     <p className="text-2xl font-bold text-white">
                       ${product.price.toFixed(2)}
                     </p>
 
-                    {/* Add to Cart Button */}
-                    <button className="w-full bg-[#692437] text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-[#692437]/80 hover:shadow-lg active:scale-95">
+                    <button className="w-full bg-[#692437] text-white py-3 rounded-lg font-semibold transition hover:bg-[#692437]/80">
                       Add to Cart
                     </button>
                   </div>
