@@ -7,6 +7,7 @@ interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
   delay?: number;
+  staggerChildren?: boolean;
 }
 
 export default function AnimatedSection({
