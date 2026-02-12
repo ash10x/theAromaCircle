@@ -14,6 +14,7 @@ interface Product {
   category: string;
   images: string[];
   rating: number;
+  quantity: number;
 }
 
 const mockProducts: Product[] = [
