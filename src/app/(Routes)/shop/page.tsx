@@ -30,6 +30,7 @@ const mockProducts: Product[] = [
       "/products/burberryhero.jpg",
     ],
     rating: 4.8,
+    quantity: 1,
   },
   {
     id: 2,
@@ -43,6 +44,7 @@ const mockProducts: Product[] = [
       "/products/moschinotoy2bg.jpg",
     ],
     rating: 4.9,
+    quantity: 1,
   },
   {
     id: 3,
@@ -56,6 +58,7 @@ const mockProducts: Product[] = [
       "/products/moschinotoy2bg.jpg",
     ],
     rating: 4.7,
+    quantity: 1,
   },
   {
     id: 4,
@@ -69,6 +72,7 @@ const mockProducts: Product[] = [
       "/products/moschinotoy2bg.jpg",
     ],
     rating: 4.6,
+    quantity: 1,
   },
   {
     id: 5,
@@ -82,6 +86,7 @@ const mockProducts: Product[] = [
       "/products/moschinotoy2bg.jpg",
     ],
     rating: 4.9,
+    quantity: 1,
   },
   {
     id: 6,
@@ -95,6 +100,7 @@ const mockProducts: Product[] = [
       "/products/moschinotoy2bg.jpg",
     ],
     rating: 4.5,
+    quantity: 1,
   },
   {
     id: 7,
@@ -108,6 +114,7 @@ const mockProducts: Product[] = [
       "/products/moschinotoy2bg.jpg",
     ],
     rating: 5.0,
+    quantity: 1,
   },
   {
     id: 8,
@@ -121,6 +128,7 @@ const mockProducts: Product[] = [
       "/products/burberryhero.jpg",
     ],
     rating: 4.4,
+    quantity: 1,
   },
 ];
 
