@@ -1,115 +1,140 @@
 "use client";
+
 import Link from "next/link";
-import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function AboutPage() {
   return (
-    <div className="pt-50 h-max w-full flex flex-col items-center bg-black px-4 py-16 tracking-wide max-sm:pt-30">
-      <p className="text-[28pt] text-[#BD955E] font-bold mb-5 max-sm:text-[22pt] text-center">
-        More Than Fragrance. It’s Identity.
-      </p>
+    <main className="min-h-screen bg-black text-white px-6 py-32">
+      <div className="max-w-4xl mx-auto pt-20">
+        {/* Hero Heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-[36pt] max-sm:text-[26pt] text-[#BD955E] font-semibold text-center tracking-tight"
+        >
+          More Than Fragrance. It’s Identity.
+        </motion.h1>
 
-      <p className="mt-4 text-[12pt] text-white w-[60%] max-sm:w-full max-sm:px-4 ">
-        At The Aroma Circle, scent is a statement. It’s how you enter a room.
-        It’s how you’re remembered. We curate premium fragrances for individuals
-        who understand that style doesn’t stop at what you wear—it’s what you
-        leave behind.
-      </p>
+        <p className="mt-8 text-neutral-300 text-lg leading-relaxed text-center max-w-3xl mx-auto">
+          At The Aroma Circle, scent is a statement. It’s how you enter a room.
+          It’s how you’re remembered. We curate premium fragrances for
+          individuals who understand that style doesn’t stop at what you wear —
+          it’s what you leave behind.
+        </p>
 
-      <div className="mt-8 w-[60%] h-max space-y-6 text-white text-[12pt] max-sm:w-full max-sm:px-4">
-        <section className={"flex flex-col gap-4 pb-4"}>
-          <h2 className="text-2xl font-semibold mb-1 text-[#BD955E]">
-            Our Story
-          </h2>
-          <p className={"text-[#692437] font-semibold text-[13pt]"}>
-            Where It Began
-          </p>
-          <p>
-            The Aroma Circle was born from a simple truth: fragrance is
-            personal, powerful, and deeply emotional. A single scent can unlock
-            memories, spark confidence, and define moments. We saw fragrance not
-            as a luxury, but as a form of self-expression—one everyone deserves
-            access to.
-          </p>
-          <p>
-            What started as a passion for exceptional aromas became a mission:
-            to make authentic, high-quality fragrances accessible to those who
-            move with intention and style.
-          </p>
-        </section>
-        <section className={"flex flex-col gap-4 pb-4"}>
-          <h2 className="text-2xl font-semibold mb-1 text-[#BD955E]">
-            Our Philosophy
-          </h2>
-          <p className={"text-[#692437] font-semibold text-[13pt]"}>
-            Scent Is Power
-          </p>
-          <p>
-            We believe every person carries a unique energy. Fragrance is how
-            you amplify it.
-          </p>
-          <p>
-            Each bottle we offer is chosen with precision—whether bold and
-            magnetic, soft and intimate, or clean and timeless. Our collection
-            is designed to match moods, moments, and identities, helping you
-            find a scent that feels like you.
-          </p>
-          <ul className={"list-none list-inside space-y-2"}>
-            <li>This isn’t about trends.</li>
-            <li>It’s about presence.</li>
-            <li>It’s about confidence.</li>
-            <li>It’s about becoming unforgettable.</li>
-          </ul>
-        </section>
-        <section className={"flex flex-col gap-4 pb-4"}>
-          <h2 className="text-2xl font-semibold mb-1 text-[#BD955E]">
-            What We Offer
-          </h2>
-          <p className={"text-[#692437] font-semibold text-[13pt]"}>
-            Curated. Authentic. Elevated
-          </p>
-          <p>At The Aroma Circle, we specialize in:</p>
-          <ul className="list-disc list-inside space-y-2">
-            <li>Premium designer fragrances</li>
-            <li>Hard-to-find and hidden-gem scents</li>
-            <li>100% authentic products</li>
-            <li>A refined, modern shopping experience</li>
-          </ul>
-          <p>
-            Every fragrance in our circle earns its place. No clutter. No
-            guesswork. Just scents that make an impact.
-          </p>
-        </section>
-        <section className={"flex flex-col gap-4 pb-4"}>
-          <h2 className="text-2xl font-semibold mb-1 text-[#BD955E]">
-            The Experience
-          </h2>
-          <p className={"text-[#692437] font-semibold text-[13pt]"}>
-            More Than Shopping
-          </p>
-          <p>
-            We’re not just selling cologne and perfume—we’re creating a journey.
-          </p>
-          <p>
-            From the moment you browse to the instant your fragrance arrives,
-            every detail is crafted to feel intentional, smooth, and elevated.
-            You’re not just choosing a scent—you’re discovering a new version of
-            yourself.
-          </p>
-        </section>
-        <section className={"flex flex-col gap-4 pb-4"}>
-          <h2 className="text-2xl font-semibold mb-1 text-[#BD955E]">
-            Enter The Circle
-          </h2>
-          <Link href="/shop">
-            <button className="bg-[#692437] text-white font-semibold px-6 py-2 w-max rounded-md hover:bg-[#a6854e] transition ease-in duration-200 cursor-pointer">
-              Shop Now
-            </button>
-          </Link>
-          <p>Your scent is your signature.</p>
-          <p>Your presence is your brand.</p>
-        </section>
+        {/* Divider */}
+        <div className="border-t border-neutral-900 my-20" />
+
+        {/* Content Sections */}
+        <div className="space-y-20 text-neutral-300 leading-relaxed">
+          {/* Our Story */}
+          <section>
+            <h2 className="text-3xl font-semibold text-[#BD955E] mb-3">
+              Our Story
+            </h2>
+            <p className="text-[#a6854e] font-medium mb-6 uppercase tracking-widest text-sm">
+              Where It Began
+            </p>
+            <p>
+              The Aroma Circle was born from a simple truth: fragrance is
+              personal, powerful, and deeply emotional. A single scent can
+              unlock memories, spark confidence, and define moments.
+            </p>
+            <p className="mt-4">
+              What started as a passion for exceptional aromas became a mission:
+              to make authentic, high-quality fragrances accessible to those who
+              move with intention and style.
+            </p>
+          </section>
+
+          {/* Philosophy */}
+          <section>
+            <h2 className="text-3xl font-semibold text-[#BD955E] mb-3">
+              Our Philosophy
+            </h2>
+            <p className="text-[#a6854e] font-medium mb-6 uppercase tracking-widest text-sm">
+              Scent Is Power
+            </p>
+            <p>
+              We believe every person carries a unique energy. Fragrance is how
+              you amplify it.
+            </p>
+            <p className="mt-4">
+              Each bottle we offer is chosen with precision — whether bold and
+              magnetic, soft and intimate, or clean and timeless.
+            </p>
+
+            <ul className="mt-6 space-y-3 text-neutral-400">
+              <li>• This isn’t about trends.</li>
+              <li>• It’s about presence.</li>
+              <li>• It’s about confidence.</li>
+              <li>• It’s about becoming unforgettable.</li>
+            </ul>
+          </section>
+
+          {/* What We Offer */}
+          <section>
+            <h2 className="text-3xl font-semibold text-[#BD955E] mb-3">
+              What We Offer
+            </h2>
+            <p className="text-[#a6854e] font-medium mb-6 uppercase tracking-widest text-sm">
+              Curated. Authentic. Elevated.
+            </p>
+
+            <ul className="space-y-3 list-disc list-inside text-neutral-400">
+              <li>Premium designer fragrances</li>
+              <li>Hard-to-find and hidden-gem scents</li>
+              <li>100% authentic products</li>
+              <li>A refined, modern shopping experience</li>
+            </ul>
+
+            <p className="mt-6">
+              Every fragrance in our circle earns its place. No clutter. No
+              guesswork. Just scents that make an impact.
+            </p>
+          </section>
+
+          {/* Experience */}
+          <section>
+            <h2 className="text-3xl font-semibold text-[#BD955E] mb-3">
+              The Experience
+            </h2>
+            <p className="text-[#a6854e] font-medium mb-6 uppercase tracking-widest text-sm">
+              More Than Shopping
+            </p>
+            <p>
+              We’re not just selling cologne and perfume — we’re creating a
+              journey.
+            </p>
+            <p className="mt-4">
+              From the moment you browse to the instant your fragrance arrives,
+              every detail is crafted to feel intentional, smooth, and elevated.
+              You’re not just choosing a scent — you’re discovering a new
+              version of yourself.
+            </p>
+          </section>
+
+          {/* CTA */}
+          <section className="text-center pt-10">
+            <h2 className="text-3xl font-semibold text-[#BD955E] mb-6">
+              Enter The Circle
+            </h2>
+
+            <Link href="/shop">
+              <button className="bg-[#BD955E] text-black font-medium px-8 py-3 rounded-full hover:bg-[#BD955E]/80 transition-all">
+                Shop Now
+              </button>
+            </Link>
+
+            <p className="mt-8 text-neutral-400">
+              Your scent is your signature. <br />
+              Your presence is your brand.
+            </p>
+          </section>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

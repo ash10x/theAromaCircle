@@ -1,8 +1,10 @@
 "use client";
-import { useState, useMemo, use } from "react";
-import Link from "next/link";
+
+import { useState, useMemo } from "react";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useCart } from "@/app/context/cartContext";
 
 interface Product {
   id: number;
@@ -122,7 +124,7 @@ const mockProducts: Product[] = [
 ];
 
 const ITEMS_PER_PAGE = 6;
-const CATEGORIES = ["All", "Men", "Women"];
+const CATEGORIES = ["All", "Men", "Women", "Unisex"];
 
 export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -131,19 +133,29 @@ export default function ShopPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState<
     Record<number, number>
   >({});
+  const { addToCart } = useCart();
+  const searchParams = useSearchParams();
+  const urlQuery = searchParams.get("search") || "";
+
+  const [urlSearchQuery, setUrlSearchQuery] = useState(urlQuery);
 
   const filteredProducts = useMemo(() => {
     return mockProducts.filter((product) => {
       const matchesSearch =
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.brand.toLowerCase().includes(searchQuery.toLowerCase());
+        product.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.name.toLowerCase().includes(urlSearchQuery.toLowerCase()) ||
+        product.brand.toLowerCase().includes(urlSearchQuery.toLowerCase());
+
       const matchesCategory =
         selectedCategory === "All" || product.category === selectedCategory;
+
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, urlSearchQuery, mockProducts]);
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
@@ -164,21 +176,21 @@ export default function ShopPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-50">
-      {/* Header */}
-      <section className="p-5 text-center">
-        <h1 className="text-[28pt] font-bold text-[#BD955E] mb-4 tracking-wide">
+    <div className="min-h-screen bg-black text-white pt-40">
+      {/* HEADER */}
+      <section className="text-center px-6 py-10 mb-16">
+        <h1 className="text-4xl font-bold text-[#BD955E] tracking-wide">
           Discover Your Signature Scent
         </h1>
-        <p className="text-[12.5pt] text-[#E5E5E5] font-semibold max-w-2xl mx-auto tracking-wide">
-          Curated collection of premium colognes and perfumes for every mood and
-          occasion
+        <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
+          Curated collection of premium colognes and perfumes crafted to elevate
+          your presence.
         </p>
       </section>
 
-      {/* Search & Filter */}
-      <section className="px-4 md:px-8 py-8">
-        <div className="max-w-6xl mx-auto space-y-6">
+      {/* SEARCH + FILTER */}
+      <section className="px-6 mb-14">
+        <div className="max-w-6xl mx-auto space-y-8">
           {/* Search */}
           <div className="relative">
             <input
@@ -189,15 +201,16 @@ export default function ShopPage() {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full px-6 py-3 rounded-lg border-2 border-[#BD955E] focus:border-slate-900 focus:outline-none transition-colors text-slate-900 placeholder-slate-500"
+              className="w-full bg-[#111] border border-[#BD955E]/40 rounded-lg px-6 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#BD955E]"
             />
-            <span className="absolute right-4 top-3.5 text-slate-400">
-              <Search size={20} color="white" />
-            </span>
+            <Search
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#BD955E]"
+              size={20}
+            />
           </div>
 
           {/* Categories */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-4">
             {CATEGORIES.map((category) => (
               <button
                 key={category}
@@ -205,10 +218,10 @@ export default function ShopPage() {
                   setSelectedCategory(category);
                   setCurrentPage(1);
                 }}
-                className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                className={`px-6 py-2 rounded-full border transition-all duration-300 ${
                   selectedCategory === category
-                    ? "bg-[#BD955E] text-white shadow-lg"
-                    : "bg-slate-200 text-slate-900 hover:bg-slate-300"
+                    ? "bg-[#BD955E] text-black border-[#BD955E]"
+                    : "border-[#BD955E]/40 hover:border-[#BD955E] text-[#BD955E]"
                 }`}
               >
                 {category}
@@ -216,96 +229,84 @@ export default function ShopPage() {
             ))}
           </div>
 
-          {/* Results count */}
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-gray-400">
             Showing {paginatedProducts.length} of {filteredProducts.length}{" "}
             products
           </p>
         </div>
       </section>
 
-      {/* Products Grid */}
-      <section className="px-4 md:px-8 pb-12 flex flex-col gap-8 items-center">
+      {/* PRODUCT GRID */}
+      <section className="px-6 pb-16">
         <div className="max-w-6xl mx-auto">
           {paginatedProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-xl text-slate-600">
-                No products found. Try adjusting your filters.
-              </p>
+            <div className="text-center py-20 text-gray-500 text-lg">
+              No products found. Try adjusting your filters.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
               {paginatedProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group cursor-pointer transition-all duration-300 hover:shadow-xl rounded-xl overflow-hidden"
+                  className="group bg-[#111] rounded-xl overflow-hidden border border-[#1a1a1a] hover:border-[#BD955E]/50 transition-all duration-500"
                 >
-                  {/* Image Slider */}
-                  <div className="relative w-full aspect-square bg-gradient-to-br from-slate-100 to-slate-50 overflow-hidden rounded-lg">
+                  {/* IMAGE */}
+                  <div className="relative aspect-square overflow-hidden">
                     <Image
                       src={product.images[currentImageIndex[product.id] || 0]}
                       alt={product.name}
                       fill
-                      className="object-cover transition-opacity duration-500 group-hover:opacity-90"
+                      className="object-cover group-hover:scale-105 transition duration-700"
                     />
 
-                    {/* Navigation */}
                     {product.images.length > 1 && (
                       <>
-                        <ArrowLeft
-                          size={20}
-                          onClick={() =>
-                            handlePrevImage(product.id, product.images.length)
-                          }
-                          className="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 transition"
-                        />
-                        <ArrowRight
-                          size={20}
-                          onClick={() =>
-                            handleNextImage(product.id, product.images.length)
-                          }
-                          className="  absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 transition"
-                        />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePrevImage(product.id, product.images.length);
+                          }}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+                        >
+                          <ArrowLeft size={18} />
+                        </button>
 
-                        {/* Dots */}
-                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
-                          {product.images.map((_, idx) => (
-                            <div
-                              key={idx}
-                              className={`h-2 rounded-full transition-all ${
-                                idx === (currentImageIndex[product.id] || 0)
-                                  ? "bg-[#692437] w-6"
-                                  : "bg-white/60 w-2"
-                              }`}
-                            />
-                          ))}
-                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleNextImage(product.id, product.images.length);
+                          }}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+                        >
+                          <ArrowRight size={18} />
+                        </button>
                       </>
                     )}
                   </div>
 
-                  {/* Info */}
-                  <div className="p-5 space-y-3">
-                    <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
+                  {/* INFO */}
+                  <div className="p-6 space-y-4">
+                    <p className="text-xs tracking-widest text-[#BD955E] uppercase">
                       {product.brand}
                     </p>
 
-                    <h3 className="text-xl font-bold text-white">
-                      {product.name}
-                    </h3>
+                    <h3 className="text-xl font-semibold">{product.name}</h3>
 
-                    <div className="flex items-center gap-1">
-                      <span className="text-amber-400">★</span>
-                      <span className="text-sm text-white font-medium">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[#BD955E]">★</span>
+                      <span className="text-sm text-gray-400">
                         {product.rating}
                       </span>
                     </div>
 
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-[#BD955E]">
                       ${product.price.toFixed(2)}
                     </p>
 
-                    <button className="w-full bg-[#692437] text-white py-3 rounded-lg font-semibold transition hover:bg-[#692437]/80">
+                    <button
+                      onClick={() => addToCart(product)}
+                      className="w-full bg-[#692437] text-white py-3 rounded-lg font-semibold transition hover:bg-[#692437]/80"
+                    >
                       Add to Cart
                     </button>
                   </div>
@@ -316,43 +317,23 @@ export default function ShopPage() {
         </div>
       </section>
 
-      {/* Pagination */}
+      {/* PAGINATION */}
       {totalPages > 1 && (
-        <section className="px-4 md:px-8 pb-12">
-          <div className="max-w-6xl mx-auto flex justify-center items-center gap-3">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 rounded-lg border-2 border-slate-300 text-slate-300 font-medium transition-all duration-300 hover:border-slate-900 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-            >
-              Previous
-            </button>
-
-            <div className="flex gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 rounded-lg font-semibold transition-all duration-300 ${
-                      currentPage === page
-                        ? "bg-slate-200 text-slate-900"
-                        : "bg-slate-900 text-slate-200 hover:bg-slate-300"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                ),
-              )}
-            </div>
-
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 rounded-lg border-2 border-slate-300 text-slate-300 font-medium transition-all duration-300 hover:border-slate-900 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-            >
-              Next
-            </button>
+        <section className="pb-20">
+          <div className="flex justify-center gap-3">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`w-10 h-10 rounded-lg font-semibold transition ${
+                  currentPage === page
+                    ? "bg-[#BD955E] text-black"
+                    : "bg-[#111] border border-[#BD955E]/30 text-[#BD955E] hover:border-[#BD955E]"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
           </div>
         </section>
       )}

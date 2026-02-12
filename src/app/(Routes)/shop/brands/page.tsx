@@ -1,9 +1,9 @@
-// app/page.tsx (Next.js 13+ App Router)
-// If using Pages Router, place in pages/index.tsx
-
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const [formValues, setFormValues] = useState({ name: "", email: "" });
@@ -14,103 +14,135 @@ export default function HomePage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(`Form submitted: ${JSON.stringify(formValues)}`);
     console.log("Form Values:", formValues);
   };
 
   return (
-    <main className="min-h-screen bg-black text-gray-900 pt-40">
-      {/* Hero Section */}
-      <section className="text-center py-16 bg-black text-white">
-        <h1 className="text-[28pt] text-[#BD955E] font-bold mb-4">
+    <main className="min-h-screen bg-black text-white">
+      {/* ================= HERO ================= */}
+      <section className="relative py-50 text-center px-6 max-w-4xl mx-auto">
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-[36pt] max-sm:text-[26pt] text-[#BD955E] font-semibold tracking-tight"
+        >
           Luxury Cologne & Perfume
-        </h1>
-        <p className="text-[14pt] text-[#E5E5E5] max-w-2xl mx-auto">
-          Discover timeless fragrances from world-renowned brands.
+        </motion.h1>
+
+        <p className="text-lg text-neutral-300 mt-6 max-w-2xl mx-auto">
+          Discover timeless fragrances crafted by the world’s most prestigious
+          perfume houses.
         </p>
+
+        <Link href="/shop">
+          <button className="mt-10 bg-[#BD955E] text-black px-8 py-3 rounded-full font-medium hover:bg-[#BD955E]/80 transition-all">
+            Explore Collection
+          </button>
+        </Link>
       </section>
 
-      {/* Section 1: Featured Products */}
-      <section className="py-16 px-6 max-w-6xl mx-auto">
-        <h2 className="text-[25pt] font-semibold mb-6 text-white">
+      {/* ================= FEATURED PRODUCTS ================= */}
+      <section className="py-24 px-6 max-w-6xl mx-auto">
+        <h2 className="text-[28pt] font-semibold mb-12 text-center">
           Featured Fragrances
         </h2>
-        <div className="grid md:grid-cols-3 gap-8">
+
+        <div className="grid md:grid-cols-3 gap-10">
           {[
             "Burberry - Hero",
             "Burberry - Mr.Burberry",
             "Hugo Boss - The Scent Elixir",
           ].map((item, i) => (
-            <div
+            <motion.div
               key={i}
-              className="bg-[#0a0a0a] rounded-lg shadow hover:shadow-xl transition-shadow p-6 flex flex-col items-center"
+              whileHover={{ y: -8 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              className="bg-neutral-950 border border-neutral-800 rounded-2xl overflow-hidden text-center p-6"
             >
-              <img
-                src={`/images/${item}.png`}
-                alt={item}
-                className="w-45 h-45 object-cover mb-4 rounded"
-              />
-              <h3 className="text-xl text-white font-medium mb-2">{item}</h3>
-              <Link href={"/shop"}>
-                <button className="mt-auto bg-[#692437] text-white px-4 py-2 rounded hover:bg-[#692437]/70 hover:scale-105 transition-all cursor-pointer">
+              <div className="relative w-full h-56 mb-6">
+                <Image
+                  src={`/images/${item}.png`}
+                  alt={item}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+
+              <h3 className="text-lg font-medium mb-4">{item}</h3>
+
+              <Link href="/shop">
+                <button className="bg-[#BD955E] text-black px-6 py-2 rounded-full hover:bg-[#BD955E]/80 transition-all">
                   Shop Now
                 </button>
               </Link>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Section 2: Brand Logos */}
-      <section className="py-16 px-6 bg-black">
-        <h2 className="text-3xl text-[#BD955E] font-semibold mb-6 text-center">
+      {/* ================= BRAND LOGOS ================= */}
+      <section className="py-24 px-6 bg-black border-t border-neutral-900 border-b">
+        <h2 className="text-2xl text-[#BD955E] font-semibold mb-12 text-center uppercase tracking-widest">
           Our Brands
         </h2>
-        <div className="flex flex-wrap justify-center gap-8">
+
+        <div className="flex flex-wrap justify-center gap-12">
           {["coach", "christiandior", "gucci", "polo", "versace"].map(
             (brand) => (
-              <div
+              <motion.div
                 key={brand}
-                className="w-25 h-25 flex items-center justify-center bg-black rounded shadow hover:scale-105 transition-transform"
+                whileHover={{ scale: 1.1 }}
+                className="w-24 h-24 flex items-center justify-center opacity-70 hover:opacity-100 transition"
               >
-                <img
-                  src={"/fragrancebrands/" + brand + ".png"}
+                <Image
+                  src={`/fragranceBrands/${brand}.png`}
                   alt={brand}
-                  className="h-25 w-auto object-contain"
+                  width={90}
+                  height={90}
+                  className="object-contain"
                 />
-              </div>
+              </motion.div>
             ),
           )}
         </div>
       </section>
 
-      {/* Contact Form */}
-      <section className="py-16 px-6 max-w-3xl mx-auto">
-        <h2 className="text-3xl text-[#BD955E] font-semibold mb-6">
+      {/* ================= NEWSLETTER ================= */}
+      <section className="py-24 px-6 max-w-3xl mx-auto text-center">
+        <h2 className="text-2xl text-[#BD955E] font-semibold mb-6 uppercase tracking-widest">
           Stay Updated
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+
+        <p className="text-neutral-400 mb-10">
+          Get exclusive access to new arrivals, limited editions, and private
+          offers.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           <input
             type="text"
             name="name"
             placeholder="Your Name"
             value={formValues.name}
             onChange={handleChange}
-            className="w-full border-2 border-[#BD955E] text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
+            className="w-full bg-neutral-900 border border-neutral-800 rounded-full px-6 py-3 focus:outline-none focus:border-[#BD955E] transition"
             required
           />
+
           <input
             type="email"
             name="email"
             placeholder="Your Email"
             value={formValues.email}
             onChange={handleChange}
-            className="w-full border-2 border-[#BD955E] text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
+            className="w-full bg-neutral-900 border border-neutral-800 rounded-full px-6 py-3 focus:outline-none focus:border-[#BD955E] transition"
             required
           />
+
           <button
             type="submit"
-            className="bg-[#692437] text-white px-6 py-2 rounded hover:bg-[#692437]/70 hover:scale-105 transition-all cursor-pointer"
+            className="bg-[#BD955E] text-black px-8 py-3 rounded-full hover:bg-[#BD955E]/80 transition-all"
           >
             Subscribe
           </button>

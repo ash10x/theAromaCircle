@@ -4,17 +4,46 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useCart } from "../context/cartContext";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import MiniCart from "./miniCart";
 
 export default function NavDesktop() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const reduceMotion = useReducedMotion();
+
+  // Scroll listener for shrinking nav
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const { cart } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Handle search submit
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Navigate to Shop page with query param
+    if (pathname !== "/shop") {
+      router.push(`/shop?search=${encodeURIComponent(searchText)}`);
+    } else {
+      router.push(`/shop?search=${encodeURIComponent(searchText)}`);
+    }
+    setIsSearchOpen(false);
+  };
 
   return (
     <motion.nav
@@ -27,11 +56,11 @@ export default function NavDesktop() {
         duration: reduceMotion ? 0 : 0.4,
         ease: "easeOut",
       }}
-      className="fixed top-0 z-50 w-full flex flex-col items-center pb-5 border-b border-[#0e0e0e] max-sm:hidden"
+      className="fixed top-0 z-50 w-full flex flex-col items-center pb-5 border-b border-[#0e0e0e] max-sm:hidden backdrop-blur-sm"
     >
       {/* Promo Bar */}
       <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
-        <p className="text-white text-[9.8pt] font-semibold tracking-wide">
+        <p className="text-white text-[9.8pt] font-semibold tracking-wide text-center">
           Free Shipping on Orders Over $75 | 100% Authentic Fragrances
         </p>
       </div>
@@ -44,7 +73,12 @@ export default function NavDesktop() {
         className="overflow-hidden mt-1.5"
       >
         <Link href="/">
-          <Image src="/logo.png" alt="Logo" width={60} height={60} />
+          <Image
+            src="/logo.png"
+            alt="The Aroma Circle Logo"
+            width={60}
+            height={60}
+          />
         </Link>
       </motion.div>
 
@@ -68,7 +102,7 @@ export default function NavDesktop() {
       </div>
 
       {/* Icons */}
-      <div className="absolute bottom-2.5 right-8 flex gap-5">
+      <div className="absolute bottom-2.5 right-8 flex gap-5 items-center">
         {/* Search */}
         <div className="relative">
           <i
@@ -85,20 +119,35 @@ export default function NavDesktop() {
             className="absolute right-0 top-8"
           >
             {isSearchOpen && (
-              <input
-                autoFocus
-                onBlur={() => setIsSearchOpen(false)}
-                placeholder="Search products..."
-                className="w-48 px-4 py-2 bg-black text-white placeholder-gray-400 border border-[#BD955E] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
-              />
+              <form onSubmit={handleSearch}>
+                <input
+                  autoFocus
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  placeholder="Search products..."
+                  className="w-48 px-4 py-2 bg-black text-white placeholder-gray-400 border border-[#BD955E] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
+                />
+              </form>
             )}
           </motion.div>
         </div>
 
         {/* Cart */}
-        <i className="material-symbols-outlined text-[14px] text-white cursor-pointer transition duration-200 hover:scale-110 hover:text-[#BD955E]">
-          shopping_cart
-        </i>
+        <div className="relative">
+          <i
+            className="material-symbols-outlined text-[14px] text-white cursor-pointer transition duration-200 hover:scale-110 hover:text-[#BD955E]"
+            onClick={() => setIsCartOpen((prev) => !prev)}
+          >
+            shopping_cart
+          </i>
+          {totalItems > 0 && (
+            <span className="absolute -top-2 -right-2 bg-[#BD955E] text-black rounded-full px-1 text-xs font-bold">
+              {totalItems}
+            </span>
+          )}
+
+          <MiniCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        </div>
       </div>
     </motion.nav>
   );

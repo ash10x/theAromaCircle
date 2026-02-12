@@ -43,18 +43,21 @@ export default function MenCategoryPage() {
       </div>
 
       {/* GRID */}
-      <AnimatedSection className="max-w-7xl mx-auto px-10 py-16">
+      <AnimatedSection className="max-w-7xl mx-auto px-6 sm:px-10 py-16">
         <p className="text-[#BD955E] text-center mb-12">
           Bold, refined, and unforgettable fragrances crafted for him.
         </p>
 
-        {/* 👉 Stagger container should live HERE */}
-        <div className="grid grid-cols-3 gap-10 max-sm:grid-cols-2">
+        {/* Staggered grid */}
+        <AnimatedSection
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          staggerChildren
+        >
           {products.map((product) => (
             <AnimatedSection key={product.slug}>
               <Link
                 href={`/shop/${product.slug}`}
-                className="group relative block w-[280px] max-sm:w-full mx-auto"
+                className="group relative block w-full mx-auto"
               >
                 {/* Card */}
                 <div className="relative bg-[#0b0b0b] border border-[#BD955E]/40 rounded-xl overflow-hidden transition-all duration-300 group-hover:border-[#BD955E] group-hover:-translate-y-1">
@@ -71,6 +74,12 @@ export default function MenCategoryPage() {
                   {/* Add to cart */}
                   <button
                     aria-label="Add to cart"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log(`Added ${product.title} to cart`);
+                      // Replace with real add-to-cart logic
+                    }}
                     className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition bg-black/80 border border-[#BD955E] text-[#BD955E] p-2 rounded-full hover:bg-[#BD955E] hover:text-black"
                   >
                     <ShoppingBag size={18} />
@@ -81,8 +90,6 @@ export default function MenCategoryPage() {
                     <p className="text-white font-medium text-sm truncate">
                       {product.title}
                     </p>
-
-                    {/* Fixed price position */}
                     <p className="text-[#BD955E] font-semibold mt-1">
                       ${product.price}
                     </p>
@@ -91,7 +98,7 @@ export default function MenCategoryPage() {
               </Link>
             </AnimatedSection>
           ))}
-        </div>
+        </AnimatedSection>
       </AnimatedSection>
     </div>
   );

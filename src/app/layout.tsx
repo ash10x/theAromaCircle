@@ -3,6 +3,7 @@ import { Figtree } from "next/font/google";
 import NavDesktop from "./components/navDesktop";
 import NavMobile from "./components/navMobile";
 import FooterDesktop from "./components/footerDesktop";
+import { CartProvider } from "./context/cartContext";
 import "./globals.css";
 
 export const figtree = Figtree({
@@ -28,11 +29,13 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="figtree.className flex flex-col">
-        <NavDesktop />
-        <NavMobile />
-        {children}
-        <FooterDesktop />
+      <body className="figtree.className flex flex-col bg-black">
+        <CartProvider>
+          <NavDesktop />
+          <NavMobile />
+          {children}
+          <FooterDesktop />
+        </CartProvider>
       </body>
     </html>
   );
