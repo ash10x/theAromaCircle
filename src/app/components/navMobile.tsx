@@ -3,17 +3,13 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useCart } from "@/app/context/cartContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function NavMobile() {
   const [navOpen, setNavOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const { cart, getTotalPrice, updateQuantity, removeFromCart } = useCart();
-  const router = useRouter();
   const cartRef = useRef<HTMLDivElement>(null);
 
   // Close cart on outside click
@@ -26,16 +22,6 @@ export default function NavMobile() {
     if (cartOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [cartOpen]);
-
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchText.trim()) {
-      router.push(`/shop?search=${encodeURIComponent(searchText)}`);
-      setSearchText("");
-      setSearchOpen(false);
-      setNavOpen(false);
-    }
-  };
 
   return (
     <div className={navOpen ? "overflow-hidden" : "overflow-auto"}>
@@ -64,7 +50,6 @@ export default function NavMobile() {
           height={25}
           width={25}
           alt="search"
-          onClick={() => setSearchOpen((prev) => !prev)}
         />
 
         {/* Cart icon */}
@@ -94,36 +79,6 @@ export default function NavMobile() {
           onClick={() => setNavOpen(true)}
         />
       </div>
-
-      {/* Search Dropdown */}
-      <AnimatePresence>
-        {searchOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-16 left-0 w-full bg-[#111] z-50 px-5 overflow-hidden"
-          >
-            <form onSubmit={handleSearchSubmit} className="flex w-full gap-2">
-              <input
-                type="text"
-                autoFocus
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                placeholder="Search products..."
-                className="flex-1 px-4 py-3 rounded-lg bg-black text-white border border-[#BD955E] focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
-              />
-              <button
-                type="submit"
-                className="bg-[#BD955E] text-black px-4 py-3 rounded-lg font-semibold"
-              >
-                Go
-              </button>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Nav overlay */}
       <div
@@ -168,8 +123,125 @@ export default function NavMobile() {
         </div>
       </div>
 
-      {/* MiniCart component */}
-      {/* You can reuse the previous MiniCart code here */}
+      {/* MiniCart with Backdrop Blur */}
+      <AnimatePresence>
+        {cartOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.7 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
+              onClick={() => setCartOpen(false)}
+            />
+
+            {/* Cart Panel */}
+            <motion.div
+              ref={cartRef}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 h-full w-80 bg-black z-50 flex flex-col shadow-xl"
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center p-5 border-b border-[#222]">
+                <h2 className="text-white text-xl font-semibold">Your Cart</h2>
+                <button
+                  className="text-white text-2xl font-bold"
+                  onClick={() => setCartOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Cart Items */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-4">
+                {cart.length === 0 ? (
+                  <p className="text-gray-400 text-center mt-10">
+                    Your cart is empty.
+                  </p>
+                ) : (
+                  cart.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex gap-4 items-center border-b border-[#222] pb-3"
+                    >
+                      {item.images?.[0] && (
+                        <div className="w-16 h-16 relative rounded-lg overflow-hidden flex-shrink-0">
+                          <Image
+                            src={item.images[0]}
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <p className="text-white font-semibold">{item.name}</p>
+                        <p className="text-gray-400 text-sm">{item.brand}</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
+                            className="w-8 h-8 text-white border border-[#333] rounded"
+                          >
+                            −
+                          </button>
+                          <span className="text-white">{item.quantity}</span>
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
+                            className="w-8 h-8 text-white border border-[#333] rounded"
+                          >
+                            +
+                          </button>
+                          <button
+                            onClick={() => removeFromCart(item.id)}
+                            className="ml-auto text-red-500 hover:text-red-600 text-sm"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <p className="text-[#BD955E] font-bold">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Footer */}
+              {cart.length > 0 && (
+                <div className="p-5 border-t border-[#222]">
+                  <div className="flex justify-between mb-4 text-lg font-bold text-white">
+                    <span>Total</span>
+                    <span className="text-[#BD955E]">
+                      ${getTotalPrice().toFixed(2)}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => (window.location.href = "/checkout")}
+                    className="w-full bg-[#BD955E] text-black py-3 rounded-lg font-semibold mb-3"
+                  >
+                    Checkout
+                  </button>
+                  <button
+                    onClick={() => setCartOpen(false)}
+                    className="w-full bg-[#111] text-white border border-[#333] py-3 rounded-lg font-semibold"
+                  >
+                    Continue Shopping
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
