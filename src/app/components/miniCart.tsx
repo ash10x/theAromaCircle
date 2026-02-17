@@ -4,6 +4,8 @@ import { useCart } from "../context/cartContext";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function MiniCart({
   isOpen,
@@ -12,7 +14,18 @@ export default function MiniCart({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const { cart, updateQuantity, removeFromCart, getTotal } = useCart();
+  const { cart, updateQuantity, removeFromCart, getTotalPrice, closeCart } =
+    useCart();
+  const total = getTotalPrice();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Automatically close cart if user navigates to /cart or /checkout
+  useEffect(() => {
+    if (pathname.startsWith("/cart") || pathname.startsWith("/checkout")) {
+      closeCart();
+    }
+  }, [pathname, closeCart]);
 
   return (
     <AnimatePresence>
@@ -24,6 +37,7 @@ export default function MiniCart({
           transition={{ duration: 0.3 }}
           className="absolute top-12 right-0 w-80 bg-[#0a0a0a] border border-[#BD955E] rounded-lg shadow-lg z-50 p-4 flex flex-col gap-4"
         >
+          {/* Header */}
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-lg font-bold text-[#BD955E]">Cart</h2>
             <button
@@ -34,23 +48,26 @@ export default function MiniCart({
             </button>
           </div>
 
+          {/* Empty */}
           {cart.length === 0 ? (
             <p className="text-white text-sm text-center py-4">
               Your cart is empty
             </p>
           ) : (
             <>
+              {/* Cart Items */}
               <div className="flex flex-col gap-3 max-h-72 overflow-y-auto">
                 {cart.map((item) => (
                   <div key={item.id} className="flex items-center gap-3">
                     <div className="w-16 h-16 relative rounded overflow-hidden">
                       <Image
-                        src={item.images[0]}
+                        src={item.images?.[0] || "/placeholder.png"}
                         alt={item.name}
                         fill
                         className="object-cover"
                       />
                     </div>
+
                     <div className="flex-1 flex flex-col gap-1">
                       <p className="text-white font-semibold text-sm">
                         {item.name}
@@ -58,6 +75,7 @@ export default function MiniCart({
                       <p className="text-[#BD955E] text-sm">
                         ${item.price.toFixed(2)}
                       </p>
+
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() =>
@@ -78,6 +96,7 @@ export default function MiniCart({
                         >
                           +
                         </button>
+
                         <button
                           onClick={() => removeFromCart(item.id)}
                           className="ml-auto text-red-500 hover:text-red-700 font-semibold text-sm"
@@ -93,17 +112,29 @@ export default function MiniCart({
               {/* Cart Total */}
               <div className="mt-2 border-t border-[#BD955E] pt-3 flex justify-between items-center">
                 <p className="text-white font-bold">Total:</p>
-                <p className="text-[#BD955E] font-bold">
-                  ${getTotal().toFixed(2)}
-                </p>
+                <p className="text-[#BD955E] font-bold">${total.toFixed(2)}</p>
               </div>
 
-              {/* Checkout Button */}
-              <Link href="/cart">
-                <button className="mt-3 w-full bg-[#692437] py-2 rounded-lg font-semibold text-white hover:bg-[#a6854e] transition">
-                  View Cart
-                </button>
-              </Link>
+              {/* Buttons */}
+              <div className="flex flex-col gap-2 mt-3">
+                <Link href="/cart">
+                  <button
+                    onClick={closeCart} // closes MiniCart
+                    className="w-full bg-[#692437] py-2 rounded-lg font-semibold text-white hover:bg-[#a6854e] transition"
+                  >
+                    View Cart
+                  </button>
+                </Link>
+
+                <Link href="/checkout">
+                  <button
+                    onClick={closeCart} // closes MiniCart
+                    className="w-full bg-[#BD955E] py-2 rounded-lg font-semibold text-black hover:bg-[#a6854e] transition"
+                  >
+                    Checkout
+                  </button>
+                </Link>
+              </div>
             </>
           )}
         </motion.div>

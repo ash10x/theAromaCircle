@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useCart } from "../context/cartContext";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import MiniCart from "./miniCart";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function NavDesktop() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,34 +14,23 @@ export default function NavDesktop() {
   const [searchText, setSearchText] = useState("");
   const reduceMotion = useReducedMotion();
 
-  // Scroll listener for shrinking nav
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  const { cart } = useCart();
+  const { cart, isCartOpen, openCart, closeCart } = useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
 
+  // Scroll listener
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Handle search submit
+  // Search submit
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Navigate to Shop page with query param
-    if (pathname !== "/shop") {
-      router.push(`/shop?search=${encodeURIComponent(searchText)}`);
-    } else {
-      router.push(`/shop?search=${encodeURIComponent(searchText)}`);
-    }
+    router.push(`/shop?search=${encodeURIComponent(searchText)}`);
     setIsSearchOpen(false);
   };
 
@@ -52,10 +41,7 @@ export default function NavDesktop() {
         height: isScrolled ? 100 : 175,
         backgroundColor: isScrolled ? "rgba(0,0,0,1)" : "rgba(0,0,0,0.7)",
       }}
-      transition={{
-        duration: reduceMotion ? 0 : 0.4,
-        ease: "easeOut",
-      }}
+      transition={{ duration: reduceMotion ? 0 : 0.4, ease: "easeOut" }}
       className="fixed top-0 z-50 w-full flex flex-col items-center pb-5 border-b border-[#0e0e0e] max-sm:hidden backdrop-blur-sm"
     >
       {/* Promo Bar */}
@@ -112,13 +98,13 @@ export default function NavDesktop() {
             search
           </i>
 
-          <motion.div
-            initial={{ opacity: 0, y: -5 }}
-            animate={isSearchOpen ? { opacity: 1, y: 0 } : { opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="absolute right-0 top-8"
-          >
-            {isSearchOpen && (
+          {isSearchOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="absolute right-0 top-8"
+            >
               <form onSubmit={handleSearch}>
                 <input
                   autoFocus
@@ -128,15 +114,18 @@ export default function NavDesktop() {
                   className="w-48 px-4 py-2 bg-black text-white placeholder-gray-400 border border-[#BD955E] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
                 />
               </form>
-            )}
-          </motion.div>
+            </motion.div>
+          )}
         </div>
 
         {/* Cart */}
         <div className="relative">
           <i
             className="material-symbols-outlined text-[14px] text-white cursor-pointer transition duration-200 hover:scale-110 hover:text-[#BD955E]"
-            onClick={() => setIsCartOpen((prev) => !prev)}
+            onClick={() => {
+              isCartOpen ? closeCart() : openCart();
+              setIsSearchOpen(false);
+            }}
           >
             shopping_cart
           </i>
@@ -146,7 +135,7 @@ export default function NavDesktop() {
             </span>
           )}
 
-          <MiniCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+          <MiniCart isOpen={isCartOpen} onClose={closeCart} />
         </div>
       </div>
     </motion.nav>

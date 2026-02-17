@@ -1,7 +1,9 @@
 "use client";
-import { useState, useMemo } from "react";
+
+import { useState, useMemo, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/app/context/cartContext";
 
@@ -135,156 +137,161 @@ const ITEMS_PER_PAGE = 6;
 const CATEGORIES = ["All", "Men", "Women", "Unisex"];
 
 export default function ShopPage() {
+  const { addToCart, openCart } = useCart();
+
+  const searchParams = useSearchParams();
+  const urlQuery = searchParams.get("search") || "";
+
   const [searchQuery, setSearchQuery] = useState("");
+  const [urlSearchQuery, setUrlSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState<
     Record<number, number>
   >({});
-  const { addToCart } = useCart();
-  const searchParams = useSearchParams();
-  const urlQuery = searchParams.get("search") || "";
 
-  const [urlSearchQuery, setUrlSearchQuery] = useState(urlQuery);
+  /* Sync URL search */
+  useEffect(() => {
+    setUrlSearchQuery(urlQuery);
+    setCurrentPage(1);
+  }, [urlQuery]);
 
+  /* Filter products */
   const filteredProducts = useMemo(() => {
     return mockProducts.filter((product) => {
+      const query = (searchQuery || urlSearchQuery).toLowerCase();
+
       const matchesSearch =
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.name.toLowerCase().includes(urlSearchQuery.toLowerCase()) ||
-        product.brand.toLowerCase().includes(urlSearchQuery.toLowerCase());
+        product.name.toLowerCase().includes(query) ||
+        product.brand.toLowerCase().includes(query);
 
       const matchesCategory =
         selectedCategory === "All" || product.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory, urlSearchQuery]);
+  }, [searchQuery, urlSearchQuery, selectedCategory]);
 
-  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const totalProducts = filteredProducts.length;
+  const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
 
-  const handleNextImage = (productId: number, totalImages: number) => {
+  /* Image navigation */
+  const handleNextImage = (id: number, total: number) => {
     setCurrentImageIndex((prev) => ({
       ...prev,
-      [productId]: ((prev[productId] || 0) + 1) % totalImages,
+      [id]: ((prev[id] || 0) + 1) % total,
     }));
   };
 
-  const handlePrevImage = (productId: number, totalImages: number) => {
+  const handlePrevImage = (id: number, total: number) => {
     setCurrentImageIndex((prev) => ({
       ...prev,
-      [productId]: ((prev[productId] || 0) - 1 + totalImages) % totalImages,
+      [id]: ((prev[id] || 0) - 1 + total) % total,
     }));
   };
 
   return (
     <div className="min-h-screen bg-black text-white pt-40">
-      {/* HEADER */}
+      {/* Header */}
       <section className="text-center px-6 py-10 mb-16">
-        <h1 className="text-4xl font-bold text-[#BD955E] tracking-wide">
+        <h1 className="text-4xl font-bold text-[#BD955E]">
           Discover Your Signature Scent
         </h1>
-        <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-          Curated collection of premium colognes and perfumes crafted to elevate
-          your presence.
+        <p className="mt-4 text-gray-400">
+          Premium fragrances designed to elevate your presence.
         </p>
       </section>
 
-      {/* SEARCH + FILTER */}
+      {/* Search + Filters */}
       <section className="px-6 mb-14">
-        <div className="max-w-6xl mx-auto space-y-8">
+        <div className="max-w-6xl mx-auto space-y-6">
           {/* Search */}
           <div className="relative">
             <input
-              type="text"
-              placeholder="Search by name or brand..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-[#111] border border-[#BD955E]/40 rounded-lg px-6 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#BD955E]"
+              placeholder="Search fragrances..."
+              className="w-full bg-[#111] border border-[#BD955E]/30 px-6 py-3 rounded-lg focus:outline-none focus:border-[#BD955E]"
             />
-            <Search
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#BD955E]"
-              size={20}
-            />
+            <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-[#BD955E]" />
           </div>
 
           {/* Categories */}
-          <div className="flex flex-wrap gap-4">
-            {CATEGORIES.map((category) => (
+          <div className="flex gap-3 flex-wrap">
+            {CATEGORIES.map((cat) => (
               <button
-                key={category}
+                key={cat}
                 onClick={() => {
-                  setSelectedCategory(category);
+                  setSelectedCategory(cat);
                   setCurrentPage(1);
                 }}
-                className={`px-6 py-2 rounded-full border transition-all duration-300 ${
-                  selectedCategory === category
-                    ? "bg-[#BD955E] text-black border-[#BD955E]"
-                    : "border-[#BD955E]/40 hover:border-[#BD955E] text-[#BD955E]"
+                className={`px-5 py-2 rounded-full border transition ${
+                  selectedCategory === cat
+                    ? "bg-[#BD955E] text-black"
+                    : "border-[#BD955E]/40 text-[#BD955E]"
                 }`}
               >
-                {category}
+                {cat}
               </button>
             ))}
           </div>
 
-          <p className="text-sm text-gray-400">
-            Showing {paginatedProducts.length} of {filteredProducts.length}{" "}
-            products
-          </p>
+          {/* Count */}
+          {totalProducts > 0 && (
+            <p className="text-gray-400 text-sm">
+              Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
+              {Math.min(currentPage * ITEMS_PER_PAGE, totalProducts)} of{" "}
+              {totalProducts} products
+            </p>
+          )}
         </div>
       </section>
 
-      {/* PRODUCT GRID */}
+      {/* Grid */}
       <section className="px-6 pb-16">
-        <div className="max-w-6xl mx-auto">
-          {paginatedProducts.length === 0 ? (
-            <div className="text-center py-20 text-gray-500 text-lg">
-              No products found. Try adjusting your filters.
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {paginatedProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="group bg-[#111] rounded-xl overflow-hidden border border-[#1a1a1a] hover:border-[#BD955E]/50 transition-all duration-500"
-                >
-                  {/* IMAGE */}
-                  <div className="relative aspect-square overflow-hidden">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {paginatedProducts.map((product) => {
+            const currentIndex = currentImageIndex[product.id] || 0;
+
+            return (
+              <Link key={product.id} href={`/product/${product.id}`}>
+                <div className="group bg-[#111] border border-[#1a1a1a] hover:border-[#BD955E]/50 rounded-xl overflow-hidden cursor-pointer transition">
+                  {/* Image */}
+                  <div className="relative aspect-square">
                     <Image
-                      src={product.images[currentImageIndex[product.id] || 0]}
+                      src={product.images[currentIndex]}
                       alt={product.name}
                       fill
                       className="object-cover group-hover:scale-105 transition duration-700"
                     />
 
+                    {/* Arrows */}
                     {product.images.length > 1 && (
                       <>
                         <button
                           onClick={(e) => {
-                            e.stopPropagation();
+                            e.preventDefault();
                             handlePrevImage(product.id, product.images.length);
                           }}
-                          className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full opacity-0 group-hover:opacity-100"
                         >
                           <ArrowLeft size={18} />
                         </button>
 
                         <button
                           onClick={(e) => {
-                            e.stopPropagation();
+                            e.preventDefault();
                             handleNextImage(product.id, product.images.length);
                           }}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full opacity-0 group-hover:opacity-100"
                         >
                           <ArrowRight size={18} />
                         </button>
@@ -292,57 +299,66 @@ export default function ShopPage() {
                     )}
                   </div>
 
-                  {/* INFO */}
-                  <div className="p-6 space-y-4">
-                    <p className="text-xs tracking-widest text-[#BD955E] uppercase">
+                  {/* Indicators */}
+                  <div className="flex justify-center gap-1 mt-2">
+                    {product.images.map((_, i) => (
+                      <div
+                        key={i}
+                        className={`w-2 h-2 rounded-full ${
+                          i === currentIndex ? "bg-[#BD955E]" : "bg-gray-600"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-6">
+                    <p className="text-xs text-[#BD955E] uppercase">
                       {product.brand}
                     </p>
 
-                    <h3 className="text-xl font-semibold">{product.name}</h3>
+                    <h3 className="text-lg font-semibold mt-1">
+                      {product.name}
+                    </h3>
 
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#BD955E]">★</span>
-                      <span className="text-sm text-gray-400">
-                        {product.rating}
-                      </span>
-                    </div>
-
-                    <p className="text-2xl font-bold text-[#BD955E]">
+                    <p className="text-[#BD955E] text-xl font-bold mt-2">
                       ${product.price.toFixed(2)}
                     </p>
 
                     <button
-                      onClick={() => addToCart(product)}
-                      className="w-full bg-[#692437] text-white py-3 rounded-lg font-semibold transition hover:bg-[#692437]/80"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addToCart({ ...product, quantity: 1 });
+                        openCart();
+                      }}
+                      className="mt-4 w-full bg-[#692437] hover:bg-[#692437]/80 py-2 rounded-lg"
                     >
                       Add to Cart
                     </button>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      {/* PAGINATION */}
+      {/* Pagination */}
       {totalPages > 1 && (
-        <section className="pb-20">
-          <div className="flex justify-center gap-3">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`w-10 h-10 rounded-lg font-semibold transition ${
-                  currentPage === page
-                    ? "bg-[#BD955E] text-black"
-                    : "bg-[#111] border border-[#BD955E]/30 text-[#BD955E] hover:border-[#BD955E]"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
+        <section className="pb-20 flex justify-center gap-3">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`w-10 h-10 rounded-lg ${
+                page === currentPage
+                  ? "bg-[#BD955E] text-black"
+                  : "bg-[#111] border border-[#BD955E]/30 text-[#BD955E]"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
         </section>
       )}
     </div>
