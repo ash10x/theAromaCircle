@@ -1,142 +1,16 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, Key } from "react";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/app/context/cartContext";
 
-interface Product {
-  id: number;
-  name: string;
-  brand: string;
-  price: number;
-  category: string;
-  images: string[];
-  rating: number;
-  quantity: number;
-}
-
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    name: "Midnight Elegance",
-    brand: "Luxe Scents",
-    price: 89.99,
-    category: "Men",
-    images: [
-      "/products/coachdreams.jpg",
-      "/products/moschinotoy2bg.jpg",
-      "/products/burberryhero.jpg",
-    ],
-    rating: 4.8,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    name: "Floral Dreams",
-    brand: "Pure Essence",
-    price: 79.99,
-    category: "Women",
-    images: [
-      "/products/versaceeros.jpg",
-      "/products/coachdreams.jpg",
-      "/products/moschinotoy2bg.jpg",
-    ],
-    rating: 4.9,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    name: "Ocean Breeze",
-    brand: "Coastal Vibes",
-    price: 69.99,
-    category: "Unisex",
-    images: [
-      "/products/versaceeros.jpg",
-      "/products/coachdreams.jpg",
-      "/products/moschinotoy2bg.jpg",
-    ],
-    rating: 4.7,
-    quantity: 1,
-  },
-  {
-    id: 4,
-    name: "Rose Garden",
-    brand: "Nature's Touch",
-    price: 84.99,
-    category: "Women",
-    images: [
-      "/products/versaceeros.jpg",
-      "/products/coachdreams.jpg",
-      "/products/moschinotoy2bg.jpg",
-    ],
-    rating: 4.6,
-    quantity: 1,
-  },
-  {
-    id: 5,
-    name: "Spiced Leather",
-    brand: "Bold Notes",
-    price: 94.99,
-    category: "Men",
-    images: [
-      "/products/versaceeros.jpg",
-      "/products/coachdreams.jpg",
-      "/products/moschinotoy2bg.jpg",
-    ],
-    rating: 4.9,
-    quantity: 1,
-  },
-  {
-    id: 6,
-    name: "Vanilla Silk",
-    brand: "Soft Touch",
-    price: 74.99,
-    category: "Unisex",
-    images: [
-      "/products/versaceeros.jpg",
-      "/products/coachdreams.jpg",
-      "/products/moschinotoy2bg.jpg",
-    ],
-    rating: 4.5,
-    quantity: 1,
-  },
-  {
-    id: 7,
-    name: "Oud Mystique",
-    brand: "Eastern Luxury",
-    price: 129.99,
-    category: "Men",
-    images: [
-      "/products/versaceeros.jpg",
-      "/products/coachdreams.jpg",
-      "/products/moschinotoy2bg.jpg",
-    ],
-    rating: 5.0,
-    quantity: 1,
-  },
-  {
-    id: 8,
-    name: "Citrus Zest",
-    brand: "Fresh Appeal",
-    price: 64.99,
-    category: "Unisex",
-    images: [
-      "/products/versaceeros.jpg",
-      "/products/burberryhero.jpg",
-      "/products/burberryhero.jpg",
-    ],
-    rating: 4.4,
-    quantity: 1,
-  },
-];
-
 const ITEMS_PER_PAGE = 6;
 const CATEGORIES = ["All", "Men", "Women", "Unisex"];
 
-export default function ShopPage() {
+export default function ShopPage({ data }: { data: any[] }) {
   const { addToCart, openCart } = useCart();
 
   const searchParams = useSearchParams();
@@ -158,7 +32,7 @@ export default function ShopPage() {
 
   /* Filter products */
   const filteredProducts = useMemo(() => {
-    return mockProducts.filter((product) => {
+    return data.filter((product) => {
       const query = (searchQuery || urlSearchQuery).toLowerCase();
 
       const matchesSearch =
@@ -267,7 +141,7 @@ export default function ShopPage() {
                   {/* Image */}
                   <div className="relative aspect-square">
                     <Image
-                      src={product.images[currentIndex]}
+                      src={product.images[currentIndex] + ".jpg"}
                       alt={product.name}
                       fill
                       className="object-cover group-hover:scale-105 transition duration-700"
@@ -301,7 +175,7 @@ export default function ShopPage() {
 
                   {/* Indicators */}
                   <div className="flex justify-center gap-1 mt-2">
-                    {product.images.map((_, i) => (
+                    {product.images.map((_: any, i: Key | null | undefined) => (
                       <div
                         key={i}
                         className={`w-2 h-2 rounded-full ${
@@ -317,7 +191,7 @@ export default function ShopPage() {
                       {product.brand}
                     </p>
 
-                    <h3 className="text-lg font-semibold mt-1">
+                    <h3 className="text-lg font-semibold mt-1 text-ellipsis whitespace-nowrap overflow-hidden">
                       {product.name}
                     </h3>
 
@@ -331,7 +205,7 @@ export default function ShopPage() {
                         addToCart({ ...product, quantity: 1 });
                         openCart();
                       }}
-                      className="mt-4 w-full bg-[#692437] hover:bg-[#692437]/80 py-2 rounded-lg"
+                      className="mt-4 w-full bg-[#692437] hover:bg-[#692437]/80 py-2 rounded-lg cursor-pointer text-sm font-medium transition hover:scale-105"
                     >
                       Add to Cart
                     </button>

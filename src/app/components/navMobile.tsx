@@ -25,114 +25,97 @@ export default function NavMobile() {
 
   return (
     <div className={navOpen ? "overflow-hidden" : "overflow-auto"}>
-      {/* Top nav bar */}
-      <div
-        className={
-          !navOpen
-            ? "fixed top-0 right-0 flex flex-row items-center gap-2.5 justify-end p-5 h-max w-full bg-black z-50 md:hidden"
-            : "hidden"
-        }
-      >
-        <Link href="/">
-          <Image
-            className="absolute left-2.5 top-4.5 w-40 h-auto cursor-pointer md:hidden"
-            src={"/logomobile.svg"}
-            height={160}
-            width={160}
-            alt="logo"
-          />
-        </Link>
+      {/* ===================== TOP BAR ===================== */}
+      {!navOpen && (
+        <div className="fixed top-0 right-0 flex items-center justify-end gap-4 px-5 py-5 w-full bg-black/95 backdrop-blur-md z-50 md:hidden border-b border-[#1a1a1a]">
+          {/* Logo */}
+          <Link href="/">
+            <Image
+              className="absolute left-4 top-4 w-36 h-auto"
+              src="/logomobile.svg"
+              height={140}
+              width={140}
+              alt="logo"
+            />
+          </Link>
 
-        {/* Search icon */}
-        <Image
-          className="w-6 h-auto cursor-pointer md:hidden"
-          src={"/icons/search.svg"}
-          height={25}
-          width={25}
-          alt="search"
-        />
-
-        {/* Cart icon */}
-        <div className="relative">
-          <Image
-            className="w-6 h-auto cursor-pointer md:hidden"
-            src={"/icons/cart.svg"}
-            height={25}
-            width={25}
-            alt="cart"
+          {/* Cart */}
+          <div
+            className="relative cursor-pointer"
             onClick={() => setCartOpen(true)}
-          />
-          {cart.length > 0 && (
-            <span className="absolute -top-2 -right-2 bg-[#BD955E] text-black rounded-full px-1 text-xs font-bold">
-              {cart.reduce((sum, item) => sum + item.quantity, 0)}
-            </span>
-          )}
-        </div>
+          >
+            <Image src="/icons/cart.svg" height={22} width={22} alt="cart" />
+            {cart.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-gradient-to-r from-[#BD955E] to-[#e6c78b] text-black text-[10px] font-bold px-1.5 py-[2px] rounded-full shadow-md">
+                {cart.reduce((sum, item) => sum + item.quantity, 0)}
+              </span>
+            )}
+          </div>
 
-        {/* Menu icon */}
-        <Image
-          className="w-6 h-auto cursor-pointer md:hidden"
-          src={"/icons/menu.svg"}
-          height={25}
-          width={25}
-          alt="menu"
-          onClick={() => setNavOpen(true)}
-        />
-      </div>
-
-      {/* Nav overlay */}
-      <div
-        className={
-          navOpen
-            ? "fixed top-0 right-0 flex flex-col items-center justify-center h-screen w-full bg-black z-40 overflow-hidden transition-all duration-300 md:hidden"
-            : "fixed top-0 right-0 flex flex-col items-center justify-center h-0 w-full bg-black z-40 overflow-hidden transition-all duration-300 md:hidden"
-        }
-      >
-        {/* Close button */}
-        <Image
-          className="absolute top-0 mt-6 right-3 w-[34px] h-auto cursor-pointer"
-          src={"/icons/arrowup.svg"}
-          height={34}
-          width={34}
-          alt="close"
-          onClick={() => setNavOpen(false)}
-        />
-
-        <Link href="/">
+          {/* Menu */}
           <Image
-            className="w-auto h-auto mt-5 mb-10"
-            src={"/logowhite.png"}
-            height={60}
-            width={60}
-            alt="logo"
-            onClick={() => setNavOpen(false)}
+            className="w-6 h-auto cursor-pointer"
+            src="/icons/menu.svg"
+            height={24}
+            width={24}
+            alt="menu"
+            onClick={() => setNavOpen(true)}
           />
-        </Link>
-
-        <div className="flex flex-col items-center gap-10 text-white font-semibold mb-20">
-          {["Home", "Shop", "Brands", "About", "Contact"].map((link) => (
-            <Link
-              key={link}
-              href={`/${link.toLowerCase()}`}
-              className="cursor-pointer hover:scale-110 hover:text-[#BD955E] transition duration-200"
-              onClick={() => setNavOpen(false)}
-            >
-              {link}
-            </Link>
-          ))}
         </div>
-      </div>
+      )}
 
-      {/* MiniCart with Backdrop Blur */}
+      {/* ===================== NAV OVERLAY ===================== */}
+      <AnimatePresence>
+        {navOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center md:hidden"
+          >
+            <button
+              onClick={() => setNavOpen(false)}
+              className="absolute top-6 right-6 text-white text-3xl"
+            >
+              ×
+            </button>
+
+            <Link href="/" onClick={() => setNavOpen(false)}>
+              <Image
+                src="/logowhite.png"
+                height={60}
+                width={60}
+                alt="logo"
+                className="mb-12"
+              />
+            </Link>
+
+            <div className="flex flex-col gap-10 text-white text-lg tracking-widest uppercase">
+              {["Home", "Shop", "Brands", "About", "Contact"].map((link) => (
+                <Link
+                  key={link}
+                  href={`/${link.toLowerCase()}`}
+                  onClick={() => setNavOpen(false)}
+                  className="hover:text-[#BD955E] transition duration-300"
+                >
+                  {link}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ===================== CART ===================== */}
       <AnimatePresence>
         {cartOpen && (
           <>
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.7 }}
+              animate={{ opacity: 0.6 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black backdrop-blur-md z-40"
               onClick={() => setCartOpen(false)}
             />
 
@@ -142,34 +125,33 @@ export default function NavMobile() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 h-full w-80 bg-black z-50 flex flex-col shadow-xl"
+              transition={{ duration: 0.35 }}
+              className="fixed top-0 right-0 h-full w-80 bg-[#0e0e0e] z-50 flex flex-col shadow-2xl border-l border-[#1c1c1c]"
             >
               {/* Header */}
-              <div className="flex justify-between items-center p-5 border-b border-[#222]">
-                <h2 className="text-white text-xl font-semibold">Your Cart</h2>
+              <div className="flex justify-between items-center p-6 border-b border-[#1a1a1a]">
+                <h2 className="text-white text-lg tracking-wider uppercase">
+                  Your Cart
+                </h2>
                 <button
-                  className="text-white text-2xl font-bold"
+                  className="text-white text-2xl"
                   onClick={() => setCartOpen(false)}
                 >
                   ×
                 </button>
               </div>
 
-              {/* Cart Items */}
-              <div className="flex-1 overflow-y-auto p-5 space-y-4">
+              {/* Items */}
+              <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
                 {cart.length === 0 ? (
-                  <p className="text-gray-400 text-center mt-10">
+                  <p className="text-gray-500 text-center mt-16">
                     Your cart is empty.
                   </p>
                 ) : (
                   cart.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex gap-4 items-center border-b border-[#222] pb-3"
-                    >
+                    <div key={item.id} className="flex gap-4">
                       {item.images?.[0] && (
-                        <div className="w-16 h-16 relative rounded-lg overflow-hidden flex-shrink-0">
+                        <div className="w-16 h-16 relative rounded-lg overflow-hidden">
                           <Image
                             src={item.images[0]}
                             alt={item.name}
@@ -178,15 +160,17 @@ export default function NavMobile() {
                           />
                         </div>
                       )}
+
                       <div className="flex-1">
-                        <p className="text-white font-semibold">{item.name}</p>
-                        <p className="text-gray-400 text-sm">{item.brand}</p>
-                        <div className="flex items-center gap-2 mt-2">
+                        <p className="text-white font-medium">{item.name}</p>
+                        <p className="text-gray-500 text-sm">{item.brand}</p>
+
+                        <div className="flex items-center gap-3 mt-3">
                           <button
                             onClick={() =>
                               updateQuantity(item.id, item.quantity - 1)
                             }
-                            className="w-8 h-8 text-white border border-[#333] rounded"
+                            className="w-7 h-7 border border-[#333] text-white rounded"
                           >
                             −
                           </button>
@@ -195,19 +179,14 @@ export default function NavMobile() {
                             onClick={() =>
                               updateQuantity(item.id, item.quantity + 1)
                             }
-                            className="w-8 h-8 text-white border border-[#333] rounded"
+                            className="w-7 h-7 border border-[#333] text-white rounded"
                           >
                             +
                           </button>
-                          <button
-                            onClick={() => removeFromCart(item.id)}
-                            className="ml-auto text-red-500 hover:text-red-600 text-sm"
-                          >
-                            Remove
-                          </button>
                         </div>
                       </div>
-                      <p className="text-[#BD955E] font-bold">
+
+                      <p className="text-[#BD955E] font-semibold">
                         ${(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
@@ -217,22 +196,24 @@ export default function NavMobile() {
 
               {/* Footer */}
               {cart.length > 0 && (
-                <div className="p-5 border-t border-[#222]">
-                  <div className="flex justify-between mb-4 text-lg font-bold text-white">
+                <div className="p-6 border-t border-[#1a1a1a]">
+                  <div className="flex justify-between text-white mb-5 text-lg">
                     <span>Total</span>
-                    <span className="text-[#BD955E]">
+                    <span className="text-[#BD955E] font-bold">
                       ${getTotalPrice().toFixed(2)}
                     </span>
                   </div>
+
                   <button
                     onClick={() => (window.location.href = "/checkout")}
-                    className="w-full bg-[#BD955E] text-black py-3 rounded-lg font-semibold mb-3"
+                    className="w-full bg-gradient-to-r from-[#BD955E] to-[#e6c78b] text-black py-3 rounded-lg font-semibold tracking-wide shadow-lg hover:opacity-90 transition mb-3"
                   >
-                    Checkout
+                    Secure Checkout
                   </button>
+
                   <button
                     onClick={() => setCartOpen(false)}
-                    className="w-full bg-[#111] text-white border border-[#333] py-3 rounded-lg font-semibold"
+                    className="w-full border border-[#333] text-white py-3 rounded-lg font-medium hover:bg-[#111] transition"
                   >
                     Continue Shopping
                   </button>

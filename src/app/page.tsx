@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import AnimatedSection from "./components/AnimatedSection";
 
 export default function Home() {
@@ -10,24 +10,18 @@ export default function Home() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 },
+      transition: { staggerChildren: 0.18 },
     },
   };
 
   const itemFade = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
-
-  interface Product {
-    id: string;
-    name: string;
-    price: number;
-  }
-
-  interface Props {
-    bestSellers: Product[];
-  }
 
   const bestSellers = [
     { id: "coachdreams", name: "Coach Dreams", price: "$150" },
@@ -42,8 +36,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="w-full bg-black overflow-hidden">
-      {/* HERO */}
+    <div className="w-full bg-[#0a0a0a] overflow-hidden">
+      {/* ================= HERO ================= */}
       <main className="relative h-screen w-full">
         <Image
           src="/backgrounds/bg2.jpg"
@@ -53,64 +47,66 @@ export default function Home() {
           className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-black/70 flex justify-end items-end max-sm:justify-center">
-          <AnimatedSection className="mr-16 mb-32 max-sm:mr-0 text-white max-sm:text-center">
-            <p className="text-[10pt] text-[#BD955E] font-semibold">
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40" />
+
+        <div className="absolute inset-0 flex justify-end items-end max-sm:justify-center">
+          <AnimatedSection className="mr-20 mb-36 max-sm:mr-0 text-white max-sm:text-center max-w-xl">
+            <p className="text-sm tracking-[0.3em] uppercase text-[#BD955E]">
               The Aroma Circle
             </p>
 
-            <h1 className="text-[40pt] max-sm:text-[28pt] font-bold mt-2">
-              Luxury Fragrances. Authentic Brands.
+            <h1 className="text-[46pt] max-sm:text-[30pt] font-light leading-tight mt-4">
+              Curated Luxury <br />
+              Fragrance Collection
             </h1>
 
-            <p className="text-[14pt] max-sm:text-[12pt] text-[#BD955E] mt-2">
-              Discover authentic designer fragrances crafted to captivate and
-              inspire.
+            <p className="text-neutral-300 mt-6 text-lg leading-relaxed">
+              Authentic designer scents crafted for distinction, presence, and
+              unforgettable moments.
             </p>
 
             <Link
               href="/shop"
-              className="inline-flex mt-6 w-40 h-14 max-sm:w-32 max-sm:h-12 items-center justify-center bg-[#692437] rounded-md font-semibold transition-all hover:scale-105 hover:bg-[#BD955E]"
+              className="inline-flex mt-8 px-10 py-4 
+              bg-gradient-to-r from-[#BD955E] to-[#e6c78b] 
+              text-black font-semibold tracking-wider rounded-md 
+              shadow-lg hover:opacity-90 transition duration-300"
             >
-              Shop Now
+              Explore Collection
             </Link>
           </AnimatedSection>
         </div>
       </main>
 
-      {/* BRANDS */}
-      <AnimatedSection className="py-20 border-b border-neutral-900 bg-black">
+      {/* ================= BRANDS ================= */}
+      <AnimatedSection className="py-28 border-b border-[#141414]">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          {/* Heading */}
-          <h2 className="text-[32pt] max-sm:text-[24pt] text-white font-semibold tracking-tight">
-            Elite Signature Collections
+          <h2 className="text-[36pt] max-sm:text-[26pt] text-white font-light tracking-tight">
+            Signature Houses
           </h2>
 
-          <p className="text-[#BD955E] mt-3 text-sm tracking-wide uppercase">
-            Discover timeless creations from the world’s most prestigious
-            perfume brands.
+          <p className="text-[#BD955E] mt-4 uppercase tracking-[0.25em] text-xs">
+            The World’s Finest Perfume Brands
           </p>
 
-          {/* Brand Grid */}
-          <div className="flex flex-wrap justify-center gap-8 mt-14">
+          <div className="flex flex-wrap justify-center gap-10 mt-16">
             {["christiandior", "coach", "polo", "versace", "gucci"].map(
               (brand, index) => (
                 <AnimatedSection
                   key={brand}
                   delay={index * 0.1}
-                  className="group w-28 h-28 md:w-32 md:h-32 border border-[#BD955E]/40 rounded-xl 
-                     flex items-center justify-center 
-                     bg-neutral-950 hover:bg-neutral-900
-                     hover:border-[#BD955E]
-                     transition-all duration-300 cursor-pointer"
+                  className="group w-32 h-32 border border-[#BD955E]/30 rounded-2xl 
+                  bg-[#111] hover:bg-[#151515]
+                  hover:border-[#BD955E] transition-all duration-300 
+                  flex items-center justify-center shadow-lg"
                 >
                   <Image
                     src={`/fragranceBrands/${brand}.png`}
-                    alt={`${brand} fragrance brand logo`}
+                    alt={`${brand} brand logo`}
                     width={100}
                     height={100}
-                    className="object-contain opacity-80 group-hover:opacity-100 
-                       transition duration-300"
+                    className="object-contain opacity-70 group-hover:opacity-100 transition duration-300"
                   />
                 </AnimatedSection>
               ),
@@ -119,63 +115,53 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* BEST SELLERS */}
-      <AnimatedSection className="py-24 bg-black border-b border-neutral-900">
+      {/* ================= BEST SELLERS ================= */}
+      <AnimatedSection className="py-28 border-b border-[#141414]">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          {/* Heading */}
-          <h3 className="text-[32pt] max-sm:text-[24pt] text-white font-semibold tracking-tight">
-            Luxury Best Sellers
+          <h3 className="text-[36pt] max-sm:text-[26pt] text-white font-light">
+            Best Sellers
           </h3>
 
-          <p className="text-[#BD955E] mt-3 text-sm uppercase tracking-widest">
-            Best-selling scents that leave a lasting impression — every time.
+          <p className="text-[#BD955E] mt-4 uppercase tracking-[0.25em] text-xs">
+            Timeless Icons of Modern Elegance
           </p>
 
-          {/* Product Grid */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="flex flex-wrap justify-center gap-10 mt-16"
+            className="flex flex-wrap justify-center gap-12 mt-20"
           >
             {bestSellers.map((product) => (
               <motion.div
                 key={product.id}
                 variants={itemFade}
-                whileHover={{ y: -8 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                className="cursor-pointer"
+                whileHover={{ y: -10 }}
+                transition={{ type: "spring", stiffness: 200 }}
               >
                 <Link
                   href={`/shop/${product.id}`}
-                  aria-label={`View ${product.name}`}
-                  className="group block w-47.5 max-sm:w-37.5 
-                     rounded-xl overflow-hidden 
-                     border border-[#BD955E]/40 
-                     bg-neutral-950 hover:bg-neutral-900
-                     transition-all duration-300"
+                  className="group block w-52 rounded-2xl 
+                  bg-[#111] border border-[#BD955E]/25 
+                  hover:border-[#BD955E] transition duration-300 
+                  overflow-hidden shadow-lg"
                 >
-                  {/* Image */}
-                  <div className="relative w-full h-52.5 max-sm:h-40 overflow-hidden">
+                  <div className="relative w-full h-64 overflow-hidden">
                     <Image
                       src={`/products/${product.id}.jpg`}
                       alt={product.name}
                       fill
-                      sizes="(max-width: 640px) 150px, 190px"
-                      className="object-cover object-center 
-                         transition-transform duration-500 
-                         group-hover:scale-110"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
 
-                  {/* Product Info */}
-                  <div className="px-4 py-4 text-center">
-                    <p className="text-white font-medium text-sm tracking-wide truncate">
+                  <div className="px-6 py-5 text-center">
+                    <p className="text-white font-medium tracking-wide">
                       {product.name}
                     </p>
 
-                    <p className="text-[#BD955E] font-semibold text-lg tracking-wider mt-2">
+                    <p className="text-[#BD955E] text-xl mt-3 font-semibold">
                       {product.price}
                     </p>
                   </div>
@@ -186,45 +172,43 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* CATEGORIES */}
-      <AnimatedSection className="w-full border-b border-[#0e0e0e] p-10">
-        <div className="max-w-7xl mx-auto text-center">
-          <h3 className="text-[30pt] max-sm:text-[22pt] text-white font-bold">
-            Refined By Category
+      {/* ================= CATEGORIES ================= */}
+      <AnimatedSection className="py-28">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h3 className="text-[36pt] max-sm:text-[26pt] text-white font-light">
+            Shop by Category
           </h3>
 
-          <p className="text-[#BD955E] mt-2">
-            Find the perfect fragrance—designed for him, her, and every moment
-            in between.
+          <p className="text-[#BD955E] mt-4 uppercase tracking-[0.25em] text-xs">
+            Refined For Every Identity
           </p>
 
-          <AnimatedSection className="flex justify-center gap-8 mt-8 flex-wrap">
+          <div className="flex justify-center gap-12 mt-16 flex-wrap">
             {[
-              { href: "/shop/men", img: "mencat.png", label: "Shop Men" },
-              { href: "/shop/women", img: "womencat.png", label: "Shop Women" },
+              { href: "/shop/men", img: "mencat.png", label: "Men" },
+              { href: "/shop/women", img: "womencat.png", label: "Women" },
             ].map((cat) => (
-              <AnimatedSection key={cat.href} className="cursor-pointer">
-                <Link
-                  href={cat.href}
-                  className="group relative block border-2 border-[#BD955E] rounded-md overflow-hidden"
-                >
-                  <Image
-                    src={`/category/${cat.img}`}
-                    alt={cat.label}
-                    width={160}
-                    height={160}
-                    className="transition-transform duration-300 group-hover:scale-105"
-                  />
+              <Link
+                key={cat.href}
+                href={cat.href}
+                className="group relative block rounded-2xl overflow-hidden border border-[#BD955E]/30 hover:border-[#BD955E] transition duration-300"
+              >
+                <Image
+                  src={`/category/${cat.img}`}
+                  alt={cat.label}
+                  width={220}
+                  height={220}
+                  className="transition-transform duration-500 group-hover:scale-105"
+                />
 
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white font-semibold tracking-wide">
-                      {cat.label}
-                    </span>
-                  </div>
-                </Link>
-              </AnimatedSection>
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                  <span className="text-white text-lg tracking-widest uppercase">
+                    {cat.label}
+                  </span>
+                </div>
+              </Link>
             ))}
-          </AnimatedSection>
+          </div>
         </div>
       </AnimatedSection>
     </div>
