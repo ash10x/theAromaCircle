@@ -168,7 +168,7 @@ export default function Home() {
                   </div>
 
                   <div className="px-6 py-5 text-center">
-                    <p className="text-white font-medium tracking-wide">
+                    <p className="text-white font-medium tracking-wide text-ellipsis whitespace-nowrap overflow-hidden">
                       {product.name}
                     </p>
 
