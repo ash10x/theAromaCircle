@@ -2,26 +2,35 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import AnimatedSection from "./components/AnimatedSection";
 
 export default function Home() {
-  const staggerContainer = {
+  /* ================= ANIMATION VARIANTS ================= */
+
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.18 },
+      transition: {
+        staggerChildren: 0.18,
+      },
     },
   };
 
-  const itemFade = {
+  const itemFade: Variants = {
     hidden: { opacity: 0, y: 25 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1], // luxury smooth ease-out curve
+      },
     },
   };
+
+  /* ================= DATA ================= */
 
   const bestSellers = [
     { id: "coachdreams", name: "Coach Dreams", price: "$150" },
@@ -48,7 +57,7 @@ export default function Home() {
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40" />
+        <div className="absolute inset-0 bg-linear-to-t from-black via-black/70 to-black/40" />
 
         <div className="absolute inset-0 flex justify-end items-end max-sm:justify-center">
           <AnimatedSection className="mr-20 mb-36 max-sm:mr-0 text-white max-sm:text-center max-w-xl">
@@ -137,8 +146,10 @@ export default function Home() {
               <motion.div
                 key={product.id}
                 variants={itemFade}
-                whileHover={{ y: -10 }}
-                transition={{ type: "spring", stiffness: 200 }}
+                whileHover={{
+                  y: -10,
+                  transition: { type: "spring", stiffness: 260, damping: 18 },
+                }}
               >
                 <Link
                   href={`/shop/${product.id}`}
