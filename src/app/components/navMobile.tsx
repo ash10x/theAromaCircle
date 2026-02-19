@@ -153,7 +153,7 @@ export default function NavMobile() {
                       {item.images?.[0] && (
                         <div className="w-16 h-16 relative rounded-lg overflow-hidden">
                           <Image
-                            src={item.images[0]}
+                            src={item.images[0] + ".jpg"}
                             alt={item.name}
                             fill
                             className="object-cover"
