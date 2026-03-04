@@ -46,7 +46,7 @@ export default function NavMobile() {
           >
             <Image src="/icons/cart.svg" height={22} width={22} alt="cart" />
             {cart.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-gradient-to-r from-[#BD955E] to-[#e6c78b] text-black text-[10px] font-bold px-1.5 py-[2px] rounded-full shadow-md">
+              <span className="absolute -top-2 -right-2 bg-linear-to-r from-[#BD955E] to-[#e6c78b] text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-md">
                 {cart.reduce((sum, item) => sum + item.quantity, 0)}
               </span>
             )}

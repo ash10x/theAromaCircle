@@ -49,12 +49,12 @@ export default function ContactPage() {
             {
               icon: Phone,
               title: "Phone",
-              value: "+1 (555) 000-0000",
+              value: "+1 (876) 518-2868",
             },
             {
               icon: MapPin,
               title: "Location",
-              value: "123 Main St, City, State",
+              value: "14 Strand St - China Doll Plaza, Montego Bay, Jamaica",
             },
           ].map((item, index) => (
             <motion.div
