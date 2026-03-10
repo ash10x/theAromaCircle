@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useCart } from "@/app/context/cartContext";
 
 const ITEMS_PER_PAGE = 6;
-const CATEGORIES = ["All", "Men", "Women", "Unisex"];
+const CATEGORIES = ["All", "Men", "Women", "Unisex"] as const;
 
 interface Product {
   id: number;
@@ -33,42 +33,44 @@ export default function ShopPage({ data }: { data: Product[] }) {
   >({});
   const [loadingId, setLoadingId] = useState<number | null>(null);
 
-  /* Sync URL search */
+  /* ================= SYNC URL SEARCH ================= */
+
   useEffect(() => {
     setUrlSearchQuery(urlQuery);
     setCurrentPage(1);
   }, [urlQuery]);
 
-  /* Filter products */
+  /* ================= FILTER PRODUCTS ================= */
+
   const filteredProducts = useMemo(() => {
-    const activeQuery = searchQuery || urlSearchQuery;
-    const normalizedQuery = activeQuery.trim().toLowerCase();
+    const activeQuery = (searchQuery || urlSearchQuery).trim().toLowerCase();
 
     return data.filter((product) => {
-      const matchesCategory =
-        selectedCategory === "All" || product.category === selectedCategory;
+      if (selectedCategory !== "All" && product.category !== selectedCategory)
+        return false;
 
-      if (!normalizedQuery) return matchesCategory;
+      if (!activeQuery) return true;
 
-      const matchesSearch =
-        product.name.toLowerCase().includes(normalizedQuery) ||
-        product.brand.toLowerCase().includes(normalizedQuery);
-
-      return matchesSearch && matchesCategory;
+      return (
+        product.name.toLowerCase().includes(activeQuery) ||
+        product.brand.toLowerCase().includes(activeQuery)
+      );
     });
   }, [data, searchQuery, urlSearchQuery, selectedCategory]);
 
   const totalProducts = filteredProducts.length;
   const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
-  /* Prevent empty pagination edge case */
+  /* ================= FIX PAGINATION EDGE CASE ================= */
+
   useEffect(() => {
     if (currentPage > totalPages && totalPages > 0) {
       setCurrentPage(1);
     }
   }, [totalPages, currentPage]);
 
-  /* Memoized pagination */
+  /* ================= PAGINATION ================= */
+
   const paginatedProducts = useMemo(() => {
     return filteredProducts.slice(
       (currentPage - 1) * ITEMS_PER_PAGE,
@@ -76,37 +78,57 @@ export default function ShopPage({ data }: { data: Product[] }) {
     );
   }, [filteredProducts, currentPage]);
 
-  /* Image navigation */
-  const handleNextImage = (id: number, total: number) => {
+  /* ================= IMAGE NAVIGATION ================= */
+
+  const handleNextImage = useCallback((id: number, total: number) => {
     setCurrentImageIndex((prev) => ({
       ...prev,
       [id]: ((prev[id] || 0) + 1) % total,
     }));
-  };
+  }, []);
 
-  const handlePrevImage = (id: number, total: number) => {
+  const handlePrevImage = useCallback((id: number, total: number) => {
     setCurrentImageIndex((prev) => ({
       ...prev,
       [id]: ((prev[id] || 0) - 1 + total) % total,
     }));
+  }, []);
+
+  /* ================= ADD TO CART ================= */
+
+  const handleAddToCart = async (e: React.MouseEvent, product: Product) => {
+    e.preventDefault();
+
+    if (loadingId === product.id) return;
+
+    setLoadingId(product.id);
+
+    addToCart({ ...product, quantity: 1 });
+    openCart();
+
+    setTimeout(() => setLoadingId(null), 400);
   };
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 md:pt-32">
       {/* Header */}
+
       <section className="text-center px-4 md:px-6 py-8 md:py-10 mb-12 md:mb-16">
         <h1 className="text-2xl md:text-4xl mt-5 font-bold text-[#BD955E]">
           Discover Your Signature Scent
         </h1>
+
         <p className="mt-3 text-sm md:text-base text-gray-400 max-w-md mx-auto">
           Premium fragrances designed to elevate your presence.
         </p>
       </section>
 
-      {/* Search + Filters */}
+      {/* SEARCH + FILTERS */}
+
       <section className="px-4 md:px-6 mb-10 md:mb-14">
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Search */}
+
           <div className="relative">
             <input
               value={searchQuery}
@@ -117,11 +139,13 @@ export default function ShopPage({ data }: { data: Product[] }) {
               placeholder="Search fragrances..."
               className="w-full bg-[#111] border border-[#BD955E]/30 px-5 py-4 rounded-xl focus:outline-none focus:border-[#BD955E] text-sm md:text-base"
             />
+
             <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-[#BD955E]" />
           </div>
 
-          {/* Categories - Horizontal Scroll on Mobile */}
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+          {/* Categories */}
+
+          <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 snap-x">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
@@ -129,7 +153,7 @@ export default function ShopPage({ data }: { data: Product[] }) {
                   setSelectedCategory(cat);
                   setCurrentPage(1);
                 }}
-                className={`px-5 py-3 rounded-full whitespace-nowrap text-sm md:text-base transition min-h-[44px] ${
+                className={`snap-start px-5 py-3 rounded-full whitespace-nowrap text-sm md:text-base transition min-h-[44px] ${
                   selectedCategory === cat
                     ? "bg-[#BD955E] text-black"
                     : "border border-[#BD955E]/40 text-[#BD955E]"
@@ -141,6 +165,7 @@ export default function ShopPage({ data }: { data: Product[] }) {
           </div>
 
           {/* Count */}
+
           {totalProducts > 0 && (
             <p className="text-gray-400 text-xs md:text-sm">
               Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
@@ -151,26 +176,42 @@ export default function ShopPage({ data }: { data: Product[] }) {
         </div>
       </section>
 
-      {/* Grid */}
+      {/* EMPTY STATE */}
+
+      {filteredProducts.length === 0 && (
+        <div className="text-center py-24 text-gray-400">
+          No fragrances found.
+        </div>
+      )}
+
+      {/* GRID */}
+
       <section className="px-4 md:px-6 pb-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           {paginatedProducts.map((product) => {
             const currentIndex = currentImageIndex[product.id] || 0;
 
             return (
-              <Link key={product.id} href={`/product/${product.id}`}>
-                <div className="group bg-[#111] border border-[#1a1a1a] hover:border-[#BD955E]/50 rounded-2xl overflow-hidden transition">
+              <div
+                key={product.id}
+                className="group bg-[#111] border border-[#1a1a1a] 
+                hover:border-[#BD955E]/60 
+                hover:shadow-[0_15px_40px_rgba(189,149,94,0.15)]
+                rounded-2xl overflow-hidden transition"
+              >
+                <Link href={`/shop/product/${product.id}`}>
                   {/* Image */}
+
                   <div className="relative aspect-square">
                     <Image
                       src={product.images[currentIndex] + ".jpg"}
                       alt={product.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
+                      priority={currentPage === 1}
                       className="object-cover transition duration-500"
                     />
 
-                    {/* Overlay */}
                     <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition duration-500" />
 
                     {product.images.length > 1 && (
@@ -197,43 +238,44 @@ export default function ShopPage({ data }: { data: Product[] }) {
                       </>
                     )}
                   </div>
+                </Link>
 
-                  {/* Info */}
-                  <div className="p-5">
-                    <p className="text-xs text-[#BD955E] uppercase tracking-wider">
-                      {product.brand}
-                    </p>
+                {/* Product Info */}
 
+                <div className="p-5">
+                  <p className="text-xs text-[#BD955E] uppercase tracking-wider">
+                    {product.brand}
+                  </p>
+
+                  <Link href={`/product/${product.id}`}>
                     <h3 className="text-base md:text-lg font-semibold mt-1 line-clamp-1">
                       {product.name}
                     </h3>
+                  </Link>
 
-                    <p className="text-[#BD955E] text-lg md:text-xl font-bold mt-2">
-                      ${product.price.toFixed(2)}
-                    </p>
+                  <p className="text-[#BD955E] text-lg md:text-xl font-bold mt-2">
+                    ${product.price.toFixed(2)}{" "}
+                    <span className="text-sm text-[#BD955E]/70 font-semibold tracking-wide">
+                      JMD
+                    </span>
+                  </p>
 
-                    <button
-                      disabled={loadingId === product.id}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setLoadingId(product.id);
-                        addToCart({ ...product, quantity: 1 });
-                        openCart();
-                        setLoadingId(null);
-                      }}
-                      className="mt-4 w-full bg-[#692437] hover:bg-[#692437]/80 py-3 rounded-xl text-sm font-medium transition disabled:opacity-50 min-h-[44px]"
-                    >
-                      {loadingId === product.id ? "Adding..." : "Add to Cart"}
-                    </button>
-                  </div>
+                  <button
+                    disabled={loadingId === product.id}
+                    onClick={(e) => handleAddToCart(e, product)}
+                    className="mt-4 w-full bg-[#692437] hover:bg-[#692437]/80 py-3 rounded-xl text-sm font-medium transition disabled:opacity-50 min-h-11"
+                  >
+                    {loadingId === product.id ? "Adding..." : "Add to Cart"}
+                  </button>
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>
       </section>
 
-      {/* Pagination */}
+      {/* PAGINATION */}
+
       {totalPages > 1 && (
         <section className="pb-20 flex justify-center gap-3 flex-wrap px-4">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
