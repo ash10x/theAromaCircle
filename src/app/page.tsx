@@ -16,7 +16,7 @@ export default function LandingPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center h-screen text-white">
-          Loading...
+          The Aroma Circle
         </div>
       }
     >

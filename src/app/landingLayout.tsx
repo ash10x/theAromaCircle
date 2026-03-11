@@ -167,6 +167,7 @@ export default function Home({ data }: Readonly<{ data: any }>) {
           >
             {data.map(
               (product: {
+                brand: ReactNode;
                 images: any;
                 id: Key | null | undefined;
                 name:
@@ -244,6 +245,9 @@ export default function Home({ data }: Readonly<{ data: any }>) {
                     </div>
 
                     <div className="px-6 py-5 text-center">
+                      <p className="text-[#BD955E] text-sm font-bold tracking-tight uppercase">
+                        {product.brand}
+                      </p>
                       <p className="text-white font-medium tracking-wide text-ellipsis whitespace-nowrap overflow-hidden">
                         {product.name}
                       </p>
