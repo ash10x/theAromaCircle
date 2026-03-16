@@ -44,7 +44,7 @@ export default function ContactPage() {
             {
               icon: Mail,
               title: "Email",
-              value: "contact@example.com",
+              value: "fragrancesthearomacircle@gmail.com",
             },
             {
               icon: Phone,
