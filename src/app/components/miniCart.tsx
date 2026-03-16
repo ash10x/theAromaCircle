@@ -17,10 +17,10 @@ export default function MiniCart({
   const { cart, updateQuantity, removeFromCart, getTotalPrice, closeCart } =
     useCart();
 
-  const total = getTotalPrice();
   const pathname = usePathname();
+  const total = getTotalPrice();
 
-  /* Close cart automatically when navigating to cart pages */
+  /* Close cart automatically when navigating */
   useEffect(() => {
     if (pathname.startsWith("/cart") || pathname.startsWith("/checkout")) {
       closeCart();
@@ -31,7 +31,7 @@ export default function MiniCart({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Background Overlay */}
+          {/* Overlay */}
           <motion.div
             className="fixed inset-0 bg-black/50 z-40"
             initial={{ opacity: 0 }}
@@ -42,28 +42,28 @@ export default function MiniCart({
 
           {/* Cart Panel */}
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            initial={{ opacity: 0, y: -20, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            exit={{ opacity: 0, y: -20, scale: 0.96 }}
             transition={{ duration: 0.25 }}
             className="fixed top-16 right-4 sm:right-6 w-72 sm:w-80 bg-[#0a0a0a] border border-[#BD955E] rounded-xl shadow-xl z-50 p-4 flex flex-col gap-4 max-h-[80vh]"
           >
             {/* Header */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex justify-between items-center">
               <h2 className="text-lg font-bold text-[#BD955E]">Cart</h2>
 
               <button
                 onClick={onClose}
-                className="text-white hover:text-[#BD955E] font-bold text-xl"
+                className="text-white hover:text-[#BD955E] text-xl font-bold"
                 aria-label="Close cart"
               >
                 ✕
               </button>
             </div>
 
-            {/* Empty State */}
+            {/* Empty Cart */}
             {cart.length === 0 ? (
-              <p className="text-white text-sm text-center py-4">
+              <p className="text-white text-sm text-center py-6">
                 Your cart is empty
               </p>
             ) : (
@@ -71,9 +71,10 @@ export default function MiniCart({
                 {/* Cart Items */}
                 <div className="flex flex-col gap-3 overflow-y-auto max-h-[50vh] pr-1">
                   {cart.map((item) => {
-                    const imageSrc = item.images?.[0]
-                      ? `/products/${item.images[0]}.jpg`
-                      : "/products/placeholder.jpg";
+                    const imageSrc =
+                      item.images && item.images.length > 0
+                        ? `${item.images[0]}.jpg`
+                        : "/products/placeholder.jpg";
 
                     return (
                       <div
@@ -87,11 +88,16 @@ export default function MiniCart({
                             alt={item.name}
                             fill
                             sizes="64px"
+                            quality={85}
                             className="object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "/products/placeholder.jpg";
+                            }}
                           />
                         </div>
 
-                        {/* Info */}
+                        {/* Product Info */}
                         <div className="flex-1 flex flex-col gap-1">
                           <p className="text-white font-semibold text-sm sm:text-base line-clamp-2">
                             {item.name}
@@ -107,13 +113,13 @@ export default function MiniCart({
                               onClick={() =>
                                 updateQuantity(item.id, item.quantity - 1)
                               }
-                              className="px-3 py-1 bg-[#BD955E] text-black rounded-lg hover:bg-[#a6854e] transition disabled:opacity-50"
                               disabled={item.quantity <= 1}
+                              className="px-3 py-1 bg-[#BD955E] text-black rounded-lg hover:bg-[#a6854e] transition disabled:opacity-50"
                             >
                               -
                             </button>
 
-                            <span className="text-white text-sm">
+                            <span className="text-white text-sm w-4 text-center">
                               {item.quantity}
                             </span>
 
@@ -140,7 +146,7 @@ export default function MiniCart({
                 </div>
 
                 {/* Total */}
-                <div className="mt-3 border-t border-[#BD955E] pt-3 flex justify-between items-center">
+                <div className="border-t border-[#BD955E] pt-3 flex justify-between items-center">
                   <p className="text-white font-bold">Total:</p>
 
                   <p className="text-[#BD955E] font-bold">
@@ -148,8 +154,8 @@ export default function MiniCart({
                   </p>
                 </div>
 
-                {/* Actions */}
-                <div className="flex flex-col gap-2 mt-3">
+                {/* Buttons */}
+                <div className="flex flex-col gap-2">
                   <Link href="/cart" onClick={closeCart}>
                     <button className="w-full bg-[#692437] py-2 rounded-lg font-semibold text-white hover:bg-[#a6854e] transition">
                       View Cart
