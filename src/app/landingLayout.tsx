@@ -406,8 +406,8 @@ export default function Home({ data }: Readonly<{ data: any }>) {
           <div className="flex justify-center gap-8 mt-16 flex-wrap">
             {[
               { href: "/shop/men", img: "mencat.png", label: "Men" },
-              { href: "/shop/women", img: "womencat.png", label: "Women" },
-              { href: "/shop/unisex", img: "unisexcat.png", label: "Unisex" },
+              { href: "/shop/women", img: "woman.jpg", label: "Women" },
+              { href: "/shop/unisex", img: "unisex.jpg", label: "Unisex" },
             ].map((cat) => (
               <Link
                 key={cat.href}

@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingBag, X } from "lucide-react";
-import { useState } from "react";
-import AnimatedSection from "../../components/AnimatedSection";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useState, useCallback } from "react";
 import { useCart } from "@/app/context/cartContext";
 
 interface Product {
@@ -27,12 +26,25 @@ export default function CategoryPageClient({
   description: string;
   heroImage: string;
 }) {
-  const { addToCart } = useCart();
-  const [toast, setToast] = useState<{ message: string; id: number } | null>(
-    null,
-  );
+  const { addToCart, openCart } = useCart();
+  const [loadingId, setLoadingId] = useState<number | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<Record<number, number>>({});
 
-  const handleAddToCart = (product: Product) => {
+  const handleNextImage = useCallback((id: number, total: number) => {
+    setCurrentImageIndex((prev) => ({ ...prev, [id]: ((prev[id] || 0) + 1) % total }));
+  }, []);
+
+  const handlePrevImage = useCallback((id: number, total: number) => {
+    setCurrentImageIndex((prev) => ({
+      ...prev,
+      [id]: ((prev[id] || 0) - 1 + total) % total,
+    }));
+  }, []);
+
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+    e.preventDefault();
+    if (loadingId === product.id) return;
+    setLoadingId(product.id);
     addToCart({
       id: product.id,
       name: product.name,
@@ -41,120 +53,201 @@ export default function CategoryPageClient({
       images: product.images,
       brand: product.brand,
     });
-
-    const toastId = Date.now();
-    setToast({ message: `${product.name} added to cart!`, id: toastId });
-
-    setTimeout(() => {
-      setToast((prev) => (prev?.id === toastId ? null : prev));
-    }, 3000);
+    openCart();
+    setTimeout(() => setLoadingId(null), 400);
   };
 
   return (
-    <div className="bg-black min-h-screen text-white">
-      <div className="relative h-[55vh] w-full overflow-hidden">
+    <div className="min-h-screen bg-[#080808] text-white">
+
+      {/* ── HERO ── */}
+      <div className="relative h-[75vh] w-full overflow-hidden">
         <Image
           src={heroImage}
           alt={title}
           fill
           priority
-          className="object-cover opacity-90"
+          sizes="100vw"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40 flex items-center justify-center text-center px-6">
-          <div className="max-w-3xl">
-            <p className="text-sm uppercase tracking-[0.35em] text-[#BD955E] mb-4">
-              Exclusive luxury collection
-            </p>
-            <h1 className="text-[44px] font-semibold leading-tight text-white max-sm:text-[32px]">
+        {/* layered overlays for cinematic depth */}
+        <div className="absolute inset-0 bg-linear-to-t from-[#080808] via-[#080808]/60 to-black/25" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/40 via-transparent to-transparent" />
+
+        {/* Text — anchored to bottom of hero, always below nav */}
+        <div className="absolute inset-x-0 bottom-0 px-8 md:px-16 pb-14">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-4 mb-5">
+              <span className="w-8 h-px bg-[#BD955E]/60" />
+              <p
+                style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                className="text-[10px] text-[#BD955E] tracking-[0.45em] uppercase font-light"
+              >
+                Our Collection
+              </p>
+            </div>
+
+            <h1
+              style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+              className="text-[42pt] max-sm:text-[28pt] font-light text-white leading-[1.05] mb-6"
+            >
               {title}
             </h1>
-            <p className="mt-6 text-neutral-300 text-base md:text-lg">
+
+            <p
+              style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+              className="text-white/55 text-sm font-light leading-relaxed tracking-wide max-w-md"
+            >
               {description}
             </p>
+
+            <div className="flex items-center gap-6 mt-8 flex-wrap">
+              {[
+                "1–2 Day In-Store Collection",
+                "Smell Before You Buy",
+                "Gov't ID Required for Pickup",
+              ].map((note) => (
+                <div key={note} className="flex items-center gap-2">
+                  <span className="w-3 h-px bg-[#BD955E]/40" />
+                  <p
+                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    className="text-[10px] text-white/30 tracking-[0.3em] uppercase font-light"
+                  >
+                    {note}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <AnimatedSection className="max-w-7xl mx-auto px-6 sm:px-10 py-16">
-        <div className="text-center mb-12">
-          <p className="text-[#BD955E] uppercase tracking-[0.35em] text-sm mb-3">
-            Handpicked for you
+      {/* ── COLLECTION COUNT ── */}
+      <section className="px-6 py-8 border-b border-white/4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <p
+            style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+            className="text-white/20 text-xs tracking-wider"
+          >
+            {data.length} fragrance{data.length !== 1 ? "s" : ""} in this collection
           </p>
-          <h2 className="text-[32px] font-semibold">Signature pieces</h2>
+          <Link
+            href="/shop"
+            style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+            className="text-[10px] text-white/25 tracking-[0.3em] uppercase hover:text-[#BD955E] transition-colors duration-300"
+          >
+            ← All Fragrances
+          </Link>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {data.map((product) => (
-            <AnimatedSection key={product.id}>
-              <div className="group relative overflow-hidden rounded-[32px] border border-[#434343] bg-[#121212] shadow-[0_25px_80px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#BD955E]/50">
+      {/* ── PRODUCT GRID ── */}
+      <section className="px-6 py-16">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {data.map((product) => {
+            const currentIndex = currentImageIndex[product.id] || 0;
+            return (
+              <div
+                key={product.id}
+                className="group overflow-hidden bg-[#0D0D0D] border border-white/6 hover:border-[#BD955E]/25 transition-all duration-500 hover:-translate-y-1"
+              >
                 <Link href={`/shop/product/${product.id}`}>
-                  <div className="relative h-[320px] overflow-hidden">
+                  <div className="relative aspect-square overflow-hidden">
                     <Image
-                      src={
-                        product.images?.[0]
-                          ? `${product.images[0]}.jpg`
-                          : "/placeholder.png"
-                      }
+                      src={product.images[currentIndex] + ".jpg"}
                       alt={product.name}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-5 py-4">
-                      <p className="text-xs uppercase tracking-[0.35em] text-[#BD955E]">
-                        {product.brand}
-                      </p>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
+
+                    <div className="absolute left-4 top-4">
+                      <span
+                        style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                        className="text-[9px] tracking-[0.4em] uppercase text-[#BD955E] bg-black/60 px-3 py-1.5"
+                      >
+                        Premium
+                      </span>
                     </div>
+
+                    {product.images.length > 1 && (
+                      <>
+                        <button
+                          onClick={(e) => { e.preventDefault(); handlePrevImage(product.id, product.images.length); }}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 p-2.5 text-white/70 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        >
+                          <ArrowLeft size={16} strokeWidth={1.5} />
+                        </button>
+                        <button
+                          onClick={(e) => { e.preventDefault(); handleNextImage(product.id, product.images.length); }}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 p-2.5 text-white/70 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        >
+                          <ArrowRight size={16} strokeWidth={1.5} />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </Link>
 
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold leading-tight text-white mb-3 line-clamp-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-neutral-400 text-sm mb-4">
-                    {product.category}
+                  <div className="flex items-center justify-between mb-3">
+                    <p
+                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      className="text-[10px] tracking-[0.35em] uppercase text-[#BD955E] font-light"
+                    >
+                      {product.brand}
+                    </p>
+                    <span
+                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      className="text-[9px] tracking-[0.25em] uppercase text-white/25 border border-white/8 px-2.5 py-1"
+                    >
+                      {product.category}
+                    </span>
+                  </div>
+
+                  <Link href={`/shop/product/${product.id}`}>
+                    <h3
+                      style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                      className="text-xl font-light text-white hover:text-[#BD955E] transition-colors duration-300 leading-tight line-clamp-2"
+                    >
+                      {product.name}
+                    </h3>
+                  </Link>
+
+                  <p
+                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    className="text-[#BD955E] text-xl font-light mt-5"
+                  >
+                    ${product.price.toFixed(2)}
+                    <span className="text-[10px] text-[#BD955E]/40 ml-1 tracking-wider">JMD</span>
                   </p>
 
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-[#BD955E] text-lg font-bold">
-                        ${product.price.toFixed(2)}
-                      </p>
-                      <p className="text-xs uppercase tracking-[0.35em] text-neutral-500 mt-1">
-                        Premium quality
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => handleAddToCart(product)}
-                      aria-label={`Add ${product.name} to cart`}
-                      className="rounded-full bg-[#BD955E] px-5 py-3 text-black text-sm font-semibold transition hover:bg-[#d1b273]"
-                    >
-                      Add
-                    </button>
-                  </div>
+                  <button
+                    disabled={loadingId === product.id}
+                    onClick={(e) => handleAddToCart(e, product)}
+                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    className="mt-5 w-full border border-[#BD955E]/40 text-[#BD955E] py-3 text-[11px] tracking-[0.25em] uppercase font-light hover:bg-[#BD955E] hover:text-black transition-all duration-400 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {loadingId === product.id ? "Adding…" : "Add to Cart"}
+                  </button>
                 </div>
               </div>
-            </AnimatedSection>
-          ))}
+            );
+          })}
         </div>
-      </AnimatedSection>
 
-      {toast && (
-        <div className="fixed bottom-6 left-1/2 z-50 w-[min(92vw,420px)] -translate-x-1/2 rounded-3xl bg-[#BD955E] px-6 py-4 text-black shadow-2xl">
-          <div className="flex items-center justify-between gap-4">
-            <span className="font-medium">{toast.message}</span>
-            <button
-              type="button"
-              aria-label="Close toast"
-              onClick={() => setToast(null)}
-              className="opacity-80 hover:opacity-100"
+        {data.length === 0 && (
+          <div className="text-center py-28">
+            <p
+              style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+              className="text-white/20 text-2xl font-light italic"
             >
-              <X size={18} />
-            </button>
+              No fragrances in this collection yet.
+            </p>
           </div>
-        </div>
-      )}
+        )}
+      </section>
     </div>
   );
 }
