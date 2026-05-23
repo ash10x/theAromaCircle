@@ -111,6 +111,7 @@ export default function ShopPage({ data }: { data: Product[] }) {
             "1–2 Day In-Store Collection",
             "Smell Before You Buy",
             "100% Authentic",
+            "Gov't ID Required for Pickup",
           ].map((note) => (
             <div key={note} className="flex items-center gap-2">
               <span className="w-3 h-px bg-[#BD955E]/40" />

@@ -363,7 +363,7 @@ export default function Home({ data }: Readonly<{ data: any }>) {
             },
             {
               label: "1–2 Day Collection",
-              body: "Place your pre-order online and collect your fragrance in-store within 1–2 days.",
+              body: "Place your pre-order online and collect your fragrance in-store within 1–2 days. A valid government-issued ID is required at collection.",
             },
           ].map((item) => (
             <div key={item.label} className="px-10 py-4 first:pl-0 last:pr-0">

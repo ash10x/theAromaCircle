@@ -176,6 +176,12 @@ export default function CheckoutPage() {
                 </p>
                 <p
                   style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                  className="text-[#BD955E]/70 text-xs font-light mt-3 tracking-wide"
+                >
+                  A valid government-issued ID is required at the time of collection.
+                </p>
+                <p
+                  style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
                   className="text-white/40 text-xs mt-2 tracking-wide"
                 >
                   {STORE_ADDRESS}
@@ -286,6 +292,7 @@ export default function CheckoutPage() {
                   "Ready for collection in 1–2 days",
                   "Smell before you commit in-store",
                   "100% authentic fragrances",
+                  "Valid gov't ID required for pickup",
                 ].map((note) => (
                   <div key={note} className="flex items-center gap-2.5">
                     <span className="w-3 h-px bg-[#BD955E]/40 shrink-0" />

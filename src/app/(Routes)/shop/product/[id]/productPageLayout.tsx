@@ -256,7 +256,7 @@ export default function ProductPage({ product }: { product: Product }) {
               style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
               className="text-white/20 text-[10px] tracking-[0.35em] uppercase font-light"
             >
-              100% Authentic · Smell In-Store Before Purchase · Ready in 1–2 Days
+              100% Authentic · Smell In-Store Before Purchase · Ready in 1–2 Days · Gov't ID Required for Pickup
             </p>
           </div>
         </motion.div>

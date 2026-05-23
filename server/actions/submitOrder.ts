@@ -3,7 +3,6 @@
 import { db } from "../index";
 import { orders } from "../schema";
 import { sendEmail } from "../mailer";
-import { sendWhatsApp } from "../whatsapp";
 
 export type OrderItem = {
   id: number;
@@ -263,38 +262,6 @@ function buildAdminEmail(payload: OrderPayload, timestamp: number) {
   return baseWrapper(content);
 }
 
-// ─── whatsapp message ─────────────────────────────────────────────────────────
-
-function buildWhatsAppMessage(payload: OrderPayload, timestamp: number) {
-  const itemLines = payload.cart
-    .map((item) => {
-      const brand = item.brand ? ` (${item.brand})` : "";
-      return `  • ${item.name}${brand}\n    Qty: ${item.quantity}  |  $${(item.price * item.quantity).toFixed(2)} JMD`;
-    })
-    .join("\n");
-
-  const time = new Date(timestamp).toLocaleString("en-JM", {
-    timeZone: "America/Jamaica",
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
-
-  return (
-    `*NEW PRE-ORDER — THE AROMA CIRCLE*\n` +
-    `─────────────────────────\n` +
-    `*CUSTOMER*\n` +
-    `Name:  ${payload.name}\n` +
-    `Phone: ${payload.phone}\n` +
-    `Email: ${payload.email}\n\n` +
-    `*ITEMS ORDERED*\n` +
-    `${itemLines}\n\n` +
-    `*TOTAL:  $${payload.total.toFixed(2)} JMD*\n` +
-    `─────────────────────────\n` +
-    `Collection: ${payload.address}\n` +
-    `Placed: ${time}`
-  );
-}
-
 // ─── main export ──────────────────────────────────────────────────────────────
 
 export async function submitOrder(payload: OrderPayload) {
@@ -331,8 +298,6 @@ export async function submitOrder(payload: OrderPayload) {
       html: buildAdminEmail(payload, timestamp),
     });
   }
-
-  await sendWhatsApp(buildWhatsAppMessage(payload, timestamp));
 
   return { success: true };
 }
