@@ -213,7 +213,7 @@ function buildAdminEmail(payload: OrderPayload, timestamp: number) {
                     </tr>
                     <tr>
                       <td style="padding:4px 0;"><p style="margin:0;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:${textDim};">Time</p></td>
-                      <td style="padding:4px 0;"><p style="margin:0;font-size:13px;color:${textMuted};">${new Date(timestamp).toLocaleString("en-JM", { timeZone: "America/Jamaica" })}</p></td>
+                      <td style="padding:4px 0;"><p style="margin:0;font-size:13px;color:${textMuted};">${new Date(timestamp * 1000).toLocaleString("en-JM", { timeZone: "America/Jamaica" })}</p></td>
                     </tr>
                   </table>
                 </td></tr>
@@ -269,7 +269,7 @@ export async function submitOrder(payload: OrderPayload) {
     throw new Error("Cart cannot be empty.");
   }
 
-  const timestamp = Date.now();
+  const timestamp = Math.floor(Date.now() / 1000);
 
   const orderRecords = payload.cart.map((item) => ({
     user_name: payload.name,
