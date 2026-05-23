@@ -29,7 +29,9 @@ export default function NavMobile() {
   /* Lock body scroll when nav or cart is open */
   useEffect(() => {
     document.body.style.overflow = navOpen || cartOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [navOpen, cartOpen]);
 
   return (
@@ -38,7 +40,13 @@ export default function NavMobile() {
       {!navOpen && (
         <div className="fixed top-0 left-0 right-0 flex items-center justify-between px-5 py-4 bg-[#080808]/95 backdrop-blur-md z-50 md:hidden border-b border-white/[0.06]">
           <Link href="/">
-            <Image src="/logomobile.svg" height={28} width={120} alt="The Aroma Circle" className="h-7 w-auto" />
+            <Image
+              src="/logomobile.svg"
+              height={25}
+              width={100}
+              alt="The Aroma Circle"
+              className="h-5 w-auto"
+            />
           </Link>
 
           <div className="flex items-center gap-5">
@@ -85,7 +93,12 @@ export default function NavMobile() {
             </button>
 
             <Link href="/" onClick={() => setNavOpen(false)} className="mb-14">
-              <Image src="/logowhite.png" height={52} width={52} alt="The Aroma Circle" />
+              <Image
+                src="/logowhite.png"
+                height={52}
+                width={52}
+                alt="The Aroma Circle"
+              />
             </Link>
 
             <div className="flex flex-col items-center gap-9">
@@ -94,12 +107,18 @@ export default function NavMobile() {
                   key={link}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    duration: 0.4,
+                    delay: i * 0.07,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                 >
                   <Link
                     href={`/${link === "Home" ? "" : link.toLowerCase()}`}
                     onClick={() => setNavOpen(false)}
-                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    style={{
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                    }}
                     className="text-white/60 text-[11px] tracking-[0.35em] uppercase hover:text-[#BD955E] transition-colors duration-300"
                   >
                     {link}
@@ -146,13 +165,17 @@ export default function NavMobile() {
               <div className="flex justify-between items-center px-7 py-6 border-b border-white/[0.06]">
                 <div>
                   <p
-                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    style={{
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                    }}
                     className="text-[10px] text-white/30 tracking-[0.35em] uppercase mb-0.5"
                   >
                     Your Selection
                   </p>
                   <h2
-                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                    style={{
+                      fontFamily: "var(--font-cormorant), Georgia, serif",
+                    }}
                     className="text-white text-xl font-light tracking-wide"
                   >
                     Cart
@@ -170,9 +193,16 @@ export default function NavMobile() {
               <div className="flex-1 overflow-y-auto px-7 py-6 space-y-7">
                 {cart.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full gap-4 pb-10">
-                    <ShoppingBag size={32} strokeWidth={1} className="text-white/10" />
+                    <ShoppingBag
+                      size={32}
+                      strokeWidth={1}
+                      className="text-white/10"
+                    />
                     <p
-                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      style={{
+                        fontFamily:
+                          "var(--font-dm-sans), system-ui, sans-serif",
+                      }}
                       className="text-white/30 text-sm tracking-wide"
                     >
                       Your cart is empty
@@ -194,23 +224,34 @@ export default function NavMobile() {
 
                       <div className="flex-1 min-w-0">
                         <p
-                          style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                          style={{
+                            fontFamily:
+                              "var(--font-dm-sans), system-ui, sans-serif",
+                          }}
                           className="text-white text-sm font-medium truncate"
                         >
                           {item.name}
                         </p>
-                        <p className="text-white/30 text-xs mt-0.5 tracking-wide">{item.brand}</p>
+                        <p className="text-white/30 text-xs mt-0.5 tracking-wide">
+                          {item.brand}
+                        </p>
 
                         <div className="flex items-center gap-3 mt-3">
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
                             className="w-6 h-6 border border-white/10 text-white/40 hover:border-[#BD955E]/50 hover:text-[#BD955E] transition text-xs flex items-center justify-center"
                           >
                             −
                           </button>
-                          <span className="text-white text-sm w-4 text-center">{item.quantity}</span>
+                          <span className="text-white text-sm w-4 text-center">
+                            {item.quantity}
+                          </span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
                             className="w-6 h-6 border border-white/10 text-white/40 hover:border-[#BD955E]/50 hover:text-[#BD955E] transition text-xs flex items-center justify-center"
                           >
                             +
@@ -239,12 +280,17 @@ export default function NavMobile() {
                 <div className="px-7 py-6 border-t border-white/[0.06] space-y-4">
                   <div className="flex justify-between items-center">
                     <span
-                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      style={{
+                        fontFamily:
+                          "var(--font-dm-sans), system-ui, sans-serif",
+                      }}
                       className="text-[10px] text-white/40 tracking-[0.3em] uppercase"
                     >
                       Total
                     </span>
-                    <span className="text-[#BD955E] font-medium">${getTotalPrice().toFixed(2)}</span>
+                    <span className="text-[#BD955E] font-medium">
+                      ${getTotalPrice().toFixed(2)}
+                    </span>
                   </div>
 
                   <Link href="/checkout" onClick={() => setCartOpen(false)}>
@@ -255,7 +301,9 @@ export default function NavMobile() {
 
                   <button
                     onClick={() => setCartOpen(false)}
-                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    style={{
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                    }}
                     className="w-full border border-white/10 text-white/40 py-3 text-[11px] tracking-[0.25em] uppercase hover:text-white hover:border-white/20 transition-colors duration-300"
                   >
                     Continue Shopping
