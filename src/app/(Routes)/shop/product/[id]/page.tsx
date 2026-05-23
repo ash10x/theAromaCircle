@@ -1,5 +1,5 @@
 import ProductPage from "./productPageLayout";
-import { getProducts } from "../../../../../../server/actions/getProduct";
+import { getProductById } from "../../../../../../server/actions/getProductById";
 import { notFound } from "next/navigation";
 
 interface Product {
@@ -20,13 +20,8 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params; // unwrap the promise
-
-  const products = await getProducts();
-
-  if (!products || products.length === 0) notFound();
-
-  const product = products.find((p) => p.id === Number(id));
+  const { id } = await params;
+  const product = await getProductById(Number(id));
 
   if (!product) notFound();
 

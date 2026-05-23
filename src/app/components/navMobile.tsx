@@ -5,14 +5,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/app/context/cartContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingBag, X, Menu } from "lucide-react";
+
+const NAV_LINKS = ["Home", "Shop", "Brands", "About", "Contact"];
 
 export default function NavMobile() {
   const [navOpen, setNavOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const { cart, getTotalPrice, updateQuantity, removeFromCart } = useCart();
   const cartRef = useRef<HTMLDivElement>(null);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Close cart on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
@@ -23,135 +26,163 @@ export default function NavMobile() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [cartOpen]);
 
+  /* Lock body scroll when nav or cart is open */
+  useEffect(() => {
+    document.body.style.overflow = navOpen || cartOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [navOpen, cartOpen]);
+
   return (
-    <div className={navOpen ? "overflow-hidden" : "overflow-auto"}>
-      {/* ===================== TOP BAR ===================== */}
+    <div>
+      {/* ── TOP BAR ── */}
       {!navOpen && (
-        <div className="fixed top-0 right-0 flex items-center justify-end gap-4 px-5 py-5 w-full bg-black/95 backdrop-blur-md z-50 md:hidden border-b border-[#1a1a1a]">
-          {/* Logo */}
+        <div className="fixed top-0 left-0 right-0 flex items-center justify-between px-5 py-4 bg-[#080808]/95 backdrop-blur-md z-50 md:hidden border-b border-white/[0.06]">
           <Link href="/">
-            <Image
-              className="absolute left-4 top-4 w-36 h-auto"
-              src="/logomobile.svg"
-              height={140}
-              width={140}
-              alt="logo"
-            />
+            <Image src="/logomobile.svg" height={28} width={120} alt="The Aroma Circle" className="h-7 w-auto" />
           </Link>
 
-          {/* Cart */}
-          <div
-            className="relative cursor-pointer"
-            onClick={() => setCartOpen(true)}
-          >
-            <Image src="/icons/cart.svg" height={22} width={22} alt="cart" />
-            {cart.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-linear-to-r from-[#BD955E] to-[#e6c78b] text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-md">
-                {cart.reduce((sum, item) => sum + item.quantity, 0)}
-              </span>
-            )}
-          </div>
+          <div className="flex items-center gap-5">
+            <button
+              className="relative text-white/50 hover:text-[#BD955E] transition-colors"
+              onClick={() => setCartOpen(true)}
+              aria-label="Cart"
+            >
+              <ShoppingBag size={18} strokeWidth={1.5} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1.5 -right-2 bg-[#BD955E] text-black rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-semibold">
+                  {totalItems}
+                </span>
+              )}
+            </button>
 
-          {/* Menu */}
-          <Image
-            className="w-6 h-auto cursor-pointer"
-            src="/icons/menu.svg"
-            height={24}
-            width={24}
-            alt="menu"
-            onClick={() => setNavOpen(true)}
-          />
+            <button
+              onClick={() => setNavOpen(true)}
+              className="text-white/50 hover:text-white transition-colors"
+              aria-label="Open menu"
+            >
+              <Menu size={18} strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       )}
 
-      {/* ===================== NAV OVERLAY ===================== */}
+      {/* ── NAV OVERLAY ── */}
       <AnimatePresence>
         {navOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center md:hidden"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-[#080808] z-50 flex flex-col items-center justify-center md:hidden"
           >
             <button
               onClick={() => setNavOpen(false)}
-              className="absolute top-6 right-6 text-white text-3xl"
+              className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors"
+              aria-label="Close menu"
             >
-              ×
+              <X size={20} strokeWidth={1.5} />
             </button>
 
-            <Link href="/" onClick={() => setNavOpen(false)}>
-              <Image
-                src="/logowhite.png"
-                height={60}
-                width={60}
-                alt="logo"
-                className="mb-12"
-              />
+            <Link href="/" onClick={() => setNavOpen(false)} className="mb-14">
+              <Image src="/logowhite.png" height={52} width={52} alt="The Aroma Circle" />
             </Link>
 
-            <div className="flex flex-col gap-10 text-white text-lg tracking-widest uppercase">
-              {["Home", "Shop", "Brands", "About", "Contact"].map((link) => (
-                <Link
+            <div className="flex flex-col items-center gap-9">
+              {NAV_LINKS.map((link, i) => (
+                <motion.div
                   key={link}
-                  href={`/${link.toLowerCase()}`}
-                  onClick={() => setNavOpen(false)}
-                  className="hover:text-[#BD955E] transition duration-300"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {link}
-                </Link>
+                  <Link
+                    href={`/${link === "Home" ? "" : link.toLowerCase()}`}
+                    onClick={() => setNavOpen(false)}
+                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    className="text-white/60 text-[11px] tracking-[0.35em] uppercase hover:text-[#BD955E] transition-colors duration-300"
+                  >
+                    {link}
+                  </Link>
+                </motion.div>
               ))}
+            </div>
+
+            <div className="absolute bottom-10 flex gap-1 items-center">
+              <span className="w-8 h-px bg-white/10" />
+              <p
+                style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                className="text-white/20 text-sm tracking-widest italic px-3"
+              >
+                The Aroma Circle
+              </p>
+              <span className="w-8 h-px bg-white/10" />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ===================== CART ===================== */}
+      {/* ── CART PANEL ── */}
       <AnimatePresence>
         {cartOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black backdrop-blur-md z-40"
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
               onClick={() => setCartOpen(false)}
             />
 
-            {/* Cart Panel */}
             <motion.div
               ref={cartRef}
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.35 }}
-              className="fixed top-0 right-0 h-full w-80 bg-[#0e0e0e] z-50 flex flex-col shadow-2xl border-l border-[#1c1c1c]"
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed top-0 right-0 h-full w-[320px] bg-[#0A0A0A] z-50 flex flex-col border-l border-white/[0.06]"
             >
               {/* Header */}
-              <div className="flex justify-between items-center p-6 border-b border-[#1a1a1a]">
-                <h2 className="text-white text-lg tracking-wider uppercase">
-                  Your Cart
-                </h2>
+              <div className="flex justify-between items-center px-7 py-6 border-b border-white/[0.06]">
+                <div>
+                  <p
+                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    className="text-[10px] text-white/30 tracking-[0.35em] uppercase mb-0.5"
+                  >
+                    Your Selection
+                  </p>
+                  <h2
+                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                    className="text-white text-xl font-light tracking-wide"
+                  >
+                    Cart
+                  </h2>
+                </div>
                 <button
-                  className="text-white text-2xl"
                   onClick={() => setCartOpen(false)}
+                  className="text-white/30 hover:text-white transition-colors"
                 >
-                  ×
+                  <X size={16} strokeWidth={1.5} />
                 </button>
               </div>
 
               {/* Items */}
-              <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+              <div className="flex-1 overflow-y-auto px-7 py-6 space-y-7">
                 {cart.length === 0 ? (
-                  <p className="text-gray-500 text-center mt-16">
-                    Your cart is empty.
-                  </p>
+                  <div className="flex flex-col items-center justify-center h-full gap-4 pb-10">
+                    <ShoppingBag size={32} strokeWidth={1} className="text-white/10" />
+                    <p
+                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      className="text-white/30 text-sm tracking-wide"
+                    >
+                      Your cart is empty
+                    </p>
+                  </div>
                 ) : (
                   cart.map((item) => (
                     <div key={item.id} className="flex gap-4">
                       {item.images?.[0] && (
-                        <div className="w-16 h-16 relative rounded-lg overflow-hidden">
+                        <div className="w-16 h-16 relative overflow-hidden shrink-0 bg-[#111]">
                           <Image
                             src={item.images[0] + ".jpg"}
                             alt={item.name}
@@ -161,34 +192,43 @@ export default function NavMobile() {
                         </div>
                       )}
 
-                      <div className="flex-1">
-                        <p className="text-white font-medium">{item.name}</p>
-                        <p className="text-gray-500 text-sm">{item.brand}</p>
+                      <div className="flex-1 min-w-0">
+                        <p
+                          style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                          className="text-white text-sm font-medium truncate"
+                        >
+                          {item.name}
+                        </p>
+                        <p className="text-white/30 text-xs mt-0.5 tracking-wide">{item.brand}</p>
 
                         <div className="flex items-center gap-3 mt-3">
                           <button
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity - 1)
-                            }
-                            className="w-7 h-7 border border-[#333] text-white rounded"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="w-6 h-6 border border-white/10 text-white/40 hover:border-[#BD955E]/50 hover:text-[#BD955E] transition text-xs flex items-center justify-center"
                           >
                             −
                           </button>
-                          <span className="text-white">{item.quantity}</span>
+                          <span className="text-white text-sm w-4 text-center">{item.quantity}</span>
                           <button
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
-                            }
-                            className="w-7 h-7 border border-[#333] text-white rounded"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="w-6 h-6 border border-white/10 text-white/40 hover:border-[#BD955E]/50 hover:text-[#BD955E] transition text-xs flex items-center justify-center"
                           >
                             +
                           </button>
                         </div>
                       </div>
 
-                      <p className="text-[#BD955E] font-semibold">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </p>
+                      <div className="flex flex-col items-end justify-between shrink-0">
+                        <p className="text-[#BD955E] text-sm font-medium">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </p>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="text-white/20 hover:text-white/50 text-xs transition"
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}
@@ -196,24 +236,27 @@ export default function NavMobile() {
 
               {/* Footer */}
               {cart.length > 0 && (
-                <div className="p-6 border-t border-[#1a1a1a]">
-                  <div className="flex justify-between text-white mb-5 text-lg">
-                    <span>Total</span>
-                    <span className="text-[#BD955E] font-bold">
-                      ${getTotalPrice().toFixed(2)}
+                <div className="px-7 py-6 border-t border-white/[0.06] space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span
+                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      className="text-[10px] text-white/40 tracking-[0.3em] uppercase"
+                    >
+                      Total
                     </span>
+                    <span className="text-[#BD955E] font-medium">${getTotalPrice().toFixed(2)}</span>
                   </div>
 
-                  <button
-                    onClick={() => (window.location.href = "/checkout")}
-                    className="w-full bg-gradient-to-r from-[#BD955E] to-[#e6c78b] text-black py-3 rounded-lg font-semibold tracking-wide shadow-lg hover:opacity-90 transition mb-3"
-                  >
-                    Secure Checkout
-                  </button>
+                  <Link href="/checkout" onClick={() => setCartOpen(false)}>
+                    <button className="w-full bg-[#BD955E] py-3.5 text-black text-[11px] tracking-[0.25em] uppercase font-medium hover:bg-[#cca96a] transition-colors duration-300">
+                      Secure Checkout
+                    </button>
+                  </Link>
 
                   <button
                     onClick={() => setCartOpen(false)}
-                    className="w-full border border-[#333] text-white py-3 rounded-lg font-medium hover:bg-[#111] transition"
+                    style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                    className="w-full border border-white/10 text-white/40 py-3 text-[11px] tracking-[0.25em] uppercase hover:text-white hover:border-white/20 transition-colors duration-300"
                   >
                     Continue Shopping
                   </button>

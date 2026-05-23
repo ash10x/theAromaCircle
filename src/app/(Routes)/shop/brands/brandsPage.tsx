@@ -22,6 +22,8 @@ export default function HomePage({ data }: { data: Product[] }) {
     name: "",
     email: "",
   });
+  const [status, setStatus] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
@@ -30,15 +32,28 @@ export default function HomePage({ data }: { data: Product[] }) {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setStatus(null);
+    setIsPending(true);
 
-    console.log("Newsletter Signup:", formValues);
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      });
 
-    setFormValues({
-      name: "",
-      email: "",
-    });
+      if (!response.ok) throw new Error("Subscription failed.");
+
+      setStatus("You’re subscribed to exclusive fragrance drops.");
+      setFormValues({ name: "", email: "" });
+    } catch (error) {
+      console.error(error);
+      setStatus("Unable to subscribe right now. Please try again later.");
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
@@ -176,10 +191,13 @@ export default function HomePage({ data }: { data: Product[] }) {
 
           <button
             type="submit"
-            className="bg-[#BD955E] text-black px-8 py-3 rounded-full hover:bg-[#BD955E]/80 transition-all"
+            disabled={isPending}
+            className="w-full rounded-full bg-[#BD955E] text-black px-8 py-3 font-semibold transition hover:bg-[#BD955E]/80 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Subscribe
+            {isPending ? "Subscribing..." : "Subscribe"}
           </button>
+
+          {status && <p className="text-sm text-[#d1c59b] mt-3">{status}</p>}
         </form>
       </section>
     </main>

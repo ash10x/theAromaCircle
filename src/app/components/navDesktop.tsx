@@ -4,9 +4,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Search, ShoppingBag } from "lucide-react";
 import { useCart } from "../context/cartContext";
 import MiniCart from "./miniCart";
 import { useRouter, usePathname } from "next/navigation";
+
+const NAV_LINKS = [
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "Brands", href: "/shop/brands" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function NavDesktop() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,122 +29,170 @@ export default function NavDesktop() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // Scroll listener
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Search submit
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/shop?search=${encodeURIComponent(searchText)}`);
     setIsSearchOpen(false);
+    setSearchText("");
   };
 
   return (
     <motion.nav
       initial={false}
       animate={{
-        height: isScrolled ? 100 : 175,
-        backgroundColor: isScrolled ? "rgba(0,0,0,1)" : "rgba(0,0,0,0.7)",
+        height: isScrolled ? 68 : 156,
+        backgroundColor: isScrolled ? "rgba(8,8,8,0.97)" : "rgba(8,8,8,0.60)",
       }}
-      transition={{ duration: reduceMotion ? 0 : 0.4, ease: "easeOut" }}
-      className="fixed top-0 z-50 w-full flex flex-col items-center pb-5 border-b border-[#0e0e0e] max-sm:hidden backdrop-blur-sm"
+      transition={{
+        duration: reduceMotion ? 0 : 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="fixed top-0 z-50 w-full flex flex-col items-center border-b border-white/[0.06] max-sm:hidden backdrop-blur-md"
     >
-      {/* Promo Bar */}
-      <div className="p-2.5 w-full bg-[#692437] flex justify-center items-center">
-        <p className="text-white text-[9.8pt] font-semibold tracking-wide text-center">
-          Free Shipping on Orders Over $75 | 100% Authentic Fragrances
-        </p>
-      </div>
-
-      {/* Logo */}
+      {/* Promo bar — collapses on scroll */}
       <motion.div
         initial={false}
-        animate={{ opacity: isScrolled ? 0 : 1, height: isScrolled ? 0 : 80 }}
-        transition={{ duration: reduceMotion ? 0 : 0.3 }}
-        className="overflow-hidden mt-1.5"
+        animate={{
+          height: isScrolled ? 0 : "auto",
+          opacity: isScrolled ? 0 : 1,
+        }}
+        transition={{ duration: reduceMotion ? 0 : 0.35 }}
+        className="overflow-hidden w-full"
       >
-        <Link href="/">
+        <div className="w-full bg-[#0A0A0A] border-b border-white/[0.04] flex justify-center items-center px-6 py-2">
+          <p
+            style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+            className="text-white/40 text-[10px] font-light tracking-[0.4em] uppercase"
+          >
+            1–2 Day In-Store Collection&nbsp;&nbsp;·&nbsp;&nbsp;Smell Before You Buy&nbsp;&nbsp;·&nbsp;&nbsp;100% Authentic Fragrances
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Logo row — collapses on scroll */}
+      <motion.div
+        initial={false}
+        animate={{ height: isScrolled ? 0 : 80, opacity: isScrolled ? 0 : 1 }}
+        transition={{ duration: reduceMotion ? 0 : 0.35 }}
+        className="overflow-hidden flex items-center justify-center"
+      >
+        <Link href="/" className="flex items-center gap-3 mt-1">
           <Image
             src="/logo.png"
-            alt="The Aroma Circle Logo"
-            width={60}
-            height={60}
+            alt="The Aroma Circle"
+            width={55}
+            height={55}
+            className="opacity-90"
           />
         </Link>
       </motion.div>
 
-      {/* Nav Links */}
-      <div className="flex gap-10 mt-4 font-semibold tracking-wider text-white">
-        {[
-          { name: "Home", href: "/" },
-          { name: "Shop", href: "/shop" },
-          { name: "Brands", href: "/shop/brands" },
-          { name: "About", href: "/about" },
-          { name: "Contact", href: "/contact" },
-        ].map((link) => (
-          <Link
-            key={link.name}
-            href={link.href}
-            className="transition duration-200 hover:scale-110 hover:text-[#BD955E]"
-          >
-            {link.name}
+      {/* Main nav row */}
+      <div className="flex items-center justify-between w-full max-w-7xl px-10 h-[68px]">
+        {/* Condensed logo — visible only when scrolled */}
+        <motion.div
+          initial={false}
+          animate={{ opacity: isScrolled ? 1 : 0, width: isScrolled ? 44 : 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.3 }}
+          className="overflow-hidden flex items-center shrink-0"
+        >
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="The Aroma Circle"
+              width={28}
+              height={28}
+              className="opacity-85"
+            />
           </Link>
-        ))}
-      </div>
+        </motion.div>
 
-      {/* Icons */}
-      <div className="absolute bottom-2.5 right-8 flex gap-5 items-center">
-        {/* Search */}
-        <div className="relative">
-          <i
-            className="material-symbols-outlined text-[14px] text-white cursor-pointer transition duration-200 hover:scale-110 hover:text-[#BD955E]"
-            onClick={() => setIsSearchOpen((prev) => !prev)}
-          >
-            search
-          </i>
-
-          {isSearchOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="absolute right-0 top-8"
-            >
-              <form onSubmit={handleSearch}>
-                <input
-                  autoFocus
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  placeholder="Search products..."
-                  className="w-48 px-4 py-2 bg-black text-white placeholder-gray-400 border border-[#BD955E] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BD955E]"
+        {/* Nav links */}
+        <div
+          style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+          className="flex gap-10 text-[11px] font-light tracking-[0.25em] uppercase text-white/60 mx-auto"
+        >
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`relative group pb-0.5 transition-colors duration-300 ${
+                  isActive ? "text-[#BD955E]" : "hover:text-white"
+                }`}
+              >
+                {link.name}
+                <span
+                  className={`absolute -bottom-px left-0 h-px bg-[#BD955E] transition-all duration-500 ease-out ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
                 />
-              </form>
-            </motion.div>
-          )}
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Cart */}
-        <div className="relative">
-          <i
-            className="material-symbols-outlined text-[14px] text-white cursor-pointer transition duration-200 hover:scale-110 hover:text-[#BD955E]"
-            onClick={() => {
-              isCartOpen ? closeCart() : openCart();
-              setIsSearchOpen(false);
-            }}
-          >
-            shopping_cart
-          </i>
-          {totalItems > 0 && (
-            <span className="absolute -top-2 -right-2 bg-[#BD955E] text-black rounded-full px-1 text-xs font-bold">
-              {totalItems}
-            </span>
-          )}
+        {/* Icon cluster */}
+        <div className="flex gap-6 items-center">
+          {/* Search */}
+          <div className="relative">
+            <button
+              onClick={() => setIsSearchOpen((prev) => !prev)}
+              className="text-white/40 hover:text-[#BD955E] transition-colors duration-300"
+              aria-label="Search"
+            >
+              <Search size={15} strokeWidth={1.5} />
+            </button>
 
-          <MiniCart isOpen={isCartOpen} onClose={closeCart} />
+            {isSearchOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute right-0 top-9"
+              >
+                <form onSubmit={handleSearch}>
+                  <input
+                    autoFocus
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    placeholder="Search fragrances…"
+                    style={{
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                    }}
+                    className="w-56 px-4 py-2.5 bg-[#0D0D0D] text-white text-[12px] tracking-wide placeholder-white/20 border border-white/10 focus:border-[#BD955E]/40 focus:outline-none transition"
+                  />
+                </form>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Cart */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                isCartOpen ? closeCart() : openCart();
+                setIsSearchOpen(false);
+              }}
+              className="text-white/40 hover:text-[#BD955E] transition-colors duration-300 relative"
+              aria-label="Cart"
+            >
+              <ShoppingBag size={15} strokeWidth={1.5} />
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2.5 bg-[#BD955E] text-black rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-semibold">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+            <MiniCart isOpen={isCartOpen} onClose={closeCart} />
+          </div>
         </div>
       </div>
     </motion.nav>

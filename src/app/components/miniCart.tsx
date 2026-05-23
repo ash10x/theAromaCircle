@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { X, ShoppingBag } from "lucide-react";
 
 export default function MiniCart({
   isOpen,
@@ -20,7 +21,6 @@ export default function MiniCart({
   const pathname = usePathname();
   const total = getTotalPrice();
 
-  /* Close cart automatically when navigating */
   useEffect(() => {
     if (pathname.startsWith("/cart") || pathname.startsWith("/checkout")) {
       closeCart();
@@ -33,7 +33,7 @@ export default function MiniCart({
         <>
           {/* Overlay */}
           <motion.div
-            className="fixed inset-0 bg-black/50 z-40"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -42,34 +42,52 @@ export default function MiniCart({
 
           {/* Cart Panel */}
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.96 }}
+            initial={{ opacity: 0, y: -12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.96 }}
-            transition={{ duration: 0.25 }}
-            className="fixed top-16 right-4 sm:right-6 w-72 sm:w-80 bg-[#0a0a0a] border border-[#BD955E] rounded-xl shadow-xl z-50 p-4 flex flex-col gap-4 max-h-[80vh]"
+            exit={{ opacity: 0, y: -12, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed top-18 right-6 w-80 bg-[#0A0A0A] border border-white/8 z-50 flex flex-col max-h-[80vh] shadow-2xl"
           >
             {/* Header */}
-            <div className="flex justify-between items-center">
-              <h2 className="text-lg font-bold text-[#BD955E]">Cart</h2>
-
+            <div className="flex justify-between items-center px-6 py-5 border-b border-white/6">
+              <div>
+                <p
+                  style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                  className="text-[10px] text-white/30 tracking-[0.35em] uppercase mb-0.5"
+                >
+                  Your Selection
+                </p>
+                <h2
+                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                  className="text-white text-lg font-light"
+                >
+                  Cart
+                </h2>
+              </div>
               <button
                 onClick={onClose}
-                className="text-white hover:text-[#BD955E] text-xl font-bold"
+                className="text-white/25 hover:text-white transition-colors"
                 aria-label="Close cart"
               >
-                ✕
+                <X size={15} strokeWidth={1.5} />
               </button>
             </div>
 
-            {/* Empty Cart */}
+            {/* Empty state */}
             {cart.length === 0 ? (
-              <p className="text-white text-sm text-center py-6">
-                Your cart is empty
-              </p>
+              <div className="flex flex-col items-center justify-center py-14 gap-3">
+                <ShoppingBag size={28} strokeWidth={1} className="text-white/10" />
+                <p
+                  style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                  className="text-white/25 text-sm tracking-wide"
+                >
+                  Your cart is empty
+                </p>
+              </div>
             ) : (
               <>
-                {/* Cart Items */}
-                <div className="flex flex-col gap-3 overflow-y-auto max-h-[50vh] pr-1">
+                {/* Items */}
+                <div className="flex flex-col gap-5 overflow-y-auto px-6 py-5">
                   {cart.map((item) => {
                     const imageSrc =
                       item.images && item.images.length > 0
@@ -77,64 +95,48 @@ export default function MiniCart({
                         : "/products/placeholder.jpg";
 
                     return (
-                      <div
-                        key={item.id}
-                        className="flex items-start gap-3 sm:gap-4"
-                      >
-                        {/* Product Image */}
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 relative rounded-lg overflow-hidden shrink-0">
+                      <div key={item.id} className="flex gap-4">
+                        <div className="w-14 h-14 relative overflow-hidden shrink-0 bg-[#111]">
                           <Image
                             src={imageSrc}
                             alt={item.name}
                             fill
-                            sizes="64px"
-                            quality={85}
+                            sizes="56px"
                             className="object-cover"
                             onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = "/products/placeholder.jpg";
+                              (e.target as HTMLImageElement).src = "/products/placeholder.jpg";
                             }}
                           />
                         </div>
 
-                        {/* Product Info */}
-                        <div className="flex-1 flex flex-col gap-1">
-                          <p className="text-white font-semibold text-sm sm:text-base line-clamp-2">
+                        <div className="flex-1 min-w-0">
+                          <p
+                            style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                            className="text-white text-sm font-medium leading-tight line-clamp-2"
+                          >
                             {item.name}
                           </p>
+                          <p className="text-[#BD955E] text-sm mt-1">${item.price.toFixed(2)}</p>
 
-                          <p className="text-[#BD955E] text-sm sm:text-base">
-                            ${item.price.toFixed(2)}
-                          </p>
-
-                          {/* Quantity Controls */}
-                          <div className="flex items-center gap-2 mt-1">
+                          <div className="flex items-center gap-2 mt-2">
                             <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
-                              }
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
                               disabled={item.quantity <= 1}
-                              className="px-3 py-1 bg-[#BD955E] text-black rounded-lg hover:bg-[#a6854e] transition disabled:opacity-50"
+                              className="w-6 h-6 border border-white/10 text-white/40 hover:border-[#BD955E]/40 hover:text-[#BD955E] transition text-xs flex items-center justify-center disabled:opacity-30"
                             >
-                              -
+                              −
                             </button>
-
-                            <span className="text-white text-sm w-4 text-center">
-                              {item.quantity}
-                            </span>
-
+                            <span className="text-white text-sm w-5 text-center">{item.quantity}</span>
                             <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1)
-                              }
-                              className="px-3 py-1 bg-[#BD955E] text-black rounded-lg hover:bg-[#a6854e] transition"
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="w-6 h-6 border border-white/10 text-white/40 hover:border-[#BD955E]/40 hover:text-[#BD955E] transition text-xs flex items-center justify-center"
                             >
                               +
                             </button>
-
                             <button
                               onClick={() => removeFromCart(item.id)}
-                              className="ml-auto text-red-500 hover:text-red-700 text-sm font-semibold"
+                              style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                              className="ml-auto text-white/20 hover:text-white/50 text-xs transition"
                             >
                               Remove
                             </button>
@@ -145,26 +147,30 @@ export default function MiniCart({
                   })}
                 </div>
 
-                {/* Total */}
-                <div className="border-t border-[#BD955E] pt-3 flex justify-between items-center">
-                  <p className="text-white font-bold">Total:</p>
+                {/* Total + Actions */}
+                <div className="px-6 py-5 border-t border-white/6 space-y-3">
+                  <div className="flex justify-between items-center mb-1">
+                    <span
+                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      className="text-[10px] text-white/30 tracking-[0.3em] uppercase"
+                    >
+                      Total
+                    </span>
+                    <span className="text-[#BD955E] font-medium">${total.toFixed(2)}</span>
+                  </div>
 
-                  <p className="text-[#BD955E] font-bold">
-                    ${total.toFixed(2)}
-                  </p>
-                </div>
-
-                {/* Buttons */}
-                <div className="flex flex-col gap-2">
-                  <Link href="/cart" onClick={closeCart}>
-                    <button className="w-full bg-[#692437] py-2 rounded-lg font-semibold text-white hover:bg-[#a6854e] transition">
-                      View Cart
+                  <Link href="/checkout" onClick={closeCart}>
+                    <button className="w-full bg-[#BD955E] py-3 text-black text-[11px] tracking-[0.25em] uppercase font-medium hover:bg-[#cca96a] transition-colors duration-300">
+                      Secure Checkout
                     </button>
                   </Link>
 
-                  <Link href="/checkout" onClick={closeCart}>
-                    <button className="w-full bg-[#BD955E] py-2 rounded-lg font-semibold text-black hover:bg-[#a6854e] transition">
-                      Checkout
+                  <Link href="/cart" onClick={closeCart}>
+                    <button
+                      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+                      className="w-full border border-white/10 text-white/40 py-2.5 text-[11px] tracking-[0.25em] uppercase hover:text-white hover:border-white/20 transition-colors duration-300"
+                    >
+                      View Cart
                     </button>
                   </Link>
                 </div>
