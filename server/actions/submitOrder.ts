@@ -31,7 +31,7 @@ const border = "#1A1A1A";
 const textMuted = "#888888";
 const textDim = "#555555";
 
-function baseWrapper(content: string) {
+function baseWrapper(content: string, preheader = "") {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +40,7 @@ function baseWrapper(content: string) {
   <title>The Aroma Circle</title>
 </head>
 <body style="margin:0;padding:0;background-color:${bgDeep};font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#FFFFFF;">
+  ${preheader ? `<span style="display:none;max-height:0;overflow:hidden;mso-hide:all;">${preheader}&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</span>` : ""}
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color:${bgDeep};padding:40px 16px;">
     <tr>
       <td align="center">
@@ -179,7 +180,7 @@ function buildUserEmail(payload: OrderPayload) {
             </td>
           </tr>`;
 
-  return baseWrapper(content);
+  return baseWrapper(content, `Your Aroma Circle pre-order is confirmed. Ready for collection in 1–2 days.`);
 }
 
 // ─── admin email ──────────────────────────────────────────────────────────────
@@ -259,7 +260,57 @@ function buildAdminEmail(payload: OrderPayload, timestamp: number) {
             </td>
           </tr>`;
 
-  return baseWrapper(content);
+  return baseWrapper(content, `New pre-order from ${payload.name} — $${payload.total.toFixed(2)} JMD`);
+}
+
+// ─── plain-text versions ─────────────────────────────────────────────────────
+
+function buildUserText(payload: OrderPayload): string {
+  const lines = payload.cart.map(
+    (i) => `  ${i.name}${i.brand ? ` (${i.brand})` : ""}  ×${i.quantity}  $${(i.price * i.quantity).toFixed(2)} JMD`,
+  );
+  return [
+    "THE AROMA CIRCLE — PRE-ORDER CONFIRMED",
+    "--------------------------------------",
+    `Thank you, ${payload.name}.`,
+    "",
+    "Your pre-order has been received and will be ready for collection within 1–2 days.",
+    "",
+    "ITEMS ORDERED",
+    ...lines,
+    "",
+    `Total: $${payload.total.toFixed(2)} JMD`,
+    "",
+    "COLLECTION",
+    payload.address,
+    "",
+    "Please bring a valid government-issued ID when collecting your order.",
+    "You are welcome to smell any fragrance before finalising your purchase in-store.",
+    "",
+    "— The Aroma Circle",
+  ].join("\n");
+}
+
+function buildAdminText(payload: OrderPayload, timestamp: number): string {
+  const lines = payload.cart.map(
+    (i) => `  ${i.name}${i.brand ? ` (${i.brand})` : ""}  ×${i.quantity}  $${(i.price * i.quantity).toFixed(2)} JMD`,
+  );
+  const time = new Date(timestamp * 1000).toLocaleString("en-JM", { timeZone: "America/Jamaica" });
+  return [
+    "NEW PRE-ORDER — THE AROMA CIRCLE",
+    "--------------------------------",
+    `Customer: ${payload.name}`,
+    `Email:    ${payload.email}`,
+    `Phone:    ${payload.phone}`,
+    `Time:     ${time}`,
+    "",
+    "ITEMS ORDERED",
+    ...lines,
+    "",
+    `Total: $${payload.total.toFixed(2)} JMD`,
+    "",
+    `Collection: ${payload.address}`,
+  ].join("\n");
 }
 
 // ─── main export ──────────────────────────────────────────────────────────────
@@ -289,6 +340,7 @@ export async function submitOrder(payload: OrderPayload) {
     to: payload.email,
     subject: "Your Aroma Circle pre-order is confirmed",
     html: buildUserEmail(payload),
+    text: buildUserText(payload),
   });
 
   if (process.env.EMAIL_ADMIN) {
@@ -296,6 +348,8 @@ export async function submitOrder(payload: OrderPayload) {
       to: process.env.EMAIL_ADMIN,
       subject: `New pre-order from ${payload.name} — $${payload.total.toFixed(2)} JMD`,
       html: buildAdminEmail(payload, timestamp),
+      text: buildAdminText(payload, timestamp),
+      replyTo: payload.email,
     });
   }
 

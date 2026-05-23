@@ -8,6 +8,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_SMTP_USER,
     pass: process.env.EMAIL_SMTP_PASS,
   },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 export async function sendEmail({
@@ -15,11 +18,15 @@ export async function sendEmail({
   subject,
   html,
   text,
+  replyTo,
+  headers,
 }: {
   to: string;
   subject: string;
   html: string;
   text?: string;
+  replyTo?: string;
+  headers?: Record<string, string>;
 }) {
   if (!process.env.EMAIL_FROM) {
     throw new Error("EMAIL_FROM is not configured in environment variables.");
@@ -31,5 +38,7 @@ export async function sendEmail({
     subject,
     html,
     text,
+    replyTo,
+    headers,
   });
 }
